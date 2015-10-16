@@ -2,6 +2,10 @@
 
 #include "config.h"
 
+namespace tgt {
+  class OffScreenRender;
+}
+
 namespace mivt {
 
   class Application
@@ -14,6 +18,9 @@ namespace mivt {
     MIVT_API void GetPixels(unsigned char* buffer, int length);
 
     MIVT_API void Resize(int width, int height);
+
+  private:
+    tgt::OffScreenRender *offscreen_;
   };
 
 }

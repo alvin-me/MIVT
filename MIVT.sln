@@ -14,6 +14,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mivtmanaged", "mivtmanaged\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mivt", "mivt\mivt.vcxproj", "{1E463676-3EF8-4898-9524-480EC01B508D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A93D1AA2-F11B-4857-81F2-D47A119BF069} = {A93D1AA2-F11B-4857-81F2-D47A119BF069}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tgt", "tgt\tgt.vcxproj", "{A93D1AA2-F11B-4857-81F2-D47A119BF069}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +38,10 @@ Global
 		{1E463676-3EF8-4898-9524-480EC01B508D}.Debug|Mixed Platforms.Build.0 = Debug|x64
 		{1E463676-3EF8-4898-9524-480EC01B508D}.Release|Mixed Platforms.ActiveCfg = Release|x64
 		{1E463676-3EF8-4898-9524-480EC01B508D}.Release|Mixed Platforms.Build.0 = Release|x64
+		{A93D1AA2-F11B-4857-81F2-D47A119BF069}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{A93D1AA2-F11B-4857-81F2-D47A119BF069}.Debug|Mixed Platforms.Build.0 = Debug|x64
+		{A93D1AA2-F11B-4857-81F2-D47A119BF069}.Release|Mixed Platforms.ActiveCfg = Release|x64
+		{A93D1AA2-F11B-4857-81F2-D47A119BF069}.Release|Mixed Platforms.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
