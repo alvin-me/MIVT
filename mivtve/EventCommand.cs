@@ -8,6 +8,7 @@ namespace mivtve
   /// <summary>
   /// Getting WPF SizeChanged events at start-up when using MVVM and DataContext
   /// http://www.codeproject.com/Articles/210022/Getting-WPF-SizeChanged-Events-at-start-up-when-us
+  /// http://www.codeproject.com/Articles/160892/Binding-Events-to-Methods-in-the-Silverlight-MVVM
   /// </summary>
   public class EventCommand
   {

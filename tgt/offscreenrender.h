@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.h"
+#include <string>
 
 namespace tgt {
 
@@ -58,6 +59,8 @@ namespace tgt {
 
     /** Flag indicating if the window handle is passed to this object or owned by it. */
     bool own_window_;
+
+    static const std::string loggerCat_;
   };
 }
 

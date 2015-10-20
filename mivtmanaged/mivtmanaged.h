@@ -21,6 +21,12 @@ namespace mivtmanaged {
 
     void Resize(int width, int height);
 
+    void Rotate(int newPosX, int newPosY, int lastPosX, int lastPosY);
+
+    void Zoom(int newPosX, int newPosY, int lastPosX, int lastPosY);
+
+    void Pan(int newPosX, int newPosY, int lastPosX, int lastPosY);
+
   private:
     mivt::Application *localApp_;
 	};

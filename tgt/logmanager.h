@@ -10,6 +10,9 @@
 
 namespace tgt {
 
+  class LogManager;
+  template class TGT_API Singleton<LogManager>;
+
   /**
   * Specifies the severity of the log event.
   * Debug messages are not logged in release builds!
@@ -118,6 +121,8 @@ namespace tgt {
 
     FILE* file_;
     std::string absFilename_;
+
+    static const std::string loggerCat_;
   };
 
   //------------------------------------------------------------------------------
@@ -141,7 +146,7 @@ namespace tgt {
     TGT_API ~LogManager();
 
     /// Initialize logmanager, put all logfiles in logDir
-    TGT_API void reinit(const std::string& logDir);
+    TGT_API void setLogDir(const std::string& logDir);
     TGT_API std::string getLogDir() const { return logDir_; }
 
     /// Log message

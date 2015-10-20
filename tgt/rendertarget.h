@@ -77,6 +77,8 @@ namespace tgt {
     template<typename T>
     T* readColorBuffer() throw (Exception);
 
+    TGT_API void readColorBuffer(uint8_t* buffer, size_t numBytesAllocated) throw (Exception);
+
   protected:
     FramebufferObject* fbo_;
 

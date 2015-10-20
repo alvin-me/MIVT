@@ -276,4 +276,11 @@ namespace tgt {
     return glm::make_vec4(pixels);
   }
 
+  void RenderTarget::readColorBuffer(uint8_t* buffer, size_t numBytesAllocated) {
+    if (!getColorTexture()) {
+      throw Exception("RenderTarget::readColorBuffer() called on an empty render target");
+    }
+    getColorTexture()->downloadTextureToBuffer(buffer, numBytesAllocated);
+  }
+
 } // end namespace tgt

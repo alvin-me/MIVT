@@ -1,5 +1,6 @@
 #pragma once
 
+#include "config.h"
 #include <cassert>
 
 namespace tgt {
@@ -57,6 +58,7 @@ namespace tgt {
     }
 
   private:
+  protected:
     static T* singletonClass_;
   };
 

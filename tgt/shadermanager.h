@@ -11,6 +11,9 @@
 
 namespace tgt {
 
+  class ShaderManager;
+  template class TGT_API Singleton<ShaderManager>;
+
   /**
   * Type of a shader object, can be vertex, fragment or geometry shader
   *

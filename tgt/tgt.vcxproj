@@ -97,6 +97,7 @@
     <ClInclude Include="filesystem.h" />
     <ClInclude Include="framebufferobject.h" />
     <ClInclude Include="frustum.h" />
+    <ClInclude Include="geometry.h" />
     <ClInclude Include="gpucapabilities.h" />
     <ClInclude Include="logmanager.h" />
     <ClInclude Include="matrixstack.h" />
@@ -109,6 +110,8 @@
     <ClInclude Include="textureunit.h" />
     <ClInclude Include="tgt_gl.h" />
     <ClInclude Include="tgt_math.h" />
+    <ClInclude Include="trackball.h" />
+    <ClInclude Include="trianglemeshgeometry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boundingbox.cpp" />
@@ -117,6 +120,7 @@
     <ClCompile Include="filesystem.cpp" />
     <ClCompile Include="framebufferobject.cpp" />
     <ClCompile Include="frustum.cpp" />
+    <ClCompile Include="geometry.cpp" />
     <ClCompile Include="gpucapabilities.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="matrixstack.cpp" />
@@ -127,6 +131,8 @@
     <ClCompile Include="textureunit.cpp" />
     <ClCompile Include="tgt_gl.cpp" />
     <ClCompile Include="tgt_math.cpp" />
+    <ClCompile Include="trackball.cpp" />
+    <ClCompile Include="trianglemeshgeometry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

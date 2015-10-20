@@ -10,6 +10,9 @@
 
 namespace tgt {
 
+  class FileSystem;
+  template class TGT_API Singleton<FileSystem>;
+
   /**
   * Base class for input files.
   */

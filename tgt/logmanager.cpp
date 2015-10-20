@@ -126,6 +126,8 @@ namespace tgt {
 
   //------------------------------------------------------------------------------
 
+  const std::string HtmlLog::loggerCat_ = "HtmlLog";
+
   std::string HtmlLog::getLevelString(LogLevel level) {
     switch (level) {
     case Debug:
@@ -236,7 +238,7 @@ namespace tgt {
     clear();
   }
 
-  void LogManager::reinit(const std::string& logDir) {
+  void LogManager::setLogDir(const std::string& logDir) {
     logDir_ = logDir;
   }
 

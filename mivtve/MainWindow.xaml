@@ -1,6 +1,8 @@
 ﻿<Window x:Class="mivtve.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:local="clr-namespace:mivtve"
         Title="医学图像可视化" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
@@ -47,8 +49,21 @@
             </StatusBarItem>
         </StatusBar>
 
-        <Grid Margin="4" local:EventCommand.Name="SizeChanged" 
-              local:EventCommand.Command="{Binding ImageSizeChanged}">          
+        <!--use customer EventCommand for SizeChanged for startup trigger-->
+        <Grid Margin="4" Background="Black" 
+              local:EventCommand.Name="SizeChanged" 
+              local:EventCommand.Command="{Binding ImageSizeChanged}">  
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDown">
+                    <ei:CallMethodAction MethodName="ImageMouseDown" TargetObject="{Binding}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseUp">
+                    <ei:CallMethodAction MethodName="ImageMouseUp" TargetObject="{Binding}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseMove">
+                    <ei:CallMethodAction MethodName="ImageMouseMove" TargetObject="{Binding}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Image Source="{Binding Path=ImageSrc, Mode=OneWay}" />
         </Grid>
     </DockPanel>

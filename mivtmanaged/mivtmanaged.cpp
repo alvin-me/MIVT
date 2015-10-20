@@ -23,5 +23,17 @@ namespace mivtmanaged {
   void Application::Resize(int width, int height) {
     localApp_->Resize(width, height);
   }
+
+  void Application::Rotate(int newPosX, int newPosY, int lastPosX, int lastPosY) {
+    localApp_->Rotate(newPosX, newPosY, lastPosX, lastPosY);
+  }
+
+  void Application::Zoom(int newPosX, int newPosY, int lastPosX, int lastPosY) {
+    localApp_->Zoom(newPosX, newPosY, lastPosX, lastPosY);
+  }
+
+  void Application::Pan(int newPosX, int newPosY, int lastPosX, int lastPosY) {
+    localApp_->Pan(newPosX, newPosY, lastPosX, lastPosY);
+  }
 }
 

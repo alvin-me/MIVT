@@ -8,6 +8,9 @@
 
 namespace tgt {
 
+  class GpuCapabilities;
+  template class TGT_API Singleton<GpuCapabilities>;
+
   /**
   * This Singleton provides information about the graphics system.
   * This information includes:

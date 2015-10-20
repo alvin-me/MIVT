@@ -1,5 +1,6 @@
 #include "offscreenrender.h"
 #include "tgt_gl.h"
+#include "logmanager.h"
 #include <windows.h>
 #include <cassert>
 #include <tchar.h>
@@ -31,6 +32,8 @@ namespace tgt {
     return DefWindowProc(handle, message, w_param, l_param);
   }
 
+  const std::string OffScreenRender::loggerCat_ = "OffScreenRender";
+
   OffScreenRender::OffScreenRender(void)
     : window_handle_(NULL)
     , dc_handle_(NULL)
@@ -38,9 +41,14 @@ namespace tgt {
     , own_window_(false)
   {
     if (!InitializeContext())  return;
-    if (GLEW_OK != glewInit()) {
-      assert(0);
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+      LERRORC("MyApplication", "glewInit failed, error: " << glewGetErrorString(err) << std::endl);
+      assert(false);
+      exit(EXIT_FAILURE);
     }
+    LINFOC("MyApplication", "GLEW version:       " << glewGetString(GLEW_VERSION));
+
     glShadeModel(GL_SMOOTH);
 
     return;

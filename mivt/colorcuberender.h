@@ -1,36 +1,42 @@
 #pragma once
+#include "tgt_gl.h"
+#include "tgt_math.h"
 
 namespace tgt {
   class RenderTarget;
   class Shader;
   class Camera;
+  class Geometry;
 }
 
-class ColorCubeRender
-{
-public:
-  ColorCubeRender();
-  ~ColorCubeRender();
+namespace mivt {
+  class ColorCubeRender
+  {
+  public:
+    ColorCubeRender();
+    ~ColorCubeRender();
 
-//  void Initialize();
-//  void Deinitialize();
-//  void Process(Geometry *geometry, Camera *camera);
-//  void Resize(const glm::ivec2& size);
-//
-//  RenderTarget* GetFrontFace();
-//  RenderTarget* GetBackFace();
-//
-//private:
-//  void renderGeometry(const Geometry* geometry,
-//    Camera *camera,
-//    RenderTarget* outport,
-//    GLenum depthFunc,
-//    float clearDepth,
-//    GLenum cullFace);
+    void Initialize();
+    void Deinitialize();
+    void Process(tgt::Geometry *geometry, tgt::Camera *camera);
+    void Resize(const glm::ivec2& size);
 
-private:
-  tgt::RenderTarget  *frontFace_;
-  tgt::RenderTarget  *backFace_;
-  tgt::Shader        *shader_;
-};
+    tgt::RenderTarget* GetFrontFace();
+    tgt::RenderTarget* GetBackFace();
+
+  private:
+    void renderGeometry(const tgt::Geometry* geometry,
+      tgt::Camera *camera,
+      tgt::RenderTarget* outport,
+      GLenum depthFunc,
+      float clearDepth,
+      GLenum cullFace);
+
+  private:
+    tgt::RenderTarget  *frontFace_;
+    tgt::RenderTarget  *backFace_;
+    tgt::Shader        *shader_;
+  };
+}
+
 

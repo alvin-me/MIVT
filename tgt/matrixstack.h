@@ -8,6 +8,9 @@
 
 namespace tgt {
 
+  class MatrixStack;
+  template class TGT_API Singleton<MatrixStack>;
+
   class MatrixStack : public Singleton<MatrixStack> {
   public:
 
