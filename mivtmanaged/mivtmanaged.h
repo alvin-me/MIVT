@@ -6,6 +6,8 @@
 #include "application.h"
 #pragma managed
 
+#include <msclr/marshal.h>
+
 using namespace System;
 
 namespace mivtmanaged {
@@ -27,7 +29,16 @@ namespace mivtmanaged {
 
     void Pan(int newPosX, int newPosY, int lastPosX, int lastPosY);
 
+    void LoadVolume(String^ fileName,
+      String^ format,
+      array<int>^ dimension,
+      array<float>^ spacing,
+      float intercept,
+      float slope,
+      float windowWidth,
+      float windowCenter);
+
   private:
-    mivt::Application *localApp_;
+    mivt::Application *local_;
 	};
 }

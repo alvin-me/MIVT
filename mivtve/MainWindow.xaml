@@ -4,7 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:local="clr-namespace:mivtve"
-        Title="医学图像可视化" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="Medical Image Visualization" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
@@ -12,23 +12,23 @@
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button ToolTip="打开文件">
+                <Button ToolTip="Load Volume" Command="{Binding LoadVolume}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/open.png" />
-                        <TextBlock Margin="3,0,0,0">打开</TextBlock>
+                        <TextBlock Margin="3,0,0,0">Load</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button ToolTip="设置绘制属性">
+                <Button ToolTip="Set Rendering Parameters" Command="{Binding OpenSettingWindow}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/setting.png" />
-                        <TextBlock Margin="3,0,0,0">设置</TextBlock>
+                        <TextBlock Margin="3,0,0,0">Setting</TextBlock>
                     </StackPanel>
                 </Button>
                 <Separator />
-                <Button ToolTip="关于MIVT">
+                <Button ToolTip="About MIVT">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/about.png" />
-                        <TextBlock Margin="3,0,0,0">关于</TextBlock>
+                        <TextBlock Margin="3,0,0,0">About</TextBlock>
                     </StackPanel>
                 </Button>
             </ToolBar>
@@ -45,7 +45,7 @@
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0">
-                <TextBlock Text="Ready"/>
+                <TextBlock Text="{Binding Path=LogMessage}"/>
             </StatusBarItem>
         </StatusBar>
 

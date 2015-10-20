@@ -99,6 +99,9 @@
     <ClInclude Include="frustum.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="gpucapabilities.h" />
+    <ClInclude Include="progressbar.h" />
+    <ClInclude Include="rawvolumereader.h" />
+    <ClInclude Include="volumehistogram.h" />
     <ClInclude Include="logmanager.h" />
     <ClInclude Include="matrixstack.h" />
     <ClInclude Include="offscreenrender.h" />
@@ -112,6 +115,20 @@
     <ClInclude Include="tgt_math.h" />
     <ClInclude Include="trackball.h" />
     <ClInclude Include="trianglemeshgeometry.h" />
+    <ClInclude Include="valuemapping.h" />
+    <ClInclude Include="volume.h" />
+    <ClInclude Include="volumeatomic.h" />
+    <ClInclude Include="volumederiveddata.h" />
+    <ClInclude Include="volumeelement.h" />
+    <ClInclude Include="volumefactory.h" />
+    <ClInclude Include="volumegl.h" />
+    <ClInclude Include="volumelist.h" />
+    <ClInclude Include="volumeminmax.h" />
+    <ClInclude Include="volumepreview.h" />
+    <ClInclude Include="volumeram.h" />
+    <ClInclude Include="volumereader.h" />
+    <ClInclude Include="volumerepresentation.h" />
+    <ClInclude Include="volumetexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boundingbox.cpp" />
@@ -122,6 +139,9 @@
     <ClCompile Include="frustum.cpp" />
     <ClCompile Include="geometry.cpp" />
     <ClCompile Include="gpucapabilities.cpp" />
+    <ClCompile Include="progressbar.cpp" />
+    <ClCompile Include="rawvolumereader.cpp" />
+    <ClCompile Include="volumehistogram.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="matrixstack.cpp" />
     <ClCompile Include="offscreenrender.cpp" />
@@ -133,6 +153,18 @@
     <ClCompile Include="tgt_math.cpp" />
     <ClCompile Include="trackball.cpp" />
     <ClCompile Include="trianglemeshgeometry.cpp" />
+    <ClCompile Include="valuemapping.cpp" />
+    <ClCompile Include="volume.cpp" />
+    <ClCompile Include="volumeatomic.cpp" />
+    <ClCompile Include="volumefactory.cpp" />
+    <ClCompile Include="volumegl.cpp" />
+    <ClCompile Include="volumelist.cpp" />
+    <ClCompile Include="volumeminmax.cpp" />
+    <ClCompile Include="volumepreview.cpp" />
+    <ClCompile Include="volumeram.cpp" />
+    <ClCompile Include="volumereader.cpp" />
+    <ClCompile Include="volumerepresentation.cpp" />
+    <ClCompile Include="volumetexture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

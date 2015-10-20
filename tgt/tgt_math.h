@@ -6,6 +6,7 @@
 #pragma warning(disable:4201)
 #pragma warning(disable:4310)
 #pragma warning(disable:4245)
+#pragma warning(disable:4127)
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>

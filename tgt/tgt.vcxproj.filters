@@ -81,6 +81,57 @@
     <ClInclude Include="trackball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="volume.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumeatomic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumederiveddata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumeelement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumefactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumegl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumeminmax.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumepreview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumeram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumerepresentation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumetexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="valuemapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumehistogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rawvolumereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="volumereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="progressbar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tgt_gl.cpp">
@@ -138,6 +189,51 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trackball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volume.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumeatomic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumefactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumegl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumelist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumeminmax.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumepreview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumeram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumerepresentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumetexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="valuemapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumehistogram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rawvolumereader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="volumereader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="progressbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

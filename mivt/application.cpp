@@ -6,12 +6,20 @@
 #include "gpucapabilities.h"
 #include "shadermanager.h"
 #include "matrixstack.h"
+#include "rawvolumereader.h"
+#include "volume.h"
 
 #include <iostream>
 
 namespace mivt {
 
+  const std::string Application::loggerCat_ = "Application";
+
   Application::Application()
+    : offscreen_(0)
+    , logManager_(0)
+    , volume_(0)
+    , raycaster_(0)
   {
     Initialize();
   }
@@ -156,5 +164,37 @@ namespace mivt {
   void Application::Pan(int newPosX, int newPosY, int lastPosX, int lastPosY)
   {
     raycaster_->Pan(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
+  }
+
+  void Application::LoadVolume(const std::string &fileName,
+    const std::string& format,
+    const int dimension[3],
+    const float spacing[3],
+    float intercept,
+    float slope,
+    float windowWidth,
+    float windowCenter)
+  {
+    try {
+      tgt::RawVolumeReader reader;
+      reader.setReadHints(glm::ivec3(dimension[0], dimension[1], dimension[2]),
+        glm::vec3(spacing[0], spacing[1], spacing[2]),
+        format, 0, false,
+        intercept,
+        slope,
+        windowCenter,
+        windowWidth);
+      DELPTR(volume_);
+      volume_ = reader.read(fileName);
+      if (volume_) {
+        tgt::oldVolumePosition(volume_);
+      }
+    }
+    catch (const tgt::FileException& e) {
+      LERROR(e.what());
+    }
+    catch (std::bad_alloc&) {
+      LERROR("bad allocation while reading file: " << fileName);
+    }
   }
 }

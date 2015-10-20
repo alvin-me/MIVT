@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,8 @@ namespace mivtve
     private WriteableBitmap         _imageBitmap;
     private bool                    _mouseTracking;
     private Point                   _lastMousePosition;
+    private string                  _message;
+    private string                  _messageBackup;
 
     #endregion
 
@@ -45,6 +48,64 @@ namespace mivtve
 
         UpdateImage();
       });
+
+      OpenSettingWindow = new RelayCommand((x) =>
+      {
+        SettingWindow window = new SettingWindow();
+        if (window.ShowDialog() == true)
+        {
+
+        }
+      });
+
+      LoadVolume = new RelayCommand((x) =>
+      {
+        var rawFileName = Properties.Settings.Default.VolumeFile;
+        var infoFileName = System.IO.Path.ChangeExtension(rawFileName, ".info");
+        // get volume information.
+        int[] size = new int[3];
+        float[] spacing = new float[3];
+        string format;
+        float[] interceptAndSlope = new float[2];
+        float[] windowing = new float[2];
+        try
+        {
+          StreamReader sr = new StreamReader(infoFileName);
+          var tokens1 = sr.ReadLine().Split(',');
+          var tokens2 = sr.ReadLine().Split(',');
+          var tokens3 = sr.ReadLine().Split(',');
+          var tokens4 = sr.ReadLine().Split(',');
+          var tokens5 = sr.ReadLine().Split(',');
+
+          for (int i = 0; i < 3; ++i)
+          {
+            size[i] = Int16.Parse(tokens1[i]);
+            spacing[i] = (float)System.Double.Parse(tokens2[i]);
+          }
+          format = tokens3[0];
+          for (int i = 0; i < 2; ++i)
+          {
+            interceptAndSlope[i] = (float)System.Double.Parse(tokens4[i]);
+            windowing[i] = (float)System.Double.Parse(tokens5[i]);
+          }
+        }
+        catch (FileNotFoundException)
+        {
+          LogInfo("Can not find \"" + infoFileName + "\"!");
+          return;
+        }
+        catch (Exception)
+        {
+          LogInfo("Invalid info file format of \"" + infoFileName + "\"!");
+          return;
+        }
+        _engine.LoadVolume(rawFileName, format, size, spacing, interceptAndSlope[0], 
+          interceptAndSlope[1], windowing[0], windowing[1]);
+        LogInfo("Volume Loaded.", 5000);
+      }, (x) =>
+      {
+        return File.Exists(Properties.Settings.Default.VolumeFile);
+      });
     }
 
     #endregion
@@ -64,11 +125,28 @@ namespace mivtve
       }
     }
 
+    public string LogMessage
+    {
+      get { return _message; }
+      set
+      {
+        if (_message != value)
+        {
+          _message = value;
+          OnPropertyChanged("LogMessage");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
 
     public ICommand ImageSizeChanged { get; private set; }
+
+    public ICommand OpenSettingWindow { get; private set; }
+
+    public ICommand LoadVolume { get; private set; }
 
     #endregion
 
@@ -122,6 +200,27 @@ namespace mivtve
         }
 
         _lastMousePosition = mousePos;
+      }
+    }
+
+    /// <summary>
+    /// Set LogMsg properties which will in turn auto reset statusbar
+    /// </summary>
+    /// <param name="msg">message</param>
+    /// <param name="delay">delay time of message rollback</param>
+    private void LogInfo(string msg, int delay = 0)
+    {
+      _messageBackup = LogMessage;
+      LogMessage = msg;
+
+      // set delay timer to roll back message.
+      if (delay > 0)
+      {
+        System.Threading.Tasks.Task.Factory.StartNew(() =>
+        {
+          System.Threading.Thread.Sleep(delay);
+          LogInfo(_messageBackup);
+        });
       }
     }
 

@@ -6,6 +6,7 @@
 namespace tgt {
   class OffScreenRender;
   class LogManager;
+  class Volume;
 }
 
 namespace mivt {
@@ -32,6 +33,15 @@ namespace mivt {
 
     MIVT_API void Pan(int newPosX, int newPosY, int lastPosX, int lastPosY);
 
+    MIVT_API void LoadVolume(const std::string &fileName, 
+      const std::string& format,
+      const int dimension[3], 
+      const float spacing[3],
+      float intercept, 
+      float slope, 
+      float windowWidth,
+      float windowCenter);
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;
@@ -42,11 +52,14 @@ namespace mivt {
   private:
     tgt::OffScreenRender    *offscreen_;
     tgt::LogManager         *logManager_;
+    tgt::Volume             *volume_;
     Raycaster               *raycaster_;
 
     std::string             programPath_;
     std::string             basePath_;
     std::string             userDataPath_;
+
+    static const std::string loggerCat_;
   };
 
 }
