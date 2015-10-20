@@ -1,30 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="glsl">
+      <UniqueIdentifier>{1fccf42a-e449-4933-b64a-4c184051bf6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="glsl\base">
+      <UniqueIdentifier>{506605c8-fe2c-4231-8c38-673f2f0c13ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="glsl\modules">
+      <UniqueIdentifier>{f44efd64-ca57-4b51-b104-96c57a4a294c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="glsl\base\copyimage.frag">
+      <Filter>glsl\base</Filter>
+    </None>
+    <None Include="glsl\base\eep_simple.frag">
+      <Filter>glsl\base</Filter>
+    </None>
+    <None Include="glsl\base\eep_simple.vert">
+      <Filter>glsl\base</Filter>
+    </None>
+    <None Include="glsl\base\passthrough.vert">
+      <Filter>glsl\base</Filter>
+    </None>
+    <None Include="glsl\modules\mod_compositing.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_depth.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_gradient.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_raysetup.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_sampler2d.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_sampler3d.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_shading.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\modules\mod_transfunc.frag">
+      <Filter>glsl\modules</Filter>
+    </None>
+    <None Include="glsl\rc_basic.frag">
+      <Filter>glsl</Filter>
+    </None>
+    <None Include="glsl\rc_shadow.frag">
+      <Filter>glsl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="application.cpp" />
+    <ClCompile Include="colorcuberender.cpp" />
+    <ClCompile Include="raycaster.cpp" />
+    <ClCompile Include="rendererhelper.cpp" />
+    <ClCompile Include="rendertoscreen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="application.h" />
+    <ClInclude Include="colorcuberender.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="raycaster.h" />
+    <ClInclude Include="rendererhelper.h" />
+    <ClInclude Include="rendertoscreen.h" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,37 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="glsl\base\copyimage.frag" />
+    <None Include="glsl\base\eep_simple.frag" />
+    <None Include="glsl\base\eep_simple.vert" />
+    <None Include="glsl\base\passthrough.vert" />
+    <None Include="glsl\modules\mod_compositing.frag" />
+    <None Include="glsl\modules\mod_depth.frag" />
+    <None Include="glsl\modules\mod_gradient.frag" />
+    <None Include="glsl\modules\mod_raysetup.frag" />
+    <None Include="glsl\modules\mod_sampler2d.frag" />
+    <None Include="glsl\modules\mod_sampler3d.frag" />
+    <None Include="glsl\modules\mod_shading.frag" />
+    <None Include="glsl\modules\mod_transfunc.frag" />
+    <None Include="glsl\rc_basic.frag" />
+    <None Include="glsl\rc_shadow.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="application.cpp" />
+    <ClCompile Include="colorcuberender.cpp" />
+    <ClCompile Include="raycaster.cpp" />
+    <ClCompile Include="rendererhelper.cpp" />
+    <ClCompile Include="rendertoscreen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="application.h" />
+    <ClInclude Include="colorcuberender.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="raycaster.h" />
+    <ClInclude Include="rendererhelper.h" />
+    <ClInclude Include="rendertoscreen.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1E463676-3EF8-4898-9524-480EC01B508D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -89,37 +120,6 @@
       <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;tgt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="application.h" />
-    <ClInclude Include="colorcuberender.h" />
-    <ClInclude Include="config.h" />
-    <ClInclude Include="raycaster.h" />
-    <ClInclude Include="rendererhelper.h" />
-    <ClInclude Include="rendertoscreen.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="application.cpp" />
-    <ClCompile Include="colorcuberender.cpp" />
-    <ClCompile Include="raycaster.cpp" />
-    <ClCompile Include="rendererhelper.cpp" />
-    <ClCompile Include="rendertoscreen.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="glsl\base\copyimage.frag" />
-    <None Include="glsl\base\eep_simple.frag" />
-    <None Include="glsl\base\eep_simple.vert" />
-    <None Include="glsl\base\passthrough.vert" />
-    <None Include="glsl\modules\mod_compositing.frag" />
-    <None Include="glsl\modules\mod_depth.frag" />
-    <None Include="glsl\modules\mod_gradient.frag" />
-    <None Include="glsl\modules\mod_raysetup.frag" />
-    <None Include="glsl\modules\mod_sampler2d.frag" />
-    <None Include="glsl\modules\mod_sampler3d.frag" />
-    <None Include="glsl\modules\mod_shading.frag" />
-    <None Include="glsl\modules\mod_transfunc.frag" />
-    <None Include="glsl\rc_basic.frag" />
-    <None Include="glsl\rc_shadow.frag" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
