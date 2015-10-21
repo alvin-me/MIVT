@@ -10,6 +10,9 @@ namespace tgt {
 }
 
 namespace mivt {
+
+  class PreIntegration;
+
   /**
   * All processors that access volume data in shaders
   * should be derived from this base class.
@@ -163,6 +166,8 @@ namespace mivt {
     //float interactionQuality_;
     //bool useInterpolationCoarseness_;
     //bool interactionMode_;
+
+    PreIntegration *preintegration_;     ///< compute and cache pre-integration table
 
     static const std::string loggerCat_;
   };

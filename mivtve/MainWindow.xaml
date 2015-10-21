@@ -18,6 +18,12 @@
                         <TextBlock Margin="3,0,0,0">Load</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button ToolTip="Open Transfer Function Editor">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/mapping-function.png" />
+                        <TextBlock Margin="3,0,0,0">TransFunc</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Button ToolTip="Set Rendering Parameters" Command="{Binding OpenSettingWindow}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/setting.png" />

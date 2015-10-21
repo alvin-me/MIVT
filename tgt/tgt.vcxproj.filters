@@ -132,6 +132,36 @@
     <ClInclude Include="progressbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="serializable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serializationexceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tgt_string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transfunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transfunc1d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transfuncmappingkey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xmldeserializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xmlserializationconstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xmlserializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xmlserializerbase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tgt_gl.cpp">
@@ -234,6 +264,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="progressbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tgt_string.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="transfunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="transfunc1d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="transfuncmappingkey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xmldeserializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xmlserializationconstants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xmlserializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xmlserializerbase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include "volumegl.h"
 #include "textureunit.h"
 #include "transfunc1d.h"
+#include "preintegration.h"
 
 namespace mivt {
   const std::string VolumeRaycaster::loggerCat_("VolumeRaycaster");
@@ -24,9 +25,10 @@ namespace mivt {
     , materialShininess_(60.0f)
     , samplingRate_(2.f)
     , gradientMode_("central-differences")
-    , classificationMode_("transfer-function") // transfer-function, pre-integrated
+    , classificationMode_("pre-integrated") // transfer-function, pre-integrated
     , shadeMode_("phong")
     , compositingMode_("dvr")
+    , preintegration_(0)
     //, interactionCoarseness_(3) // 1~8
     //, interactionQuality_(1.f)
     //, useInterpolationCoarseness_(false)
@@ -40,10 +42,11 @@ namespace mivt {
   }
 
   void VolumeRaycaster::Initialize() {
-
+    preintegration_ = new PreIntegration();
   }
 
   void VolumeRaycaster::Deinitialize() {
+    DELPTR(preintegration_);
   }
 
   std::string VolumeRaycaster::generateHeader() 
@@ -263,10 +266,9 @@ namespace mivt {
 
   void VolumeRaycaster::bindTransfuncTexture(const std::string mode, tgt::TransFunc1D* tf, float samplingStepSize) {
     if (tf) {
-      samplingStepSize;
-      //if (tgt::startsWith(mode, "pre-integrated"))
-      //  tf->getPreIntegrationTable(samplingStepSize, 0, true)->getTexture()->bind();
-      //else
+      if (tgt::startsWith(mode, "pre-integrated"))
+        preintegration_->getTexture(tf, samplingStepSize)->bind();
+      else
         tf->bind();
     }
   }

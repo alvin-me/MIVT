@@ -9,7 +9,6 @@ namespace tgt {
   class TransFuncAlphaKey;
   class TransFuncColorKey;
   class Volume;
-  class PreIntegrationTable;
 
   /**
   * One dimensional, piece-wise linear transfer function based on key values.
@@ -167,18 +166,6 @@ namespace tgt {
     TGT_API virtual void serialize(XmlSerializer& s) const;
     TGT_API virtual void deserialize(XmlDeserializer& s);
 
-    /**
-    * Returns the pre-integration table of the transfer function with the specified attributes.
-    * If necessary, the table is (re-)computed.
-    *
-    * @param dimension width of the pre-integration table, 0 chooses the width according to the bit depth of the volume (up to 1024)
-    * @param samplingStepSize the segment length used for rendering, in texture (normalized) coordinates
-    * @param useIntegral @see PreIntegrationTable
-    * @param computeOnGPU @see PreIntegrationTable
-    */
-    //PreIntegrationTable* getPreIntegrationTable(float samplingStepSize = 1.f, size_t dimension = 0, bool useIntegral = true);
-
-
   private:
     /**
     * Saves transfer function to a XML file. The extension of the file is xml.
@@ -200,8 +187,6 @@ namespace tgt {
     std::vector<TransFuncColorKey*> colorKeys_;
     glm::vec2 dataDomain_;                      ///< transfer function data domain in real world
     glm::vec2 windowingDomain_;                 ///< windowing domain in real world
-
-    //PreIntegrationTable *preinteTable_;
 
     static const std::string loggerCat_; ///< logger category
   };

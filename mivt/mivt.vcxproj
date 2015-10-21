@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="preintegration.cpp" />
     <ClCompile Include="renderbase.cpp" />
     <ClCompile Include="rendercolorcube.cpp" />
     <ClCompile Include="rendervolume.cpp" />
@@ -36,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="preintegration.h" />
     <ClInclude Include="renderbase.h" />
     <ClInclude Include="rendercolorcube.h" />
     <ClInclude Include="config.h" />

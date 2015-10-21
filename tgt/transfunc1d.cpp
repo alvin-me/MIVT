@@ -5,7 +5,6 @@
 #include "volumeminmax.h"
 #include "xmlserializer.h"
 #include "xmldeserializer.h"
-//#include "preintegrationtable.h"
 
 #include <fstream>
 #include <sstream>
@@ -19,7 +18,6 @@ namespace tgt {
     : TransFunc(width, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, Texture::NEAREST)
     , dataDomain_(0.f, 255.f)
     , windowingDomain_(0.f, 255.f)
-    //, preinteTable_(0)
   {
     setToStandardFunc();
   }
@@ -29,8 +27,6 @@ namespace tgt {
       delete alphaKeys_[i];
     for (size_t i = 0; i < colorKeys_.size(); ++i)
       delete colorKeys_[i];
-
-    //DELPTR(preinteTable_);
   }
 
   void TransFunc1D::setToStandardFunc() {
@@ -452,28 +448,5 @@ namespace tgt {
     s.deserialize("ColorKeys", colorKeys_, "key");
     s.deserialize("AlphaKeys", alphaKeys_, "key");
   }
-
-  //PreIntegrationTable* TransFunc1D::getPreIntegrationTable(float samplingStepSize, size_t dimension, bool useIntegral) {
-  //  size_t dim;
-  //  if (dimension == 0)
-  //    dim = static_cast<size_t>(glm::min(getDimensions().x, 1024));
-  //  else
-  //    dim = dimension;
-  //  
-  //  if (preinteTable_) {
-  //    if (preinteTable_->getDimension() == dim
-  //      && preinteTable_->getSamplingStepSize() == samplingStepSize
-  //      && preinteTable_->usesIntegral() == useIntegral
-  //      && !textureInvalid_) {
-  //      return preinteTable_;
-  //    }
-  //  }
-
-  //  //create new pre-integration table and add it to the map
-  //  DELPTR(preinteTable_);
-  //  preinteTable_ = new PreIntegrationTable(this, dim, samplingStepSize, useIntegral);
-  //  textureInvalid_ = false;
-  //  return preinteTable_;
-  //}
 
 } // end namespace tgt

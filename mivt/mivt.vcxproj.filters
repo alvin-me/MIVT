@@ -62,6 +62,7 @@
     <ClCompile Include="rendervolume.cpp" />
     <ClCompile Include="renderbase.cpp" />
     <ClCompile Include="volumeraycaster.cpp" />
+    <ClCompile Include="preintegration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -71,5 +72,6 @@
     <ClInclude Include="rendervolume.h" />
     <ClInclude Include="renderbase.h" />
     <ClInclude Include="volumeraycaster.h" />
+    <ClInclude Include="preintegration.h" />
   </ItemGroup>
 </Project>
