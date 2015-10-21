@@ -46,12 +46,19 @@
                     <Grid Margin="4,0,4,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0">
                 <TextBlock Text="{Binding Path=LogMessage}"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Path=FrameRate}"/>
+                    <TextBlock Text="FPS"/>
+                </StackPanel>
             </StatusBarItem>
         </StatusBar>
 

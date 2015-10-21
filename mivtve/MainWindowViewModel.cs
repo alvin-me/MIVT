@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,7 @@ namespace mivtve
     private Point                   _lastMousePosition;
     private string                  _message;
     private string                  _messageBackup;
+    private int                     _frameRate;
 
     #endregion
 
@@ -139,6 +141,20 @@ namespace mivtve
       }
     }
 
+    public int FrameRate
+    {
+      get { return _frameRate; }
+      set
+      {
+        if (value == _frameRate)
+          return;
+
+        _frameRate = value;
+
+        base.OnPropertyChanged("FrameRate");
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -155,6 +171,9 @@ namespace mivtve
 
     private void UpdateImage()
     {
+      Stopwatch sw = new Stopwatch();
+      sw.Start();
+
       _engine.GetPixels(_imageBuffer);
 
       // copy image array into bitmap
@@ -162,6 +181,9 @@ namespace mivtve
       _imageBitmap.WritePixels(new Int32Rect(0, 0, _imageBitmap.PixelWidth, 
         _imageBitmap.PixelHeight), _imageBuffer, stride, 0);
       ImageSrc = _imageBitmap;
+
+      sw.Stop();
+      FrameRate = (int)(1000 / Math.Max(sw.ElapsedMilliseconds, 1));
     }
 
     public void ImageMouseDown(object sender, MouseButtonEventArgs e)
