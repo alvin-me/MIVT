@@ -28,18 +28,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
-    <ClCompile Include="colorcuberender.cpp" />
-    <ClCompile Include="raycaster.cpp" />
-    <ClCompile Include="rendererhelper.cpp" />
+    <ClCompile Include="renderbase.cpp" />
+    <ClCompile Include="rendercolorcube.cpp" />
+    <ClCompile Include="rendervolume.cpp" />
     <ClCompile Include="rendertoscreen.cpp" />
+    <ClCompile Include="volumeraycaster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
-    <ClInclude Include="colorcuberender.h" />
+    <ClInclude Include="renderbase.h" />
+    <ClInclude Include="rendercolorcube.h" />
     <ClInclude Include="config.h" />
-    <ClInclude Include="raycaster.h" />
-    <ClInclude Include="rendererhelper.h" />
+    <ClInclude Include="rendervolume.h" />
     <ClInclude Include="rendertoscreen.h" />
+    <ClInclude Include="volumeraycaster.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1E463676-3EF8-4898-9524-480EC01B508D}</ProjectGuid>

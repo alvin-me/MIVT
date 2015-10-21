@@ -7,11 +7,12 @@ namespace tgt {
   class OffScreenRender;
   class LogManager;
   class Volume;
+  class TransFunc1D;
 }
 
 namespace mivt {
 
-  class Raycaster;
+  class RenderVolume;
   class Application
   {
   public:
@@ -48,12 +49,15 @@ namespace mivt {
     std::string getUserDataPath(const std::string& filename = "") const;
     std::string getResourcePath(const std::string& filename = "") const;
     void initLogging();
+    void initTransfunc();
 
   private:
     tgt::OffScreenRender    *offscreen_;
     tgt::LogManager         *logManager_;
     tgt::Volume             *volume_;
-    Raycaster               *raycaster_;
+    tgt::TransFunc1D        *transfunc_;
+
+    RenderVolume            *render_;
 
     std::string             programPath_;
     std::string             basePath_;

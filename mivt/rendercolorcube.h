@@ -1,6 +1,6 @@
 #pragma once
 #include "tgt_gl.h"
-#include "tgt_math.h"
+#include "renderbase.h"
 
 namespace tgt {
   class RenderTarget;
@@ -10,11 +10,11 @@ namespace tgt {
 }
 
 namespace mivt {
-  class ColorCubeRender
+  class RenderColorCube : public RenderBase
   {
   public:
-    ColorCubeRender();
-    ~ColorCubeRender();
+    RenderColorCube();
+    ~RenderColorCube();
 
     void Initialize();
     void Deinitialize();

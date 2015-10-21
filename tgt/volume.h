@@ -114,6 +114,18 @@ namespace tgt {
     float windowWidth_;
   };
 
+  class VolumePreview;
+  template TGT_API VolumePreview* Volume::getDerivedData<VolumePreview>();
+
+  class VolumeMinMax;
+  template TGT_API VolumeMinMax* Volume::getDerivedData<VolumeMinMax>();
+
+  class VolumeHistogramIntensity;
+  template TGT_API VolumeHistogramIntensity* Volume::getDerivedData<VolumeHistogramIntensity>();
+
+  class VolumeGL;
+  template TGT_API VolumeGL* Volume::getRepresentation<VolumeGL>();
+
   //------------------------------------------------------------------------------
 
   /*

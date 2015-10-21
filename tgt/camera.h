@@ -41,6 +41,15 @@ namespace tgt {
 
     TGT_API virtual ~Camera();
 
+    TGT_API void reset(const glm::vec3& position = glm::vec3(0.f, 0.f, 0.f),
+      const glm::vec3& focus = glm::vec3(0.f, 0.f, -1.f),
+      const glm::vec3& up = glm::vec3(0.f, 1.f, 0.f),
+      float fovy = 45.f,
+      float ratio = 1.0f,
+      float distn = 0.1f,
+      float distf = 50.f,
+      ProjectionMode pm = PERSPECTIVE);
+
     /// Setter / Getter
     TGT_API void setPosition(const glm::vec3& pos) { position_ = pos; }
     TGT_API void setFocus(const glm::vec3& foc)    { focus_ = foc; }

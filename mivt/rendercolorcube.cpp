@@ -1,24 +1,23 @@
-#include "colorcuberender.h"
+#include "rendercolorcube.h"
 #include "matrixstack.h"
 #include "rendertarget.h"
 #include "shadermanager.h"
 #include "camera.h"
 #include "geometry.h"
-#include "rendererhelper.h"
 
 namespace mivt {
-  ColorCubeRender::ColorCubeRender()
+  RenderColorCube::RenderColorCube()
     : frontFace_(0)
     , backFace_(0)
     , shader_(0)
   {
   }
 
-  ColorCubeRender::~ColorCubeRender()
+  RenderColorCube::~RenderColorCube()
   {
   }
 
-  void ColorCubeRender::Initialize()
+  void RenderColorCube::Initialize()
   {
     frontFace_ = new tgt::RenderTarget();
     frontFace_->initialize();
@@ -28,7 +27,7 @@ namespace mivt {
     shader_ = ShdrMgr.load("eep_simple", "", false);
   }
 
-  void ColorCubeRender::Deinitialize()
+  void RenderColorCube::Deinitialize()
   {
     frontFace_->deinitialize();
     DELPTR(frontFace_);
@@ -39,7 +38,7 @@ namespace mivt {
     shader_ = 0;
   }
 
-  void ColorCubeRender::Process(tgt::Geometry *geometry, tgt::Camera *camera)
+  void RenderColorCube::Process(tgt::Geometry *geometry, tgt::Camera *camera)
   {
     // set modelview and projection matrices
     MatStack.matrixMode(tgt::MatrixStack::PROJECTION);
@@ -70,23 +69,23 @@ namespace mivt {
     LGL_ERROR;
   }
 
-  void ColorCubeRender::Resize(const glm::ivec2& size)
+  void RenderColorCube::Resize(const glm::ivec2& size)
   {
     frontFace_->resize(size);
     backFace_->resize(size);
   }
 
-  tgt::RenderTarget* ColorCubeRender::GetFrontFace()
+  tgt::RenderTarget* RenderColorCube::GetFrontFace()
   {
     return frontFace_;
   }
 
-  tgt::RenderTarget* ColorCubeRender::GetBackFace()
+  tgt::RenderTarget* RenderColorCube::GetBackFace()
   {
     return backFace_;
   }
 
-  void ColorCubeRender::renderGeometry(const tgt::Geometry* geometry,
+  void RenderColorCube::renderGeometry(const tgt::Geometry* geometry,
     tgt::Camera *camera,
     tgt::RenderTarget* outport,
     GLenum depthFunc,
@@ -96,7 +95,7 @@ namespace mivt {
     // activate shader program
     shader_->activate();
 
-    RendererHelper::setGlobalShaderParameters(shader_, camera, outport->getSize());
+    setGlobalShaderParameters(shader_, camera, outport->getSize());
     shader_->setUniform("modelMatrix_", geometry->getTransformationMatrix());
 
     // enable culling

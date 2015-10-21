@@ -1,0 +1,6 @@
+*.sdf
+*.suo
+*.user
+mivt-log.html
+bin/*
+

@@ -1,17 +1,17 @@
-#include "rendererhelper.h"
+#include "renderbase.h"
 #include "shadermanager.h"
 #include "camera.h"
 
 namespace mivt {
-  RendererHelper::RendererHelper()
+  RenderBase::RenderBase()
   {
   }
 
-  RendererHelper::~RendererHelper()
+  RenderBase::~RenderBase()
   {
   }
 
-  void RendererHelper::setGlobalShaderParameters(tgt::Shader* shader, const tgt::Camera* camera, glm::ivec2 screenDim) {
+  void RenderBase::setGlobalShaderParameters(tgt::Shader* shader, const tgt::Camera* camera, glm::ivec2 screenDim) {
     shader->setIgnoreUniformLocationError(true);
 
     shader->setUniform("screenDim_", glm::vec2(screenDim));
@@ -32,6 +32,24 @@ namespace mivt {
     shader->setIgnoreUniformLocationError(false);
 
     LGL_ERROR;
+  }
+
+  void RenderBase::renderQuad() {
+    glDepthFunc(GL_ALWAYS);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.f, 0.f);
+    glVertex2f(-1.f, -1.f);
+
+    glTexCoord2f(1.f, 0.f);
+    glVertex2f(1.f, -1.f);
+
+    glTexCoord2f(1.f, 1.f);
+    glVertex2f(1.f, 1.f);
+
+    glTexCoord2f(0.f, 1.f);
+    glVertex2f(-1.f, 1.f);
+    glEnd();
+    glDepthFunc(GL_LESS);
   }
 }
 

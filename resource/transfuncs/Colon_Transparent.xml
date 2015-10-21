@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<PepperData version="1">
+    <TransFunc1D>
+        <gammaValue value="1" />
+        <domain x="-1024" y="-192" />
+        <ColorKeys>
+            <key>
+                <intensity value="-1024" />
+                <color r="0" g="0" b="0" />
+            </key>
+            <key>
+                <intensity value="-555" />
+                <color r="234" g="202" b="200" />
+            </key>
+            <key>
+                <intensity value="-513" />
+                <color r="224" g="182" b="131" />
+            </key>
+            <key>
+                <intensity value="-355" />
+                <color r="83" g="185" b="223" />
+            </key>
+            <key>
+                <intensity value="-314" />
+                <color r="98" g="176" b="255" />
+            </key>
+            <key>
+                <intensity value="-245" />
+                <color r="17" g="136" b="255" />
+            </key>
+            <key>
+                <intensity value="-192" />
+                <color r="128" g="255" b="255" />
+            </key>
+        </ColorKeys>
+        <AlphaKeys>
+            <key>
+                <intensity value="-1024" />
+                <alpha value="0" />
+            </key>
+            <key>
+                <intensity value="-555" />
+                <alpha value="0" />
+            </key>
+            <key>
+                <intensity value="-513" />
+                <alpha value="0.0708434" />
+            </key>
+            <key>
+                <intensity value="-355" />
+                <alpha value="0.0259322" />
+            </key>
+            <key>
+                <intensity value="-314" />
+                <alpha value="0.129819" />
+            </key>
+            <key>
+                <intensity value="-245" />
+                <alpha value="0.129819" />
+            </key>
+            <key>
+                <intensity value="-192" />
+                <alpha value="0" />
+            </key>
+        </AlphaKeys>
+    </TransFunc1D>
+</PepperData>

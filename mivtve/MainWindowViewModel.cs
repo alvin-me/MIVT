@@ -40,7 +40,7 @@ namespace mivtve
         _imageBuffer = new byte[width * height * 4];
 
         // create bitmap for control binding
-        PixelFormat pf = PixelFormats.Bgr24;
+        PixelFormat pf = PixelFormats.Rgb24;
         int stride = (width * pf.BitsPerPixel + 7) / 8;
         _imageBitmap = new WriteableBitmap(width, height, 96, 96, pf, null);
 
@@ -101,6 +101,7 @@ namespace mivtve
         }
         _engine.LoadVolume(rawFileName, format, size, spacing, interceptAndSlope[0], 
           interceptAndSlope[1], windowing[0], windowing[1]);
+        UpdateImage();
         LogInfo("Volume Loaded.", 5000);
       }, (x) =>
       {

@@ -33,6 +33,17 @@ namespace tgt {
   Camera::~Camera() {
   }
 
+  void Camera::reset(const vec3& position, const vec3& focus, const vec3& up,
+    float fovy, float ratio, float distn, float distf, ProjectionMode pm)
+  {
+    position_ = position;
+    focus_ = focus;
+    upVector_ = glm::normalize(up);
+    frust_ = Frustum(fovy, ratio, distn, distf);
+    projectionMode_ = pm;
+    viewMatrix_ = glm::lookAt(position, focus, up);
+  }
+
   bool Camera::operator==(const Camera& rhs) const {
     return (rhs.position_ == position_) && (rhs.focus_ == focus_) && (rhs.upVector_ == upVector_) && (rhs.frust_ == frust_) &&
       (rhs.projectionMode_ == projectionMode_);

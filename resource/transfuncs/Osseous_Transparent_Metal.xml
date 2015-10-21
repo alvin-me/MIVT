@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<PepperData version="1">
+    <TransFunc1D>
+        <gammaValue value="1" />
+        <domain x="-1024" y="1728" />
+        <ColorKeys>
+            <key>
+                <intensity value="-1024" />
+                <color r="0" g="0" b="0" />
+            </key>
+            <key>
+                <intensity value="151" />
+                <color r="128" g="128" b="128" />
+            </key>
+            <key>
+                <intensity value="826" />
+                <color r="255" g="255" b="255" />
+            </key>
+            <key>
+                <intensity value="1573" />
+                <color r="255" g="255" b="255" />
+            </key>
+            <key>
+                <intensity value="1728" />
+                <color r="252" g="252" b="252" />
+            </key>
+        </ColorKeys>
+        <AlphaKeys>
+            <key>
+                <intensity value="-1024" />
+                <alpha value="0" />
+            </key>
+            <key>
+                <intensity value="151" />
+                <alpha value="0" />
+            </key>
+            <key>
+                <intensity value="826" />
+                <alpha value="0.0265378" />
+            </key>
+            <key>
+                <intensity value="1573" />
+                <alpha value="0.0265378" />
+            </key>
+            <key>
+                <intensity value="1728" />
+                <alpha value="0" />
+            </key>
+        </AlphaKeys>
+    </TransFunc1D>
+</PepperData>

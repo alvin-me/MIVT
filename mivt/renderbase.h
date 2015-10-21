@@ -1,4 +1,5 @@
 #pragma once
+
 #include "tgt_math.h"
 
 namespace tgt {
@@ -7,12 +8,13 @@ namespace tgt {
 }
 
 namespace mivt {
-  class RendererHelper
+  class RenderBase
   {
   public:
-    RendererHelper();
-    ~RendererHelper();
+    RenderBase();
+    virtual ~RenderBase();
 
+  protected:
     /**
     * Sets some uniforms potentially needed by every shader.
     * @note This function should be called for every shader before every rendering pass!
@@ -21,7 +23,13 @@ namespace mivt {
     * @param camera camera whose position is passed to uniform cameraPosition_, also needed for passing matrices
     * @param screenDim dimensions of the render target's viewport
     */
-    static void setGlobalShaderParameters(tgt::Shader* shader, const tgt::Camera* camera, glm::ivec2 screenDim);
+    virtual void setGlobalShaderParameters(tgt::Shader* shader, const tgt::Camera* camera, glm::ivec2 screenDim);
+
+    /// Renders a screen-aligned quad with depth func GL_ALWAYS.
+    virtual void renderQuad();
+
+  protected:
+    static const std::string loggerCat_;
   };
 }
 

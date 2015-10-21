@@ -63,7 +63,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32d.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\lib\debug\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -84,7 +84,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\lib\release\$(TargetName).lib</ImportLibrary>
     </Link>
@@ -101,6 +101,12 @@
     <ClInclude Include="gpucapabilities.h" />
     <ClInclude Include="progressbar.h" />
     <ClInclude Include="rawvolumereader.h" />
+    <ClInclude Include="serializable.h" />
+    <ClInclude Include="serializationexceptions.h" />
+    <ClInclude Include="tgt_string.h" />
+    <ClInclude Include="transfunc.h" />
+    <ClInclude Include="transfunc1d.h" />
+    <ClInclude Include="transfuncmappingkey.h" />
     <ClInclude Include="volumehistogram.h" />
     <ClInclude Include="logmanager.h" />
     <ClInclude Include="matrixstack.h" />
@@ -129,6 +135,10 @@
     <ClInclude Include="volumereader.h" />
     <ClInclude Include="volumerepresentation.h" />
     <ClInclude Include="volumetexture.h" />
+    <ClInclude Include="xmldeserializer.h" />
+    <ClInclude Include="xmlserializationconstants.h" />
+    <ClInclude Include="xmlserializer.h" />
+    <ClInclude Include="xmlserializerbase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="boundingbox.cpp" />
@@ -141,6 +151,10 @@
     <ClCompile Include="gpucapabilities.cpp" />
     <ClCompile Include="progressbar.cpp" />
     <ClCompile Include="rawvolumereader.cpp" />
+    <ClCompile Include="tgt_string.cpp" />
+    <ClCompile Include="transfunc.cpp" />
+    <ClCompile Include="transfunc1d.cpp" />
+    <ClCompile Include="transfuncmappingkey.cpp" />
     <ClCompile Include="volumehistogram.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="matrixstack.cpp" />
@@ -165,6 +179,10 @@
     <ClCompile Include="volumereader.cpp" />
     <ClCompile Include="volumerepresentation.cpp" />
     <ClCompile Include="volumetexture.cpp" />
+    <ClCompile Include="xmldeserializer.cpp" />
+    <ClCompile Include="xmlserializationconstants.cpp" />
+    <ClCompile Include="xmlserializer.cpp" />
+    <ClCompile Include="xmlserializerbase.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

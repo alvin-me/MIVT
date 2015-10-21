@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<PepperData version="1">
+    <TransFunc1D>
+        <gammaValue value="1" />
+        <domain x="-1024" y="-475" />
+        <ColorKeys>
+            <key>
+                <intensity value="-1024" />
+                <color r="0" g="0" b="0" />
+            </key>
+            <key>
+                <intensity value="-693" />
+                <color r="154" g="211" b="218" />
+            </key>
+            <key>
+                <intensity value="-628" />
+                <color r="154" g="211" b="218" />
+            </key>
+            <key>
+                <intensity value="-617" />
+                <color r="154" g="211" b="218" />
+            </key>
+            <key>
+                <intensity value="-591" />
+                <color r="154" g="211" b="218" />
+            </key>
+            <key>
+                <intensity value="-565" />
+                <color r="154" g="211" b="218" />
+            </key>
+            <key>
+                <intensity value="-513" />
+                <color r="216" g="239" b="241" />
+            </key>
+            <key>
+                <intensity value="-488" />
+                <color r="222" g="241" b="243" />
+            </key>
+            <key>
+                <intensity value="-475" />
+                <color r="154" g="211" b="218" />
+            </key>
+        </ColorKeys>
+        <AlphaKeys>
+            <key>
+                <intensity value="-1024" />
+                <alpha value="0" />
+            </key>
+            <key>
+                <intensity value="-693" />
+                <alpha value="0" />
+            </key>
+            <key>
+                <intensity value="-628" />
+                <alpha value="0.0488601" />
+            </key>
+            <key>
+                <intensity value="-617" />
+                <alpha value="0.212501" />
+            </key>
+            <key>
+                <intensity value="-591" />
+                <alpha value="0.501295" />
+            </key>
+            <key>
+                <intensity value="-565" />
+                <alpha value="0.501295" />
+            </key>
+            <key>
+                <intensity value="-513" />
+                <alpha value="0.328842" />
+            </key>
+            <key>
+                <intensity value="-488" />
+                <alpha value="0.143689" />
+            </key>
+            <key>
+                <intensity value="-475" />
+                <alpha value="0" />
+            </key>
+        </AlphaKeys>
+    </TransFunc1D>
+</PepperData>

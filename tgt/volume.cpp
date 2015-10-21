@@ -328,11 +328,6 @@ namespace tgt {
     }
   }
 
-  template VolumePreview* Volume::getDerivedData<VolumePreview>();
-  template VolumeMinMax* Volume::getDerivedData<VolumeMinMax>();
-  template VolumeHistogramIntensity* Volume::getDerivedData<VolumeHistogramIntensity>();
-  template VolumeGL* Volume::getRepresentation<VolumeGL>();
-
   //------------------------------------------------------------------------------
 
   void oldVolumePosition(Volume* vh) {

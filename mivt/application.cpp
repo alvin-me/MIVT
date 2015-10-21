@@ -1,6 +1,6 @@
 #include "application.h"
 #include "offscreenrender.h"
-#include "raycaster.h"
+#include "rendervolume.h"
 #include "logmanager.h"
 #include "filesystem.h"
 #include "gpucapabilities.h"
@@ -8,6 +8,7 @@
 #include "matrixstack.h"
 #include "rawvolumereader.h"
 #include "volume.h"
+#include "transfunc1d.h"
 
 #include <iostream>
 
@@ -19,7 +20,8 @@ namespace mivt {
     : offscreen_(0)
     , logManager_(0)
     , volume_(0)
-    , raycaster_(0)
+    , transfunc_(0)
+    , render_(0)
   {
     Initialize();
   }
@@ -76,14 +78,18 @@ namespace mivt {
     ShdrMgr.addPath(tgt::FileSystem::cleanupPath(getBasePath("mivt/glsl/base")));
     ShdrMgr.addPath(tgt::FileSystem::cleanupPath(getBasePath("mivt/glsl/modules")));
 
-    raycaster_ = new Raycaster();
-    raycaster_->Initialize();
+    render_ = new RenderVolume();
+    render_->Initialize();
+
+    initTransfunc();
   }
 
   void Application::Deinitialize()
   {
-    raycaster_->Deinitialize();
-    DELPTR(raycaster_);
+    render_->Deinitialize();
+    DELPTR(render_);
+
+    DELPTR(volume_);
 
     tgt::GpuCapabilities::deinit();
     tgt::ShaderManager::deinit();
@@ -97,13 +103,13 @@ namespace mivt {
 
   void Application::GetPixels(unsigned char* buffer, int length) 
   {
-    raycaster_->GetPixels(buffer, length);
+    render_->GetPixels(buffer, length);
     //memset(buffer, 0, length * sizeof(unsigned char));
   }
 
   void Application::Resize(int width, int height) 
   {
-    raycaster_->Resize(glm::ivec2(width, height));
+    render_->Resize(glm::ivec2(width, height));
   }
 
   std::string Application::getBasePath(const std::string& filename) const {
@@ -153,17 +159,17 @@ namespace mivt {
 
   void Application::Rotate(int newPosX, int newPosY, int lastPosX, int lastPosY)
   {
-    raycaster_->Rotate(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
+    render_->Rotate(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
   }
 
   void Application::Zoom(int newPosX, int newPosY, int lastPosX, int lastPosY)
   {
-    raycaster_->Zoom(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
+    render_->Zoom(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
   }
 
   void Application::Pan(int newPosX, int newPosY, int lastPosX, int lastPosY)
   {
-    raycaster_->Pan(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
+    render_->Pan(glm::ivec2(newPosX, newPosY), glm::ivec2(lastPosX, lastPosY));
   }
 
   void Application::LoadVolume(const std::string &fileName,
@@ -196,5 +202,18 @@ namespace mivt {
     catch (std::bad_alloc&) {
       LERROR("bad allocation while reading file: " << fileName);
     }
+
+    if (volume_) {
+      render_->SetVolume(volume_);
+    }
+  }
+
+  void Application::initTransfunc()
+  {
+    transfunc_ = new tgt::TransFunc1D();
+    transfunc_->setToStandardFunc();
+    transfunc_->load(getResourcePath("transfuncs") + "\\Vascular_Leg_Runoff.xml");
+
+    render_->SetTransfunc(transfunc_);
   }
 }
