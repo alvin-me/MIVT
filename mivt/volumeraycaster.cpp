@@ -49,6 +49,10 @@ namespace mivt {
     DELPTR(preintegration_);
   }
 
+  std::string VolumeRaycaster::GetClassificationMode() {
+    return classificationMode_;
+  }
+
   std::string VolumeRaycaster::generateHeader() 
   {
     std::string headerSource = "#version 330\n";

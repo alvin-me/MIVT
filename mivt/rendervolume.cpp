@@ -39,6 +39,7 @@ namespace mivt {
 
     camera_ = new tgt::Camera(glm::vec3(0.f, 0.f, 3.5f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
     trackball_ = new tgt::Trackball(camera_);
+    trackball_->setSize(0.7f); // sets trackball sensitivity
 
     renderColorCube_ = new RenderColorCube();
     renderColorCube_->Initialize();
@@ -190,6 +191,15 @@ namespace mivt {
   void RenderVolume::SetTransfunc(tgt::TransFunc1D *transfunc)
   {
     transfunc_ = transfunc;
+  }
+
+  void RenderVolume::SetClassificationMode(const std::string& mode) 
+  {
+    if (classificationMode_ != mode) {
+      classificationMode_ = mode;
+      shader_->setFragmentHeader(generateHeader());
+      shader_->rebuild();
+    }
   }
 }
 

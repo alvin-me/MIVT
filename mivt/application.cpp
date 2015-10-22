@@ -210,10 +210,32 @@ namespace mivt {
 
   void Application::initTransfunc()
   {
+    transfuncName_ = "Vascular_Leg_Runoff";
     transfunc_ = new tgt::TransFunc1D();
     transfunc_->setToStandardFunc();
-    transfunc_->load(getResourcePath("transfuncs") + "\\Vascular_Leg_Runoff.xml");
+    transfunc_->load(getResourcePath("transfuncs") + "\\" + transfuncName_ + ".xml");
 
     render_->SetTransfunc(transfunc_);
+  }
+
+  void Application::SetTransfunc(const std::string& fileName)
+  {
+    transfuncName_ = fileName;
+    transfunc_->load(getResourcePath("transfuncs") + "\\" + fileName + ".xml");
+  }
+
+  std::string Application::GetTransfunc()
+  {
+    return transfuncName_;
+  }
+
+  void Application::SetClassificationMode(const std::string& mode)
+  {
+    render_->SetClassificationMode(mode);
+  }
+
+  std::string Application::GetClassificationMode()
+  {
+    return render_->GetClassificationMode();
   }
 }

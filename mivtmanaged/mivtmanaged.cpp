@@ -19,6 +19,12 @@ namespace mivtmanaged {
     return result;
   }
 
+  String^ ToManaged(const std::string& str)
+  {
+    return System::Runtime::InteropServices::Marshal::PtrToStringAnsi(
+      static_cast<IntPtr>(const_cast<char*>(str.c_str())));
+  }
+
   Application::Application() {
     local_ = new mivt::Application();
   }
@@ -63,6 +69,26 @@ namespace mivtmanaged {
     pin_ptr<float> pinned_spacing = &spacing[0];
     local_->LoadVolume(naviteFileName, nativeFormat, pinned_dimension, pinned_spacing,
       intercept, slope, windowWidth, windowCenter);
+  }
+
+  void Application::SetTransfunc(String^ fileName)
+  {
+    local_->SetTransfunc(FromManaged(fileName));
+  }
+
+  String^ Application::GetTransfunc()
+  {
+    return ToManaged(local_->GetTransfunc());
+  }
+
+  void Application::SetClassificationMode(String^ mode)
+  {
+    local_->SetClassificationMode(FromManaged(mode));
+  }
+
+  String^ Application::GetClassificationMode()
+  {
+    return ToManaged(local_->GetClassificationMode());
   }
 }
 

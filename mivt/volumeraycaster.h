@@ -33,6 +33,8 @@ namespace mivt {
     virtual void Initialize();
     virtual void Deinitialize();
 
+    std::string GetClassificationMode();
+
   protected:
     /**
     * This struct contains information about a volume. It is exclusively used

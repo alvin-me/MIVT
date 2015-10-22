@@ -38,6 +38,12 @@ namespace mivtmanaged {
       float windowWidth,
       float windowCenter);
 
+    void SetTransfunc(String^ fileName);
+    String^ GetTransfunc();
+
+    void SetClassificationMode(String^ mode);
+    String^ GetClassificationMode();
+
   private:
     mivt::Application *local_;
 	};

@@ -150,7 +150,7 @@ namespace mivt {
 
   const tgt::Texture* PreIntegration::getTexture(tgt::TransFunc1D *transFunc, float d)
   {
-    if (transFunc != transFunc_ || samplingStepSize_ != d) {
+    if (transFunc != transFunc_ || samplingStepSize_ != d || transFunc->isPreinteTextureInvalid()) {
       transFunc_ = transFunc;
       samplingStepSize_ = d;
 
@@ -162,6 +162,8 @@ namespace mivt {
 
       // prevent deleting twice
       tex_->setPixelData(0);
+
+      transFunc->validPreinteTexture();
     }
     return tex_;
   }

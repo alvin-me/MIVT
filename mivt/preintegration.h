@@ -18,7 +18,7 @@ namespace mivt {
     * @param resolution the resolution of the table in both directions (if <= 1 the resolution is set to 256)
     * @param useIntegral Use integral functions to compute pre-integration table, which is faster but not quite as accurate.
     */
-    PreIntegration(size_t resolution = 256, bool useIntegral = true);
+    PreIntegration(size_t resolution = 256, bool useIntegral = false);
     
     ~PreIntegration();
 

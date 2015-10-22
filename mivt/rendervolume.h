@@ -40,6 +40,8 @@ namespace mivt {
 
     void SetTransfunc(tgt::TransFunc1D *transfunc);
 
+    void SetClassificationMode(const std::string& mode);
+
   private:
     void Process();
 

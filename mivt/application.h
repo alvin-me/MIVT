@@ -43,6 +43,12 @@ namespace mivt {
       float windowWidth,
       float windowCenter);
 
+    MIVT_API void SetTransfunc(const std::string& fileName);
+    MIVT_API std::string GetTransfunc();
+
+    MIVT_API void SetClassificationMode(const std::string& mode);
+    MIVT_API std::string GetClassificationMode();
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;
@@ -56,6 +62,7 @@ namespace mivt {
     tgt::LogManager         *logManager_;
     tgt::Volume             *volume_;
     tgt::TransFunc1D        *transfunc_;
+    std::string             transfuncName_;
 
     RenderVolume            *render_;
 

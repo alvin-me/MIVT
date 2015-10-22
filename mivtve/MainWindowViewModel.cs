@@ -22,6 +22,8 @@ namespace mivtve
     private string                  _message;
     private string                  _messageBackup;
     private int                     _frameRate;
+    private string                  _classificationMode;
+    private string                  _protocalType;
 
     #endregion
 
@@ -32,6 +34,9 @@ namespace mivtve
       _engine = new mivtmanaged.Application();
 
       _mouseTracking = false;
+
+      ClassificationMode = _engine.GetClassificationMode();
+      ProtocalType = _engine.GetTransfunc();
 
       ImageSizeChanged = new RelayCommand((x) =>
       {
@@ -58,6 +63,13 @@ namespace mivtve
         {
 
         }
+      });
+
+      OpenTransfuncWindow = new RelayCommand((x) =>
+      {
+        TransfuncWindow window = new TransfuncWindow();
+        window.DataContext = this;
+        window.Show();
       });
 
       LoadVolume = new RelayCommand((x) =>
@@ -155,6 +167,45 @@ namespace mivtve
       }
     }
 
+    public mivtmanaged.Application Engine
+    {
+      get {return _engine;}
+    }
+
+    public string ClassificationMode
+    {
+      get { return _classificationMode; }
+      set
+      {
+        if (_classificationMode != value)
+        {
+          _classificationMode = value;
+
+          _engine.SetClassificationMode(_classificationMode);
+          UpdateImage();
+
+          OnPropertyChanged("ClassificationMode");
+        }
+      }
+    }
+
+    public string ProtocalType
+    {
+      get { return _protocalType; }
+      set
+      {
+        if (_protocalType != value)
+        {
+          _protocalType = value;
+
+          _engine.SetTransfunc(_protocalType);
+          UpdateImage();
+
+          OnPropertyChanged("ProtocalType");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -165,6 +216,8 @@ namespace mivtve
 
     public ICommand LoadVolume { get; private set; }
 
+    public ICommand OpenTransfuncWindow { get; private set; }
+
     #endregion
 
     #region Public Methods
@@ -174,6 +227,7 @@ namespace mivtve
       Stopwatch sw = new Stopwatch();
       sw.Start();
 
+      if (_imageBuffer == null) return;
       _engine.GetPixels(_imageBuffer);
 
       // copy image array into bitmap

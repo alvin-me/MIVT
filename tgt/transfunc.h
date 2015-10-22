@@ -41,6 +41,16 @@ namespace tgt {
     */
     TGT_API bool isTextureInvalid() const;
 
+    /**
+    * Returns whether the pre-integration texture will be updated on next access.
+    */
+    TGT_API bool isPreinteTextureInvalid() const;
+
+    /**
+    * Marks the pre-integration texture of the transfer function as valid,
+    */
+    TGT_API void validPreinteTexture();
+
     TGT_API virtual void setUniform(Shader* shader, const std::string& uniform, const std::string& uniformTex, const GLint texUnit);
 
     /**
@@ -192,6 +202,7 @@ namespace tgt {
     float gammaValue_;            ///< value for gamma correction
 
     bool textureInvalid_;         ///< indicates whether the transfer function texture has to be updated
+    bool preintTextureInvalid_;   ///< indicates whether the pre-intergration texture has to be updated
 
     static const std::string loggerCat_; ///< logger category
   };

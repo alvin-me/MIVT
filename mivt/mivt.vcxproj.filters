@@ -51,9 +51,6 @@
     <None Include="glsl\rc_basic.frag">
       <Filter>glsl</Filter>
     </None>
-    <None Include="glsl\rc_shadow.frag">
-      <Filter>glsl</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />

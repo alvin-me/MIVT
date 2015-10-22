@@ -53,7 +53,7 @@ vec4 rayTraversal(in vec3 first, in vec3 last, float entryDepth, float exitDepth
       // apply shading
       color.rgb = APPLY_SHADING(n,
         texToPhysical(samplePos, volumeStruct_),
-        volumeStruct_.lightPositionPhysical_,
+        volumeStruct_.cameraPositionPhysical_,  // lightPositionPhysical_
         volumeStruct_.cameraPositionPhysical_,
         color.rgb,
         color.rgb,

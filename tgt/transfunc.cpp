@@ -19,6 +19,7 @@ namespace tgt {
     , filter_(filter)
     , gammaValue_(1.f)
     , textureInvalid_(true)
+    , preintTextureInvalid_(true)
   {}
 
   TransFunc::~TransFunc() {
@@ -28,10 +29,19 @@ namespace tgt {
 
   void TransFunc::invalidateTexture() {
     textureInvalid_ = true;
+    preintTextureInvalid_ = true;
   }
 
   bool TransFunc::isTextureInvalid() const {
     return textureInvalid_;
+  }
+
+  bool TransFunc::isPreinteTextureInvalid() const {
+    return preintTextureInvalid_;
+  }
+
+  void TransFunc::validPreinteTexture() {
+    preintTextureInvalid_ = false;
   }
 
   void TransFunc::bind() {
