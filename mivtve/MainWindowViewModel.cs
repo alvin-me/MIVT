@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -23,7 +24,10 @@ namespace mivtve
     private string                  _messageBackup;
     private int                     _frameRate;
     private string                  _classificationMode;
-    private string                  _protocalType;
+    private int                     _protocalType;
+    private List<ProtocalData>      _protocalList;
+    private List<string>            _classificationModeList;
+
 
     #endregion
 
@@ -35,8 +39,37 @@ namespace mivtve
 
       _mouseTracking = false;
 
+      // initialize Protocal type list 
+      string basePath = System.AppDomain.CurrentDomain.BaseDirectory;
+      basePath += "..\\..\\resource\\transfuncs\\";
+      _protocalList = new List<ProtocalData>();
+      foreach (var f in Directory.GetFiles(basePath))
+      {
+        string filename = Path.GetFileNameWithoutExtension(f);
+        string photopath = Path.GetDirectoryName(f) + "\\thumbnails\\" + filename + ".bmp";
+        if (!File.Exists(photopath))
+          photopath = Path.GetDirectoryName(f) + "\\thumbnails\\custom.bmp";
+        _protocalList.Add(new ProtocalData { Name = filename, Photo = photopath });
+      }
+
+      string protocal = _engine.GetTransfunc();
+      for (int i = 0; i < _protocalList.Count; ++i )
+      {
+        if (_protocalList[i].Name == protocal)
+        {
+          ProtocalType = i;
+          break;
+        }
+      }
+
+      // initialize classificaiton mode list
+      _classificationModeList = new List<string>();
+      _classificationModeList.Add("transfer-function");
+      _classificationModeList.Add("pre-integrated");
+
       ClassificationMode = _engine.GetClassificationMode();
-      ProtocalType = _engine.GetTransfunc();
+
+      // initialize commands
 
       ImageSizeChanged = new RelayCommand((x) =>
       {
@@ -189,7 +222,7 @@ namespace mivtve
       }
     }
 
-    public string ProtocalType
+    public int ProtocalType
     {
       get { return _protocalType; }
       set
@@ -198,13 +231,17 @@ namespace mivtve
         {
           _protocalType = value;
 
-          _engine.SetTransfunc(_protocalType);
+          _engine.SetTransfunc(ProtocalList[_protocalType].Name);
           UpdateImage();
 
           OnPropertyChanged("ProtocalType");
         }
       }
     }
+
+    public List<ProtocalData> ProtocalList { get { return _protocalList; } }
+
+    public List<string> ClassificationModeList { get { return _classificationModeList; } }
 
     #endregion
 
@@ -303,5 +340,11 @@ namespace mivtve
     }
 
     #endregion
+
+    public class ProtocalData
+    {
+      public string Photo { get; set; }
+      public string Name { get; set; }
+    }
   }
 }

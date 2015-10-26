@@ -22,25 +22,6 @@ namespace mivtve
     public TransfuncWindow()
     {
       InitializeComponent();
-      InitializeControls();
-    }
-
-    public void InitializeControls()
-    {
-      this.cmbClassficationMode.Items.Add("transfer-function");
-      this.cmbClassficationMode.Items.Add("pre-integrated");
-
-      //string basePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-      string basePath = System.AppDomain.CurrentDomain.BaseDirectory;
-      basePath += "..\\..\\resource\\transfuncs\\";
-
-      List<String> fileList = new List<string>();
-      foreach(var f in Directory.GetFiles(basePath))
-      {
-        fileList.Add(Path.GetFileNameWithoutExtension(f));
-      }
-
-      this.cmbProtocalType.ItemsSource = fileList;
     }
   }
 }

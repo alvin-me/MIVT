@@ -1,7 +1,7 @@
 ﻿<Window x:Class="mivtve.TransfuncWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Transfer Function" Height="117" Width="346"
+        Title="Transfer Function" Height="117" Width="400"
         ResizeMode="NoResize" Icon="Resources/mapping-function.png" Topmost="True">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -11,18 +11,29 @@
             <ColumnDefinition Width="22" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Protocol Type:"/>
-        <ComboBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" x:Name="cmbProtocalType"
-                  SelectedValue="{Binding Path=ProtocalType, Mode=TwoWay}">
+        <ComboBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" x:Name="cmbProtocalType" Height="28"
+                  ItemsSource="{Binding Path=ProtocalList, Mode=OneTime}"
+                  SelectedIndex="{Binding Path=ProtocalType, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Photo}" Width="24" Height="24" Stretch="Fill" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Margin="4,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Classification Mode:"/>
         <ComboBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" x:Name="cmbClassficationMode"
+                  ItemsSource="{Binding Path=ClassificationModeList, Mode=OneTime}"
                   SelectedValue="{Binding Path=ClassificationMode, Mode=TwoWay}">
         </ComboBox>
     </Grid>
