@@ -14,6 +14,8 @@ namespace tgt {
 namespace mivt {
 
   class RenderColorCube;
+  class RenderBackground;
+  class RenderToScreen;
 
   class RenderVolume : public VolumeRaycaster
   {
@@ -49,6 +51,7 @@ namespace mivt {
     glm::vec2 scaleMouse(const glm::ivec2& coords, const glm::ivec2& viewport) const;
 
   private:
+    tgt::RenderTarget     *privatetarget_;
     tgt::RenderTarget     *output_;
     tgt::Shader           *shader_;
     tgt::Camera           *camera_;
@@ -57,7 +60,9 @@ namespace mivt {
     tgt::Volume           *volume_;
     tgt::TransFunc1D      *transfunc_;
 
-    RenderColorCube       *renderColorCube_;       
+    RenderColorCube       *renderColorCube_;    
+    RenderBackground      *renderBackground_;
+    RenderToScreen        *renderToScreen_;
   };
 
 }

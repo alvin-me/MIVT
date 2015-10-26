@@ -8,11 +8,14 @@
 #include "trianglemeshgeometry.h"
 #include "volume.h"
 #include "transfunc1d.h"
+#include "renderbackground.h"
+#include "rendertoscreen.h"
 
 namespace mivt {
 
   RenderVolume::RenderVolume()
     : VolumeRaycaster()
+    , privatetarget_(0)
     , output_(0)
     , shader_(0)
     , camera_(0)
@@ -21,6 +24,8 @@ namespace mivt {
     , trackball_(0)
     , volume_(0)
     , transfunc_(0)
+    , renderBackground_(0)
+    , renderToScreen_(0)
   {
   }
 
@@ -35,7 +40,10 @@ namespace mivt {
     shader_ = ShdrMgr.loadSeparate("passthrough.vert", "rc_basic.frag", generateHeader(), false);
 
     output_ = new tgt::RenderTarget();
-    output_->initialize(GL_RGB);
+    output_->initialize();
+
+    privatetarget_ = new tgt::RenderTarget();
+    privatetarget_->initialize();
 
     camera_ = new tgt::Camera(glm::vec3(0.f, 0.f, 3.5f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
     trackball_ = new tgt::Trackball(camera_);
@@ -44,16 +52,11 @@ namespace mivt {
     renderColorCube_ = new RenderColorCube();
     renderColorCube_->Initialize();
 
-    // temperory create a geometry.
-    const glm::vec3 texLlf(0, 0, 0);
-    const glm::vec3 texUrb(1, 1, 1);
-    proxyGeometry_ = tgt::TriangleMeshGeometryVec4Vec3::createCube(texLlf, texUrb, texLlf, texUrb, 1.0f);
+    renderBackground_ = new RenderBackground();
+    renderBackground_->Initialize();
 
-    glm::vec3 cubeSize = texUrb - texLlf;
-    float scale = 2.0f / glm::hmax(cubeSize);
-    glm::mat4 matrix = glm::translate(-0.5f * scale * cubeSize) *
-      glm::scale(glm::vec3(scale));
-    proxyGeometry_->transform(matrix);
+    renderToScreen_ = new RenderToScreen();
+    renderToScreen_->Initialize();
   }
 
   void RenderVolume::Deinitialize()
@@ -66,11 +69,20 @@ namespace mivt {
     output_->deinitialize();
     DELPTR(output_);
 
+    privatetarget_->deinitialize();
+    DELPTR(privatetarget_);
+
     DELPTR(camera_);
     DELPTR(trackball_);
 
     renderColorCube_->Deinitialize();
     DELPTR(renderColorCube_);
+
+    renderBackground_->Deinitialize();
+    DELPTR(renderBackground_);
+
+    renderToScreen_->Deinitialize();
+    DELPTR(renderToScreen_);
 
   }
 
@@ -80,27 +92,31 @@ namespace mivt {
       return;
 
     Process();
-    output_->readColorBuffer(buffer, length);
+    output_->readColorBuffer<unsigned char>(buffer, length);
   }
 
   void RenderVolume::Resize(const glm::ivec2& newSize)
   {
+    privatetarget_->resize(newSize);
     output_->resize(newSize);
     renderColorCube_->Resize(newSize);
+    renderBackground_->Resize(newSize);
+    renderToScreen_->Resize(newSize);
   }
 
   void RenderVolume::Process()
   {
     // create front & back color cube texture.
-    renderColorCube_->Process(proxyGeometry_, camera_);
+    if (proxyGeometry_)
+      renderColorCube_->Process(proxyGeometry_, camera_);
 
-    output_->activateTarget();
-    output_->clearTarget();
+    privatetarget_->activateTarget();
+    privatetarget_->clearTarget();
 
     if (volume_) {
       // activate shader and set common uniforms
       shader_->activate();
-      setGlobalShaderParameters(shader_, camera_, output_->getSize());
+      setGlobalShaderParameters(shader_, camera_, privatetarget_->getSize());
       LGL_ERROR;
 
       // bind entry and exit params and pass texture units to the shader
@@ -140,6 +156,16 @@ namespace mivt {
       shader_->deactivate();
     }
 
+    privatetarget_->deactivateTarget();
+
+    glFinish();
+
+    // blend with background
+    renderBackground_->Process(privatetarget_);
+
+    // copy to the output
+    output_->activateTarget();
+    renderToScreen_->Process(renderBackground_->GetOutput());
     output_->deactivateTarget();
 
     tgt::TextureUnit::setZeroUnit();

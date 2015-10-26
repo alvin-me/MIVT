@@ -69,6 +69,8 @@ vec4 rayTraversal(in vec3 first, in vec3 last, float entryDepth, float exitDepth
     finished = finished || (t > tEnd);
   } END_WHILE
 
+
+    gl_FragDepth = 1;
   return result;
 }
 

@@ -276,6 +276,12 @@ namespace tgt {
     TGT_API GLubyte* downloadTextureToBuffer(GLint format, GLenum dataType) const;
 
     /**
+    * Download texture from the GPU to a already allocated buffer with
+    * the passed format/data type and the texture's dimensions.
+    */
+    TGT_API void downloadTextureToBuffer(GLint format, GLenum dataType, GLubyte* pixels, size_t numBytesAllocated) const;
+
+    /**
     * Returns, wether texture is a texture rectangle (GL_TEXTURE_RECTANGLE_ARB)
     */
     TGT_API bool isTextureRectangle() const;

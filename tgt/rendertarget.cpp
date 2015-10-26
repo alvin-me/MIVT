@@ -144,7 +144,8 @@ namespace tgt {
     if (!isActive())
       LERROR("clearTarget() called on inactive outport");
     else {
-      glClearColor(0.f, 0.f, 0.f, 1.f);
+      glClearColor(0.f, 0.f, 0.f, 0.f);
+      glClearDepth(1.0);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
   }

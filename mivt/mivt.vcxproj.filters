@@ -51,6 +51,9 @@
     <None Include="glsl\rc_basic.frag">
       <Filter>glsl</Filter>
     </None>
+    <None Include="glsl\base\background.frag">
+      <Filter>glsl\base</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
@@ -60,6 +63,7 @@
     <ClCompile Include="renderbase.cpp" />
     <ClCompile Include="volumeraycaster.cpp" />
     <ClCompile Include="preintegration.cpp" />
+    <ClCompile Include="renderbackground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -70,5 +74,6 @@
     <ClInclude Include="renderbase.h" />
     <ClInclude Include="volumeraycaster.h" />
     <ClInclude Include="preintegration.h" />
+    <ClInclude Include="renderbackground.h" />
   </ItemGroup>
 </Project>

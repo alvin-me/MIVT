@@ -77,6 +77,9 @@ namespace tgt {
     template<typename T>
     T* readColorBuffer() throw (Exception);
 
+    template<typename T>
+    void readColorBuffer(T* buffer, size_t numBytesAllocated) throw (Exception);
+
     TGT_API void readColorBuffer(uint8_t* buffer, size_t numBytesAllocated) throw (Exception);
 
   protected:
@@ -112,7 +115,7 @@ namespace tgt {
 
     GLubyte* pixels = 0;
     try {
-      pixels = getColorTexture()->downloadTextureToBuffer(GL_RGBA, dataType);
+      pixels = getColorTexture()->downloadTextureToBuffer(GL_RGB, dataType);
     }
     catch (std::bad_alloc&) {
       throw Exception("RenderTarget::readColorBuffer(): bad allocation");
@@ -123,6 +126,33 @@ namespace tgt {
       return reinterpret_cast<T*>(pixels);
     else
       throw Exception("RenderTarget::readColorBuffer(): failed to download texture");
+  }
+
+  template<typename T>
+  void RenderTarget::readColorBuffer(T* pixels, size_t numBytesAllocated) throw (Exception) {
+    if (!getColorTexture()) {
+      throw Exception("RenderTarget::readColorBuffer() called on an empty render target");
+    }
+
+    // determine OpenGL data type from template parameter
+    GLenum dataType;
+    if (typeid(T) == typeid(uint8_t))
+      dataType = GL_UNSIGNED_BYTE;
+    else if (typeid(T) == typeid(uint16_t))
+      dataType = GL_UNSIGNED_SHORT;
+    else if (typeid(T) == typeid(float))
+      dataType = GL_FLOAT;
+    else
+      throw Exception("RenderTarget::readColorBuffer(): unsupported data type. "
+      "Expected: uint8_t, uint16_t, float");
+
+    try {
+      getColorTexture()->downloadTextureToBuffer(GL_RGB, dataType, pixels, numBytesAllocated);
+    }
+    catch (std::bad_alloc&) {
+      throw Exception("RenderTarget::readColorBuffer(): bad allocation");
+    }
+    LGL_ERROR;
   }
 
 } // end namespace tgt

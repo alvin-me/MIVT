@@ -378,6 +378,18 @@ namespace tgt {
     return pixels;
   }
 
+  void Texture::downloadTextureToBuffer(GLint format, GLenum dataType, GLubyte* pixels, size_t numBytesAllocated) const {
+    bind();
+
+    size_t arraySize = glm::hmul(dimensions_) * calcBpp(format, dataType);
+    if (numBytesAllocated < arraySize) {
+      LWARNING("downloadTextureToBuffer: allocated buffer is too small");
+    }
+    else {
+      glGetTexImage(type_, 0, format, dataType, pixels);
+    }
+  }
+
   bool Texture::isTextureRectangle() const {
 #ifdef GL_TEXTURE_RECTANGLE_ARB
     return (type_ == GL_TEXTURE_RECTANGLE_ARB);

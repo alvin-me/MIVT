@@ -23,7 +23,7 @@ namespace mivt {
     * @param camera camera whose position is passed to uniform cameraPosition_, also needed for passing matrices
     * @param screenDim dimensions of the render target's viewport
     */
-    virtual void setGlobalShaderParameters(tgt::Shader* shader, const tgt::Camera* camera, glm::ivec2 screenDim);
+    virtual void setGlobalShaderParameters(tgt::Shader* shader, const tgt::Camera* camera = 0, glm::ivec2 screenDim = glm::ivec2(-1));
 
     /// Renders a screen-aligned quad with depth func GL_ALWAYS.
     virtual void renderQuad();
