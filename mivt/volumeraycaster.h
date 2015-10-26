@@ -164,9 +164,8 @@ namespace mivt {
     std::string shadeMode_;                   ///< What shading method should be applied
     std::string compositingMode_;             ///< What compositing mode should be applied
 
-    //int interactionCoarseness_;               ///< RenderPorts are resized to size_/interactionCoarseness_ in interactionmode
+    int interactionCoarseness_;               ///< RenderPorts are resized to size_/interactionCoarseness_ in interactionmode
     //float interactionQuality_;
-    //bool useInterpolationCoarseness_;
     //bool interactionMode_;
 
     PreIntegration *preintegration_;     ///< compute and cache pre-integration table

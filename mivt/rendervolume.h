@@ -28,7 +28,7 @@ namespace mivt {
 
     void Deinitialize();
 
-    void GetPixels(unsigned char* buffer, int length);
+    void GetPixels(unsigned char* buffer, int length, bool downsampling = false);
 
     void Resize(const glm::ivec2& newSize);
 
@@ -45,13 +45,14 @@ namespace mivt {
     void SetClassificationMode(const std::string& mode);
 
   private:
-    void Process();
+    void Process(bool downsampling);
 
     /// scale screen-coodinates of mouse to intervall [-1, 1]x[-1, 1]
     glm::vec2 scaleMouse(const glm::ivec2& coords, const glm::ivec2& viewport) const;
 
   private:
     tgt::RenderTarget     *privatetarget_;
+    tgt::RenderTarget     *smallprivatetarget_;
     tgt::RenderTarget     *output_;
     tgt::Shader           *shader_;
     tgt::Camera           *camera_;

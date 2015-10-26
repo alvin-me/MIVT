@@ -19,6 +19,8 @@ namespace mivtmanaged {
 
     ~Application();
 
+    void GetPixels(array<unsigned char>^ buffer, bool downsampling);
+
     void GetPixels(array<unsigned char>^ buffer);
 
     void Resize(int width, int height);

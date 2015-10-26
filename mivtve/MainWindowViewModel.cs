@@ -222,13 +222,13 @@ namespace mivtve
 
     #region Public Methods
 
-    private void UpdateImage()
+    private void UpdateImage(bool downsampling = false)
     {
       Stopwatch sw = new Stopwatch();
       sw.Start();
 
       if (_imageBuffer == null) return;
-      _engine.GetPixels(_imageBuffer);
+      _engine.GetPixels(_imageBuffer, downsampling);
 
       // copy image array into bitmap
       int stride = (_imageBitmap.PixelWidth * _imageBitmap.Format.BitsPerPixel + 7) / 8;
@@ -249,6 +249,7 @@ namespace mivtve
     public void ImageMouseUp(object sender, MouseButtonEventArgs e)
     {
       _mouseTracking = false;
+      UpdateImage();
     }
 
     public void ImageMouseMove(object sender, MouseEventArgs e)
@@ -261,19 +262,19 @@ namespace mivtve
         {
           _engine.Rotate((int)mousePos.X, (int)mousePos.Y, 
             (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
-          UpdateImage();
+          UpdateImage(true);
         }
         else if(e.RightButton == MouseButtonState.Pressed)
         {
           _engine.Zoom((int)mousePos.X, (int)mousePos.Y, 
             (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
-          UpdateImage();
+          UpdateImage(true);
         }
         else if(e.MiddleButton == MouseButtonState.Pressed)
         {
           _engine.Pan((int)mousePos.X, (int)mousePos.Y, 
             (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
-          UpdateImage();
+          UpdateImage(true);
         }
 
         _lastMousePosition = mousePos;

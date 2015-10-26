@@ -29,9 +29,8 @@ namespace mivt {
     , shadeMode_("phong")
     , compositingMode_("dvr")
     , preintegration_(0)
-    //, interactionCoarseness_(3) // 1~8
+    , interactionCoarseness_(3) // 1~8
     //, interactionQuality_(1.f)
-    //, useInterpolationCoarseness_(false)
     //, interactionMode_(false)
   {
   }

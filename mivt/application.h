@@ -24,7 +24,7 @@ namespace mivt {
 
     MIVT_API void Deinitialize();
 
-    MIVT_API void GetPixels(unsigned char* buffer, int length);
+    MIVT_API void GetPixels(unsigned char* buffer, int length, bool downsampling = false);
 
     MIVT_API void Resize(int width, int height);
 

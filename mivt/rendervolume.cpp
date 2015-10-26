@@ -16,6 +16,7 @@ namespace mivt {
   RenderVolume::RenderVolume()
     : VolumeRaycaster()
     , privatetarget_(0)
+    , smallprivatetarget_(0)
     , output_(0)
     , shader_(0)
     , camera_(0)
@@ -45,6 +46,9 @@ namespace mivt {
     privatetarget_ = new tgt::RenderTarget();
     privatetarget_->initialize();
 
+    smallprivatetarget_ = new tgt::RenderTarget();
+    smallprivatetarget_->initialize();
+
     camera_ = new tgt::Camera(glm::vec3(0.f, 0.f, 3.5f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
     trackball_ = new tgt::Trackball(camera_);
     trackball_->setSize(0.7f); // sets trackball sensitivity
@@ -72,6 +76,9 @@ namespace mivt {
     privatetarget_->deinitialize();
     DELPTR(privatetarget_);
 
+    smallprivatetarget_->deinitialize();
+    DELPTR(smallprivatetarget_);
+
     DELPTR(camera_);
     DELPTR(trackball_);
 
@@ -86,37 +93,52 @@ namespace mivt {
 
   }
 
-  void RenderVolume::GetPixels(unsigned char* buffer, int length)
+  void RenderVolume::GetPixels(unsigned char* buffer, int length, bool downsampling)
   {
     if (!buffer)
       return;
 
-    Process();
+    Process(downsampling);
     output_->readColorBuffer<unsigned char>(buffer, length);
   }
 
   void RenderVolume::Resize(const glm::ivec2& newSize)
   {
     privatetarget_->resize(newSize);
+    smallprivatetarget_->resize(newSize / interactionCoarseness_);
     output_->resize(newSize);
     renderColorCube_->Resize(newSize);
     renderBackground_->Resize(newSize);
     renderToScreen_->Resize(newSize);
   }
 
-  void RenderVolume::Process()
+  void RenderVolume::Process(bool downsampling)
   {
     // create front & back color cube texture.
     if (proxyGeometry_)
       renderColorCube_->Process(proxyGeometry_, camera_);
 
-    privatetarget_->activateTarget();
-    privatetarget_->clearTarget();
+
+    const bool renderCoarse = downsampling && interactionCoarseness_ > 1;
+    glm::ivec2 renderSize;
+    tgt::RenderTarget* renderDestination;
+    if (renderCoarse) {
+      renderSize = smallprivatetarget_->getSize();
+      renderDestination = smallprivatetarget_;
+    }
+    else {
+      renderSize = privatetarget_->getSize();
+      renderDestination = privatetarget_;
+    }
+
+
+    renderDestination->activateTarget();
+    renderDestination->clearTarget();
 
     if (volume_) {
       // activate shader and set common uniforms
       shader_->activate();
-      setGlobalShaderParameters(shader_, camera_, privatetarget_->getSize());
+      setGlobalShaderParameters(shader_, camera_, renderSize);
       LGL_ERROR;
 
       // bind entry and exit params and pass texture units to the shader
@@ -156,12 +178,12 @@ namespace mivt {
       shader_->deactivate();
     }
 
-    privatetarget_->deactivateTarget();
+    renderDestination->deactivateTarget();
 
     glFinish();
 
     // blend with background
-    renderBackground_->Process(privatetarget_);
+    renderBackground_->Process(renderDestination);
 
     // copy to the output
     output_->activateTarget();

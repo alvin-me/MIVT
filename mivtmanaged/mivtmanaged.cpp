@@ -33,7 +33,12 @@ namespace mivtmanaged {
     delete local_;
   }
 
-  void Application::GetPixels(array < unsigned char> ^ buffer) {
+  void Application::GetPixels(array < unsigned char> ^ buffer, bool downsampling) {
+    pin_ptr<unsigned char> pinned_buffer = &buffer[0];
+    local_->GetPixels(pinned_buffer, buffer->Length, downsampling);
+  }
+
+  void Application::GetPixels(array<unsigned char>^ buffer) {
     pin_ptr<unsigned char> pinned_buffer = &buffer[0];
     local_->GetPixels(pinned_buffer, buffer->Length);
   }

@@ -101,10 +101,9 @@ namespace mivt {
     DELPTR(offscreen_);
   }
 
-  void Application::GetPixels(unsigned char* buffer, int length) 
+  void Application::GetPixels(unsigned char* buffer, int length, bool downsampling)
   {
-    render_->GetPixels(buffer, length);
-    //memset(buffer, 0, length * sizeof(unsigned char));
+    render_->GetPixels(buffer, length, downsampling);
   }
 
   void Application::Resize(int width, int height) 
