@@ -23,5 +23,12 @@ namespace mivtve
     {
       InitializeComponent();
     }
+
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    {
+      //base.OnClosing(e);
+      this.Visibility = Visibility.Hidden;
+      e.Cancel = true;
+    }
   }
 }

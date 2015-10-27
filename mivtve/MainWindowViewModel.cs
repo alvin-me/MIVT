@@ -27,7 +27,7 @@ namespace mivtve
     private int                     _protocalType;
     private List<ProtocalData>      _protocalList;
     private List<string>            _classificationModeList;
-
+    TransfuncWindow                 _transfuncWindow = null;
 
     #endregion
 
@@ -91,7 +91,7 @@ namespace mivtve
 
       OpenSettingWindow = new RelayCommand((x) =>
       {
-        SettingWindow window = new SettingWindow();
+        var window = new SettingWindow();
         if (window.ShowDialog() == true)
         {
 
@@ -100,9 +100,12 @@ namespace mivtve
 
       OpenTransfuncWindow = new RelayCommand((x) =>
       {
-        TransfuncWindow window = new TransfuncWindow();
-        window.DataContext = this;
-        window.Show();
+        if (_transfuncWindow == null)
+        {
+          _transfuncWindow = new TransfuncWindow();
+          _transfuncWindow.DataContext = this;
+        }
+        _transfuncWindow.Show();
       });
 
       LoadVolume = new RelayCommand((x) =>
