@@ -160,6 +160,12 @@ namespace tgt {
     factor = 1.f / factor;
     camera_->setPosition((1.f - factor) * camera_->getFocus()
       + factor * camera_->getPosition());
+
+    // restrict distance within specidifed range
+    if (getCenterDistance() < getMinValue())
+      zoomAbsolute(getMinValue());
+    if (getCenterDistance() > getMaxValue())
+      zoomAbsolute(getMaxValue());
   }
 
   void Trackball::zoom(const vec2& newMouse, const vec2& lastMouse, const vec2& mouseZoomInDirection) {
@@ -207,15 +213,28 @@ namespace tgt {
       return;
     }
 
-    // adapt only maxValue, far plane and trackball center if there was no previous scene geometry
-    float newMaxDist = 250.f * glm::hmax(bound.diagonal());
-    float newMinDist = (nearDist > 0.f ? nearDist : newMaxDist / 50000.f);
-    getCamera()->setNearDist(newMinDist);
-    getCamera()->setFarDist(newMaxDist + glm::hmax(bound.diagonal()));
+    float oldRelCamDist = (camera_->getFocalLength() - getMinValue()) / (getMaxValue() - getMinValue());
+    float maxSideLength = glm::hmax(bound.diagonal());
+
+    // The factor 250 is derived from an earlier constant maxDist of 500 and a constant maximum cubeSize element of 2
+    float newMaxDist = 250.f * maxSideLength;
+    setMaxValue(newMaxDist);
+
+    if (nearDist > 0.f) {
+      camera_->setNearDist(nearDist);
+      setMinValue(nearDist);
+    }
+    else
+      setMinValue(newMaxDist / 50000.f);
+
+    float newAbsCamDist = getMinValue() + oldRelCamDist * (getMaxValue() - getMinValue());
 
     setCenter(bound.center());
-    setMinValue(newMinDist);
-    setMaxValue(newMaxDist);
+    glm::vec3 newFocus = bound.center();
+    glm::vec3 newPos = bound.center() - camera_->getLook() * newAbsCamDist;
+    camera_->setFocus(newFocus);
+    camera_->setPosition(newPos);
+    camera_->setFarDist(newMaxDist + maxSideLength);
   }
 
 } // end namespace tgt

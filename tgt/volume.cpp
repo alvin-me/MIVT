@@ -332,11 +332,7 @@ namespace tgt {
 
   void oldVolumePosition(Volume* vh) {
     glm::vec3 cubeSize = glm::vec3(vh->getDimensions()) * vh->getSpacing();
-    float scale = 2.0f / glm::hmax(cubeSize);
-
-    glm::mat4 matrix = glm::translate(-0.5f * scale * cubeSize) *
-      glm::scale(glm::vec3(scale));
-    
+    glm::mat4 matrix = glm::translate(-0.5f * cubeSize);
     vh->setPhysicalToWorldMatrix(matrix);
   }
 

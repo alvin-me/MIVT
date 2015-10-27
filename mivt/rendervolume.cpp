@@ -228,6 +228,12 @@ namespace mivt {
     // reset camera
     camera_->reset(glm::vec3(0.f, 0.f, 3.5f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
+    // 
+    tgt::TriangleMeshGeometryVec4Vec3* boundingbox = tgt::TriangleMeshGeometryVec4Vec3::createCube(volume->getLLF(),
+      volume->getURB(), glm::vec3(0.f), glm::vec3(1.f), 1.0f);
+    boundingbox->transform(volume->getPhysicalToWorldMatrix());
+    trackball_->adaptInteractionToScene(boundingbox->getBoundingBox(), glm::hmin(volume->getSpacing()));
+
     // generate geometry
     const glm::vec3 texLlf(0, 0, 0);
     const glm::vec3 texUrb(1, 1, 1);

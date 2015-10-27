@@ -13,6 +13,7 @@
   <ItemGroup>
     <None Include="glsl\base\background.frag" />
     <None Include="glsl\base\copyimage.frag" />
+    <None Include="glsl\base\eep_insidevolume.frag" />
     <None Include="glsl\base\eep_simple.frag" />
     <None Include="glsl\base\eep_simple.vert" />
     <None Include="glsl\base\passthrough.vert" />

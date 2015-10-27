@@ -54,6 +54,9 @@
     <None Include="glsl\base\background.frag">
       <Filter>glsl\base</Filter>
     </None>
+    <None Include="glsl\base\eep_insidevolume.frag">
+      <Filter>glsl\base</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />

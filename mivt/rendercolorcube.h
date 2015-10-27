@@ -32,10 +32,18 @@ namespace mivt {
       float clearDepth,
       GLenum cullFace);
 
+    void fillEntryPoints(tgt::RenderTarget *firstBackTarget, 
+      tgt::RenderTarget *firstFrontTarget, 
+      tgt::RenderTarget *output, 
+      const tgt::Geometry* geometry,
+      tgt::Camera *camera);
+
   private:
-    tgt::RenderTarget  *frontFace_;
-    tgt::RenderTarget  *backFace_;
+    tgt::RenderTarget  *frontTarget_;
+    tgt::RenderTarget  *backTarget_;
+    tgt::RenderTarget  *tmpTarget_;
     tgt::Shader        *shader_;
+    tgt::Shader        *shaderInsideVolume_;
   };
 }
 

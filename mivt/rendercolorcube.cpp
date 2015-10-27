@@ -7,9 +7,11 @@
 
 namespace mivt {
   RenderColorCube::RenderColorCube()
-    : frontFace_(0)
-    , backFace_(0)
+    : frontTarget_(0)
+    , backTarget_(0)
+    , tmpTarget_(0)
     , shader_(0)
+    , shaderInsideVolume_(0)
   {
   }
 
@@ -19,23 +21,33 @@ namespace mivt {
 
   void RenderColorCube::Initialize()
   {
-    frontFace_ = new tgt::RenderTarget();
-    frontFace_->initialize();
-    backFace_ = new tgt::RenderTarget();
-    backFace_->initialize();
+    frontTarget_ = new tgt::RenderTarget();
+    frontTarget_->initialize();
+    backTarget_ = new tgt::RenderTarget();
+    backTarget_->initialize();
+    tmpTarget_ = new tgt::RenderTarget();
+    tmpTarget_->initialize();
 
     shader_ = ShdrMgr.load("eep_simple", "", false);
+    shaderInsideVolume_ = ShdrMgr.loadSeparate("passthrough.vert", "eep_insidevolume.frag", "", false);
   }
 
   void RenderColorCube::Deinitialize()
   {
-    frontFace_->deinitialize();
-    DELPTR(frontFace_);
-    backFace_->deinitialize();
-    DELPTR(backFace_);
+    frontTarget_->deinitialize();
+    DELPTR(frontTarget_);
+
+    backTarget_->deinitialize();
+    DELPTR(backTarget_);
+
+    tmpTarget_->deinitialize();
+    DELPTR(tmpTarget_);
 
     ShdrMgr.dispose(shader_);
     shader_ = 0;
+
+    ShdrMgr.dispose(shaderInsideVolume_);
+    shaderInsideVolume_ = 0;
   }
 
   void RenderColorCube::Process(tgt::Geometry *geometry, tgt::Camera *camera)
@@ -43,20 +55,28 @@ namespace mivt {
     // set modelview and projection matrices
     MatStack.matrixMode(tgt::MatrixStack::PROJECTION);
     MatStack.pushMatrix();
-    MatStack.loadMatrix(camera->getProjectionMatrix(frontFace_->getSize()));
+    MatStack.loadMatrix(camera->getProjectionMatrix(frontTarget_->getSize()));
 
     MatStack.matrixMode(tgt::MatrixStack::MODELVIEW);
     MatStack.pushMatrix();
     MatStack.loadMatrix(camera->getViewMatrix());
 
     // render front texture
-    if (frontFace_) {
-      renderGeometry(geometry, camera, frontFace_, GL_LESS, 1.0f, GL_BACK);
+    if (frontTarget_) {
+      // simple implement
+      //glEnable(GL_DEPTH_CLAMP);
+      //renderGeometry(geometry, camera, frontTarget_, GL_LESS, 1.0f, GL_BACK);
+      //glDisable(GL_DEPTH_CLAMP);
+
+      // improved method for situation when camera inside volume.
+      renderGeometry(geometry, camera, tmpTarget_, GL_LESS, 1.0f, GL_BACK); // render first front face
+      renderGeometry(geometry, camera, backTarget_, GL_LESS, 1.0f, GL_FRONT); // render first back face
+      fillEntryPoints(backTarget_, tmpTarget_, frontTarget_, geometry, camera);
     }
 
     // render back texture
-    if (backFace_) {
-      renderGeometry(geometry, camera, backFace_, GL_GREATER, 0.0f, GL_FRONT);
+    if (backTarget_) {
+      renderGeometry(geometry, camera, backTarget_, GL_GREATER, 0.0f, GL_FRONT);
     }
 
     // restore OpenGL state
@@ -71,18 +91,19 @@ namespace mivt {
 
   void RenderColorCube::Resize(const glm::ivec2& size)
   {
-    frontFace_->resize(size);
-    backFace_->resize(size);
+    frontTarget_->resize(size);
+    backTarget_->resize(size);
+    tmpTarget_->resize(size);
   }
 
   tgt::RenderTarget* RenderColorCube::GetFrontFace()
   {
-    return frontFace_;
+    return frontTarget_;
   }
 
   tgt::RenderTarget* RenderColorCube::GetBackFace()
   {
-    return backFace_;
+    return backTarget_;
   }
 
   void RenderColorCube::renderGeometry(const tgt::Geometry* geometry,
@@ -124,5 +145,64 @@ namespace mivt {
     LGL_ERROR;
   }
 
+  void RenderColorCube::fillEntryPoints(tgt::RenderTarget *firstBackTarget,
+    tgt::RenderTarget *firstFrontTarget,
+    tgt::RenderTarget *output,
+    const tgt::Geometry *geometry,
+    tgt::Camera *camera)
+  {
+    MatStack.matrixMode(tgt::MatrixStack::PROJECTION);
+    MatStack.pushMatrix();
+    MatStack.loadIdentity();
+
+    MatStack.matrixMode(tgt::MatrixStack::MODELVIEW);
+    MatStack.pushMatrix();
+    MatStack.loadIdentity();
+
+    shaderInsideVolume_->activate();
+    setGlobalShaderParameters(shaderInsideVolume_, camera, output->getSize());
+
+    // bind texture
+    tgt::TextureUnit firstFrontUnit, firstFrontDepthUnit, firstBackUnit, firstBackDepthUnit;
+
+    // bind firstFront points texture and depth texture
+    firstFrontTarget->bindColorTexture(firstFrontUnit.getEnum());
+    shaderInsideVolume_->setUniform("firstFront_", firstFrontUnit.getUnitNumber());
+    firstFrontTarget->bindDepthTexture(firstFrontDepthUnit.getEnum());
+    shaderInsideVolume_->setUniform("firstFrontDepth_", firstFrontDepthUnit.getUnitNumber());
+    firstFrontTarget->setTextureParameters(shaderInsideVolume_, "firstFrontParameters_");
+
+    // bind firstBack points texture
+    firstBackTarget->bindColorTexture(firstBackUnit.getEnum());
+    shaderInsideVolume_->setUniform("firstBack_", firstBackUnit.getUnitNumber());
+    firstBackTarget->bindDepthTexture(firstBackDepthUnit.getEnum());
+    //shaderInsideVolume_->setUniform("firstBackDepth_", firstBackDepthUnit.getUnitNumber());
+    firstBackTarget->setTextureParameters(shaderInsideVolume_, "firstBackParameters_");
+
+    shaderInsideVolume_->setUniform("near_", camera->getNearDist());
+    shaderInsideVolume_->setUniform("far_", camera->getFarDist());
+
+    tgt::BoundingBox bounds = geometry->getBoundingBox(false);
+    shaderInsideVolume_->setUniform("llf_", bounds.getLLF());
+    shaderInsideVolume_->setUniform("urb_", bounds.getURB());
+
+    glm::mat4 worldToTextureMatrix = glm::inverse(geometry->getTransformationMatrix());
+    shaderInsideVolume_->setUniform("worldToTexture_", worldToTextureMatrix);
+
+    output->activateTarget();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // render screen aligned quad
+    renderQuad();
+
+    shaderInsideVolume_->deactivate();
+    output->deactivateTarget();
+
+    MatStack.matrixMode(tgt::MatrixStack::PROJECTION);
+    MatStack.popMatrix();
+    MatStack.matrixMode(tgt::MatrixStack::MODELVIEW);
+    MatStack.popMatrix();
+    LGL_ERROR;
+  }
 }
 
