@@ -162,6 +162,27 @@
     <ClInclude Include="xmlserializerbase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gdcmvolumereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dicomdict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dicomdictentry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dicominfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metadatabase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metadatacontainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="primitivemetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tgt_gl.cpp">
@@ -288,6 +309,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="xmlserializerbase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gdcmvolumereader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dicomdict.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dicomdictentry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dicominfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="metadatacontainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

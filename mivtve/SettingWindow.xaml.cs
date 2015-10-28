@@ -64,7 +64,9 @@ namespace mivtve
       fd.InitialDirectory = Environment.SpecialFolder.Desktop.ToString();
       fd.RestoreDirectory = true;
       fd.Title = "Please Select Volume Files:";
-      fd.Filter = "RAW Files (*.raw, *.img)|*.raw; *.img|All Files(*.*)|*.*";
+      fd.Filter = "RAW Files (*.raw, *.img)|*.raw; *.img|" +
+        "DICOM Format (*.dcm)|*.dcm|" +
+        "All Files(*.*)|*.*";
       if(fd.ShowDialog() == true)
       {
         this.txtVolumeFile.Text = fd.FileName;

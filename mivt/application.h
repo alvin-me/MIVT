@@ -43,6 +43,8 @@ namespace mivt {
       float windowWidth,
       float windowCenter);
 
+    MIVT_API void LoadVolume(const std::string &fileName);
+
     MIVT_API void SetTransfunc(const std::string& fileName);
     MIVT_API std::string GetTransfunc();
 

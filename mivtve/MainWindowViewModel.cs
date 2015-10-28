@@ -138,47 +138,12 @@ namespace mivtve
 
       LoadVolume = new RelayCommand((x) =>
       {
-        var rawFileName = Properties.Settings.Default.VolumeFile;
-        var infoFileName = System.IO.Path.ChangeExtension(rawFileName, ".info");
-        // get volume information.
-        int[] size = new int[3];
-        float[] spacing = new float[3];
-        string format;
-        float[] interceptAndSlope = new float[2];
-        float[] windowing = new float[2];
-        try
-        {
-          StreamReader sr = new StreamReader(infoFileName);
-          var tokens1 = sr.ReadLine().Split(',');
-          var tokens2 = sr.ReadLine().Split(',');
-          var tokens3 = sr.ReadLine().Split(',');
-          var tokens4 = sr.ReadLine().Split(',');
-          var tokens5 = sr.ReadLine().Split(',');
+        string ext = Path.GetExtension(Properties.Settings.Default.VolumeFile);
+        if(ext == ".img" || ext == ".raw")
+          LoadRawVolume(Properties.Settings.Default.VolumeFile);
+        else if(ext == ".dcm")
+          LoadDcmVolume(Properties.Settings.Default.VolumeFile);
 
-          for (int i = 0; i < 3; ++i)
-          {
-            size[i] = Int16.Parse(tokens1[i]);
-            spacing[i] = (float)System.Double.Parse(tokens2[i]);
-          }
-          format = tokens3[0];
-          for (int i = 0; i < 2; ++i)
-          {
-            interceptAndSlope[i] = (float)System.Double.Parse(tokens4[i]);
-            windowing[i] = (float)System.Double.Parse(tokens5[i]);
-          }
-        }
-        catch (FileNotFoundException)
-        {
-          LogInfo("Can not find \"" + infoFileName + "\"!");
-          return;
-        }
-        catch (Exception)
-        {
-          LogInfo("Invalid info file format of \"" + infoFileName + "\"!");
-          return;
-        }
-        _engine.LoadVolume(rawFileName, format, size, spacing, interceptAndSlope[0], 
-          interceptAndSlope[1], windowing[0], windowing[1]);
         UpdateImage();
         LogInfo("Volume Loaded.", 5000);
       }, (x) =>
@@ -441,6 +406,56 @@ namespace mivtve
           LogInfo(_messageBackup);
         });
       }
+    }
+
+
+    private void LoadRawVolume(string rawFileName)
+    {
+      var infoFileName = System.IO.Path.ChangeExtension(rawFileName, ".info");
+      // get volume information.
+      int[] size = new int[3];
+      float[] spacing = new float[3];
+      string format;
+      float[] interceptAndSlope = new float[2];
+      float[] windowing = new float[2];
+      try
+      {
+        StreamReader sr = new StreamReader(infoFileName);
+        var tokens1 = sr.ReadLine().Split(',');
+        var tokens2 = sr.ReadLine().Split(',');
+        var tokens3 = sr.ReadLine().Split(',');
+        var tokens4 = sr.ReadLine().Split(',');
+        var tokens5 = sr.ReadLine().Split(',');
+
+        for (int i = 0; i < 3; ++i)
+        {
+          size[i] = Int16.Parse(tokens1[i]);
+          spacing[i] = (float)System.Double.Parse(tokens2[i]);
+        }
+        format = tokens3[0];
+        for (int i = 0; i < 2; ++i)
+        {
+          interceptAndSlope[i] = (float)System.Double.Parse(tokens4[i]);
+          windowing[i] = (float)System.Double.Parse(tokens5[i]);
+        }
+      }
+      catch (FileNotFoundException)
+      {
+        LogInfo("Can not find \"" + infoFileName + "\"!");
+        return;
+      }
+      catch (Exception)
+      {
+        LogInfo("Invalid info file format of \"" + infoFileName + "\"!");
+        return;
+      }
+      _engine.LoadVolume(rawFileName, format, size, spacing, interceptAndSlope[0],
+        interceptAndSlope[1], windowing[0], windowing[1]);
+    }
+
+    private void LoadDcmVolume(string fileName)
+    {
+      _engine.LoadVolume(fileName);
     }
 
     #endregion

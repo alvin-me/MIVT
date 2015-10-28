@@ -7,6 +7,7 @@
 #include "shadermanager.h"
 #include "matrixstack.h"
 #include "rawvolumereader.h"
+#include "gdcmvolumereader.h"
 #include "volume.h"
 #include "transfunc1d.h"
 
@@ -191,6 +192,29 @@ namespace mivt {
         windowWidth);
       DELPTR(volume_);
       volume_ = reader.read(fileName);
+      if (volume_) {
+        tgt::oldVolumePosition(volume_);
+      }
+    }
+    catch (const tgt::FileException& e) {
+      LERROR(e.what());
+    }
+    catch (std::bad_alloc&) {
+      LERROR("bad allocation while reading file: " << fileName);
+    }
+
+    if (volume_) {
+      render_->SetVolume(volume_);
+    }
+  }
+
+  void Application::LoadVolume(const std::string &fileName)
+  {
+    std::string dictFileName = getResourcePath("dicom") + "/dicts/StandardDictionary.xml";
+
+    try {
+      DELPTR(volume_);
+      volume_ = tgt::GdcmVolumeReader(dictFileName).read(fileName);
       if (volume_) {
         tgt::oldVolumePosition(volume_);
       }

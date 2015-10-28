@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tgt_math.h"
 #include "valuemapping.h"
 

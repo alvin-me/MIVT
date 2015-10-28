@@ -40,6 +40,8 @@ namespace mivtmanaged {
       float windowWidth,
       float windowCenter);
 
+    void LoadVolume(String^ fileName);
+
     void SetTransfunc(String^ fileName);
     String^ GetTransfunc();
 

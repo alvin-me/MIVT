@@ -1120,10 +1120,10 @@ namespace tgt {
     }
   }
 
-  template<typename T> inline void XmlDeserializer::freeMemory(T& data) {}
+  template<typename T> inline void XmlDeserializer::freeMemory(T& /*data*/) {}
   template<typename T> inline void XmlDeserializer::freeMemory(T*& data) { delete data; }
 
-  template<typename T> inline void XmlDeserializer::allocateMemory(T& data) {}
+  template<typename T> inline void XmlDeserializer::allocateMemory(T& /*data*/) {}
   template<typename T> inline void XmlDeserializer::allocateMemory(T*& data) { data = new T(); }
 
 } // end namespace tgt

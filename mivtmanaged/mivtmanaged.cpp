@@ -76,6 +76,12 @@ namespace mivtmanaged {
       intercept, slope, windowWidth, windowCenter);
   }
 
+  void Application::LoadVolume(String^ fileName)
+  {
+    std::string naviteFileName = FromManaged(fileName);
+    local_->LoadVolume(naviteFileName);
+  }
+
   void Application::SetTransfunc(String^ fileName)
   {
     local_->SetTransfunc(FromManaged(fileName));
