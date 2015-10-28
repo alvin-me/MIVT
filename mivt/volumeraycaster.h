@@ -35,6 +35,18 @@ namespace mivt {
 
     std::string GetClassificationMode();
 
+    void SetLightAmbient(const glm::vec4& v);
+    glm::vec4 GetLightAmbient();
+
+    void SetLightDiffuse(const glm::vec4& v);
+    glm::vec4 GetLightDiffuse();
+
+    void SetLightSpecular(const glm::vec4& v);
+    glm::vec4 GetLightSpecular();
+
+    void SetMaterialShininess(float v);
+    float GetMaterialShininess();
+
   protected:
     /**
     * This struct contains information about a volume. It is exclusively used
@@ -145,13 +157,6 @@ namespace mivt {
     glm::vec3 lightAttenuation_;
     /// Apply light attenuation?
     bool applyLightAttenuation_;
-
-    /// The ambient material color according to the Phong lighting model
-    glm::vec4 materialAmbient_;
-    /// The diffuse material color according to the Phong lighting model
-    glm::vec4 materialDiffuse_;
-    /// The specular material color according to the Phong lighting model
-    glm::vec4 materialSpecular_;
 
     /// The material's specular exponent according to the Phong lighting model
     float materialShininess_;

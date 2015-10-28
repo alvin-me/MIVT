@@ -24,6 +24,12 @@
                         <TextBlock Margin="3,0,0,0">TransFunc</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button ToolTip="Open Light Editor" Command="{Binding OpenLightWindow}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/online.png" />
+                        <TextBlock Margin="3,0,0,0">Light</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Button ToolTip="Set Rendering Parameters" Command="{Binding OpenSettingWindow}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/setting.png" />

@@ -19,9 +19,6 @@ namespace mivt {
     , lightSpecular_(glm::vec4(0.6f, 0.6f, 0.6f, 1.f))
     , lightAttenuation_(glm::vec3(1.f, 0.f, 0.f))
     , applyLightAttenuation_(false)
-    , materialAmbient_(glm::vec4(1.f, 1.f, 1.f, 1.f))
-    , materialDiffuse_(glm::vec4(1.f, 1.f, 1.f, 1.f))
-    , materialSpecular_(glm::vec4(1.f, 1.f, 1.f, 1.f))
     , materialShininess_(60.0f)
     , samplingRate_(2.f)
     , gradientMode_("central-differences")
@@ -279,6 +276,38 @@ namespace mivt {
       else
         tf->bind();
     }
+  }
+
+  void VolumeRaycaster::SetLightAmbient(const glm::vec4& v) {
+    lightAmbient_ = v;
+  }
+
+  glm::vec4 VolumeRaycaster::GetLightAmbient() {
+    return lightAmbient_;
+  }
+
+  void VolumeRaycaster::SetLightDiffuse(const glm::vec4& v) {
+    lightDiffuse_ = v;
+  }
+
+  glm::vec4 VolumeRaycaster::GetLightDiffuse() {
+    return lightDiffuse_;
+  }
+
+  void VolumeRaycaster::SetLightSpecular(const glm::vec4& v) {
+    lightSpecular_ = v;
+  }
+
+  glm::vec4 VolumeRaycaster::GetLightSpecular() {
+    return lightSpecular_;
+  }
+
+  void VolumeRaycaster::SetMaterialShininess(float v) {
+    materialShininess_ = v;
+  }
+
+  float VolumeRaycaster::GetMaterialShininess() {
+    return materialShininess_;
   }
 
   //------------------------------------------------------------------------------

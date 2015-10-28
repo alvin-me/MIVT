@@ -237,4 +237,56 @@ namespace mivt {
   {
     return render_->GetClassificationMode();
   }
+
+  void Application::SetLightAmbient(const float v[4])
+  {
+    render_->SetLightAmbient(glm::vec4(v[0], v[1], v[2], v[3]));
+  }
+
+  void Application::GetLightAmbient(float v[4])
+  {
+    glm::vec4 ret = render_->GetLightAmbient();
+    v[0] = ret.x;
+    v[1] = ret.y;
+    v[2] = ret.z;
+    v[3] = ret.w;
+  }
+
+  void Application::SetLightDiffuse(const float v[4])
+  {
+    render_->SetLightDiffuse(glm::vec4(v[0], v[1], v[2], v[3]));
+  }
+
+  void Application::GetLightDiffuse(float v[4])
+  {
+    glm::vec4 ret = render_->GetLightDiffuse();
+    v[0] = ret.x;
+    v[1] = ret.y;
+    v[2] = ret.z;
+    v[3] = ret.w;
+  }
+
+  void Application::SetLightSpecular(const float v[4])
+  {
+    render_->SetLightSpecular(glm::vec4(v[0], v[1], v[2], v[3]));
+  }
+
+  void Application::GetLightSpecular(float v[4])
+  {
+    glm::vec4 ret = render_->GetLightSpecular();
+    v[0] = ret.x;
+    v[1] = ret.y;
+    v[2] = ret.z;
+    v[3] = ret.w;
+  }
+
+  void Application::SetMaterialShininess(float v)
+  {
+    render_->SetMaterialShininess(v);
+  }
+
+  float Application::GetMaterialShininess()
+  {
+    return render_->GetMaterialShininess();
+  }
 }

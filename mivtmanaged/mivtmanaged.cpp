@@ -95,5 +95,51 @@ namespace mivtmanaged {
   {
     return ToManaged(local_->GetClassificationMode());
   }
+
+  void Application::SetLightAmbient(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->SetLightAmbient(pinned_v);
+  }
+
+  void Application::GetLightAmbient(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->GetLightAmbient(pinned_v);
+  }
+
+  void Application::SetLightDiffuse(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->SetLightDiffuse(pinned_v);
+  }
+
+  void Application::GetLightDiffuse(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->GetLightDiffuse(pinned_v);
+  }
+
+  void Application::SetLightSpecular(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->SetLightSpecular(pinned_v);
+  }
+
+  void Application::GetLightSpecular(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->GetLightSpecular(pinned_v);
+  }
+
+  void Application::SetMaterialShininess(float v)
+  {
+    local_->SetMaterialShininess(v);
+  }
+
+  float Application::GetMaterialShininess()
+  {
+    return local_->GetMaterialShininess();
+  }
 }
 

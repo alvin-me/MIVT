@@ -46,6 +46,18 @@ namespace mivtmanaged {
     void SetClassificationMode(String^ mode);
     String^ GetClassificationMode();
 
+    void SetLightAmbient(array<float>^ v);
+    void GetLightAmbient(array<float>^ v);
+
+    void SetLightDiffuse(array<float>^ v);
+    void GetLightDiffuse(array<float>^ v);
+
+    void SetLightSpecular(array<float>^ v);
+    void GetLightSpecular(array<float>^ v);
+
+    void SetMaterialShininess(float v);
+    float GetMaterialShininess();
+
   private:
     mivt::Application *local_;
 	};

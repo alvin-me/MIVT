@@ -28,6 +28,11 @@ namespace mivtve
     private List<ProtocalData>      _protocalList;
     private List<string>            _classificationModeList;
     TransfuncWindow                 _transfuncWindow = null;
+    LightWindow                     _lightWindow = null;
+    float                           _shiness;
+    string                          _ambientColor;
+    string                          _diffuseColor;
+    string                          _specularColor;
 
     #endregion
 
@@ -70,6 +75,18 @@ namespace mivtve
 
       ClassificationMode = _engine.GetClassificationMode();
 
+      Shiness = _engine.GetMaterialShininess();
+
+      float[] color = new float[4];
+      _engine.GetLightAmbient(color);
+      AmbientColor = MyColorConverter.ArrayToString(color);
+
+      _engine.GetLightDiffuse(color);
+      DiffuseColor = MyColorConverter.ArrayToString(color);
+
+      _engine.GetLightSpecular(color);
+      SpecularColor = MyColorConverter.ArrayToString(color);
+
       // initialize commands
 
       ImageSizeChanged = new RelayCommand((x) =>
@@ -107,6 +124,16 @@ namespace mivtve
           _transfuncWindow.DataContext = this;
         }
         _transfuncWindow.Show();
+      });
+
+      OpenLightWindow = new RelayCommand((x) =>
+      {
+        if (_lightWindow == null)
+        {
+          _lightWindow = new LightWindow();
+          _lightWindow.DataContext = this;
+        }
+        _lightWindow.Show();
       });
 
       LoadVolume = new RelayCommand((x) =>
@@ -247,6 +274,77 @@ namespace mivtve
 
     public List<string> ClassificationModeList { get { return _classificationModeList; } }
 
+    public float Shiness
+    {
+      get { return _shiness; }
+      set
+      {
+        if(_shiness!= value)
+        {
+          _shiness = value;
+
+          _engine.SetMaterialShininess(_shiness);
+          UpdateImage();
+
+          OnPropertyChanged("Shiness");
+        }
+      }
+    }
+
+    public string AmbientColor
+    {
+      get { return _ambientColor; }
+      set
+      {
+        if(_ambientColor != value)
+        {
+          _ambientColor = value;
+
+          float[] arr = MyColorConverter.StringToArray(value);
+          _engine.SetLightAmbient(arr);
+          UpdateImage();
+
+          OnPropertyChanged("AmbientColor");
+        }
+      }
+    }
+
+    public string DiffuseColor
+    {
+      get { return _diffuseColor; }
+      set
+      {
+        if (_diffuseColor != value)
+        {
+          _diffuseColor = value;
+
+          float[] arr = MyColorConverter.StringToArray(value);
+          _engine.SetLightDiffuse(arr);
+          UpdateImage();
+
+          OnPropertyChanged("DiffuseColor");
+        }
+      }
+    }
+
+    public string SpecularColor
+    {
+      get { return _specularColor; }
+      set
+      {
+        if (_specularColor != value)
+        {
+          _specularColor = value;
+
+          float[] arr = MyColorConverter.StringToArray(value);
+          _engine.SetLightSpecular(arr);
+          UpdateImage();
+
+          OnPropertyChanged("SpecularColor");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -258,6 +356,8 @@ namespace mivtve
     public ICommand LoadVolume { get; private set; }
 
     public ICommand OpenTransfuncWindow { get; private set; }
+
+    public ICommand OpenLightWindow { get; private set; }
 
     #endregion
 

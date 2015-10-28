@@ -49,6 +49,18 @@ namespace mivt {
     MIVT_API void SetClassificationMode(const std::string& mode);
     MIVT_API std::string GetClassificationMode();
 
+    MIVT_API void SetLightAmbient(const float v[4]);
+    MIVT_API void GetLightAmbient(float v[4]);
+
+    MIVT_API void SetLightDiffuse(const float v[4]);
+    MIVT_API void GetLightDiffuse(float v[4]);
+
+    MIVT_API void SetLightSpecular(const float v[4]);
+    MIVT_API void GetLightSpecular(float v[4]);
+
+    MIVT_API void SetMaterialShininess(float v);
+    MIVT_API float GetMaterialShininess();
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;
