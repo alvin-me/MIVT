@@ -1,6 +1,8 @@
 #include "preintegration.h"
 #include "transfunc1d.h"
 #include "logmanager.h"
+#include "rendertarget.h"
+#include "shadermanager.h"
 
 using glm::vec2;
 using glm::vec3;
@@ -9,27 +11,50 @@ using glm::col3;
 
 namespace mivt {
 
-  PreIntegration::PreIntegration(size_t resolution, bool useIntegral)
+  PreIntegration::PreIntegration(size_t resolution, bool computeOnGPU, bool useIntegral)
     : transFunc_(0)
     , resolution_(resolution)
     , samplingStepSize_(0)
     , useIntegral_(useIntegral)
+    , computeOnGPU_(computeOnGPU)
     , table_(0)
     , tex_(0)
+    , renderTarget_(0)
+    , program_(0)
   {
     //check values
     if (resolution <= 1)
       resolution_ = 256;
 
-    table_ = new vec4[resolution_ * resolution_];
-    tex_ = new tgt::Texture(reinterpret_cast<GLubyte*>(table_), glm::ivec3(static_cast<int>(resolution_), 
-      static_cast<int>(resolution_), 1), GL_RGBA, GL_RGBA32F, GL_FLOAT, tgt::Texture::LINEAR);
+    //initialize render target if necessary
+    if (computeOnGPU_) {
+      renderTarget_ = new tgt::RenderTarget();
+      renderTarget_->initialize();
+      renderTarget_->resize(glm::ivec2(static_cast<int>(resolution_)));
+
+      program_ = ShdrMgr.loadSeparate("passthrough.vert", "preintegration.frag", "", false);
+    }
+    else {
+      table_ = new vec4[resolution_ * resolution_];
+      tex_ = new tgt::Texture(reinterpret_cast<GLubyte*>(table_), glm::ivec3(static_cast<int>(resolution_),
+        static_cast<int>(resolution_), 1), GL_RGBA, GL_RGBA32F, GL_FLOAT, tgt::Texture::LINEAR);
+    }
   }
 
   PreIntegration::~PreIntegration()
   {
-    DELARR(table_);
-    DELPTR(tex_);
+    //deinitialize render target or delete texture
+    if (computeOnGPU_) {
+      renderTarget_->deinitialize();
+      DELPTR(renderTarget_);
+
+      ShdrMgr.dispose(program_);
+      program_ = 0;
+    }
+    else {
+      DELARR(table_);
+      DELPTR(tex_);
+    }
   }
 
   void PreIntegration::computeTable()
@@ -150,22 +175,83 @@ namespace mivt {
 
   const tgt::Texture* PreIntegration::getTexture(tgt::TransFunc1D *transFunc, float d)
   {
-    if (transFunc != transFunc_ || samplingStepSize_ != d || transFunc->isPreinteTextureInvalid()) {
+    if (transFunc != transFunc_ || samplingStepSize_ != d || transFunc->isPreinteTextureInvalid()) 
+    {
       transFunc_ = transFunc;
       samplingStepSize_ = d;
-
-      computeTable();
-      tex_->setWrapping(tgt::Texture::CLAMP_TO_BORDER);
-      tex_->setPixelData(reinterpret_cast<GLubyte*>(table_));
-      tex_->uploadTexture();
-      LGL_ERROR;
-
-      // prevent deleting twice
-      tex_->setPixelData(0);
-
       transFunc->validPreinteTexture();
+
+      if (computeOnGPU_) {
+        computeTableGPU();
+        LGL_ERROR;
+
+        //set output texture
+        tex_ = renderTarget_->getColorTexture();
+      }
+      else {
+        computeTable();
+        tex_->setWrapping(tgt::Texture::CLAMP_TO_BORDER);
+        tex_->setPixelData(reinterpret_cast<GLubyte*>(table_));
+        tex_->uploadTexture();
+        LGL_ERROR;
+
+        // prevent deleting twice
+        tex_->setPixelData(0);
+      }
     }
     return tex_;
+  }
+
+  void PreIntegration::computeTableGPU()
+  {
+    //render pre-integration texture into render target
+    renderTarget_->activateTarget();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    //get texture of transfer function
+    tgt::TextureUnit transferUnit;
+    transferUnit.activate();
+
+    transFunc_->getTexture()->bind();
+    transFunc_->getTexture()->enable();
+
+    // activte shader program
+    program_->activate();
+
+    program_->setUniform("samplingStepSize_", samplingStepSize_);
+
+    //set transfer function texture
+    program_->setUniform("tfTex_", transferUnit.getUnitNumber());
+
+    bool oldIgnoreError = program_->getIgnoreUniformLocationError();
+    program_->setIgnoreUniformLocationError(true);
+    program_->setUniform("texParams_.dimensions_", glm::vec2((float)resolution_));
+    program_->setUniform("texParams_.dimensionsRCP_", glm::vec2(1.f) / glm::vec2((float)resolution_));
+    program_->setUniform("texParams_.matrix_", glm::mat4(1));
+    program_->setIgnoreUniformLocationError(oldIgnoreError);
+
+    //render quad
+    glDepthFunc(GL_ALWAYS);
+    glBegin(GL_QUADS);
+    glVertex2f(-1.f, -1.f);
+    glVertex2f(1.f, -1.f);
+    glVertex2f(1.f, 1.f);
+    glVertex2f(-1.f, 1.f);
+    glEnd();
+    glDepthFunc(GL_LESS);
+
+    //clean up
+    transFunc_->getTexture()->disable();
+    program_->deactivate();
+    renderTarget_->deactivateTarget();
+    
+
+    tgt::TextureUnit::setZeroUnit();
+    LGL_ERROR;
+  }
+
+  bool PreIntegration::computeOnGPU() {
+    return computeOnGPU_;
   }
 
 } // end namespace mivt

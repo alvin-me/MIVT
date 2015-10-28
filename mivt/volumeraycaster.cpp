@@ -25,7 +25,7 @@ namespace mivt {
     , materialShininess_(60.0f)
     , samplingRate_(2.f)
     , gradientMode_("central-differences")
-    , classificationMode_("pre-integrated") // transfer-function, pre-integrated
+    , classificationMode_("pre-integrated-gpu") // transfer-function, pre-integrated
     , shadeMode_("phong")
     , compositingMode_("dvr")
     , preintegration_(0)
@@ -41,7 +41,7 @@ namespace mivt {
   }
 
   void VolumeRaycaster::Initialize() {
-    preintegration_ = new PreIntegration();
+    preintegration_ = new PreIntegration(256, true);
   }
 
   void VolumeRaycaster::Deinitialize() {
@@ -269,8 +269,13 @@ namespace mivt {
 
   void VolumeRaycaster::bindTransfuncTexture(const std::string mode, tgt::TransFunc1D* tf, float samplingStepSize) {
     if (tf) {
-      if (tgt::startsWith(mode, "pre-integrated"))
+      if (tgt::startsWith(mode, "pre-integrated")) {
+        if (preintegration_->computeOnGPU() != tgt::contains(mode, "gpu")) {
+          DELPTR(preintegration_);
+          preintegration_ = new PreIntegration(256, tgt::contains(mode, "gpu"), true);
+        }
         preintegration_->getTexture(tf, samplingStepSize)->bind();
+      }
       else
         tf->bind();
     }

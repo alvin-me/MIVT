@@ -182,6 +182,10 @@ namespace tgt {
       return false;
   }
 
+  bool contains(const std::string& input, const std::string& substr) {
+    return (input.find(substr) != std::string::npos);
+  }
+
   std::string formatMemorySize(uint64_t bytes) {
     // calculate GB/MB/kB with 0.1f precision
     float gb = glm::round(static_cast<float>(bytes) / 107374182.4f) / 10.f;

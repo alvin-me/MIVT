@@ -131,6 +131,11 @@ namespace mivt {
       renderDestination = privatetarget_;
     }
 
+    // bind transfer function before active shader and target, because it may re-compute 
+    // transfer function table use gpu by another shader in PreIntegration.
+    if (transfunc_ && volume_) {
+      bindTransfuncTexture(classificationMode_, transfunc_, CalculateSamplingStepSize(volume_));
+    }
 
     renderDestination->activateTarget();
     renderDestination->clearTarget();
@@ -161,7 +166,7 @@ namespace mivt {
       bindVolume(shader_, volumeTexture, camera_, lightPosition_);
       LGL_ERROR;
 
-      // bind transfer function and pass it to the shader
+      // pass transfer function to the shader
       tgt::TextureUnit transferUnit;
       if (transfunc_) {
         transferUnit.activate();

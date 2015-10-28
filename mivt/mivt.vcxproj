@@ -17,6 +17,7 @@
     <None Include="glsl\base\eep_simple.frag" />
     <None Include="glsl\base\eep_simple.vert" />
     <None Include="glsl\base\passthrough.vert" />
+    <None Include="glsl\base\preintegration.frag" />
     <None Include="glsl\modules\mod_compositing.frag" />
     <None Include="glsl\modules\mod_depth.frag" />
     <None Include="glsl\modules\mod_gradient.frag" />

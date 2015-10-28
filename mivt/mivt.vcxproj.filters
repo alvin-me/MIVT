@@ -57,6 +57,9 @@
     <None Include="glsl\base\eep_insidevolume.frag">
       <Filter>glsl\base</Filter>
     </None>
+    <None Include="glsl\base\preintegration.frag">
+      <Filter>glsl\base</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />

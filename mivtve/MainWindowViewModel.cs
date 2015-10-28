@@ -65,7 +65,8 @@ namespace mivtve
       // initialize classificaiton mode list
       _classificationModeList = new List<string>();
       _classificationModeList.Add("transfer-function");
-      _classificationModeList.Add("pre-integrated");
+      _classificationModeList.Add("pre-integrated-cpu");
+      _classificationModeList.Add("pre-integrated-gpu");
 
       ClassificationMode = _engine.GetClassificationMode();
 

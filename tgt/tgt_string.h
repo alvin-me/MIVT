@@ -92,8 +92,11 @@ namespace tgt {
   /// Returns true if \p input ends with \p ending
   TGT_API bool endsWith(const std::string& input, const std::string& ending);
 
-  /// Returns true if \p input starts with \p ending
+  /// Returns true if \p input starts with \p start
   TGT_API bool startsWith(const std::string& input, const std::string& start);
+
+  /// Returns true if \p input contains \p substr
+  TGT_API bool contains(const std::string& input, const std::string& substr);
 
   /// Formats the passed byte size as string using the appropriate unit (bytes/kB/MB/GB).
   TGT_API std::string formatMemorySize(uint64_t bytes);
