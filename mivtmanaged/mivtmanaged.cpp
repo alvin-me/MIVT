@@ -76,10 +76,16 @@ namespace mivtmanaged {
       intercept, slope, windowWidth, windowCenter);
   }
 
-  void Application::LoadVolume(String^ fileName)
+  void Application::LoadVolume(String^ fileName, NativeDelegate^ callback)
   {
+    using System::IntPtr;
+    using System::Runtime::InteropServices::Marshal;
+
+    IntPtr pointer = Marshal::GetFunctionPointerForDelegate(callback);
+
     std::string naviteFileName = FromManaged(fileName);
-    local_->LoadVolume(naviteFileName);
+
+    local_->LoadVolume(naviteFileName, static_cast<tgt::ProgressCallback>(pointer.ToPointer()));
   }
 
   void Application::SetTransfunc(String^ fileName)

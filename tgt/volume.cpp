@@ -30,7 +30,7 @@ namespace tgt {
     , windowCenter_(windowCenter)
     , windowWidth_(windowWidth)
   {
-    addRepresentation(volume);
+    addRepresentationInternal(volume);
   }
 
   Volume::~Volume() {
@@ -236,34 +236,80 @@ namespace tgt {
   }
 
   template <class T>
-  T* Volume::getRepresentation() {
-    if (representations_.size() == 0) {
-      LWARNINGC("Volume", "Found no representations for this volumehandle!");
-      return 0;
+  T* Volume::getRepresentation()
+  {
+    T* test = hasRepresentation<T>();
+    if (test)
+      return test;
+
+    // if not have, create a new one.
+    VolumeRepresentation* result = 0;
+    // now we only have one Representation data created auto, that's VolumeGL.
+    if (typeid(T) == typeid(VolumeGL)) {
+      result = new VolumeGL(getRepresentation<VolumeRAM>());
+    }
+    else if (typeid(T) == typeid(VolumeRAM)) {
+      LERRORC("Volume", "VolumeRAM data should read first");
+      throw std::invalid_argument("VolumeRAM data should read first");
     }
 
-    //Check if rep. is available:
-    for (size_t i = 0; i<representations_.size(); i++) {
-      if (dynamic_cast<T*>(representations_[i])) {
-        return static_cast<T*>(representations_[i]);
+    if (result)
+      addRepresentationInternal<T>(dynamic_cast<T*>(result));
+
+    return hasRepresentation<T>();
+  }
+
+  template<class T>
+  T* Volume::hasRepresentation() const
+  {
+    for (std::vector<VolumeRepresentation*>::const_iterator it = representations_.begin(); 
+      it != representations_.end(); ++it) {
+      if (dynamic_cast<T*>(*it)) {
+        return dynamic_cast<T*>(*it);
       }
     }
-
-    LERRORC("Volume", "Failed to get representation of the requested type!");
     return 0;
   }
 
-  void Volume::addRepresentation(VolumeRepresentation* rep) {
-    //TODO: check for duplicates using RTI
-    representations_.push_back(rep);
+  template<class T>
+  void Volume::addRepresentationInternal(T* data)
+  {
+    if (!dynamic_cast<VolumeRepresentation*>(data)) {
+      LERRORC("Volume", "VolumeRepresentation data item is not of type VolumeRepresentation");
+      throw std::invalid_argument("passed data item is not of type VolumeRepresentation");
+    }
+
+    if (hasRepresentation<T>())
+      removeRepresentationInternal<T>();
+
+    representations_.push_back(dynamic_cast<VolumeRepresentation*>(data));
   }
 
-  void Volume::clearRepresentation() {
-    while (!representations_.empty()) {
-      delete representations_.back();
-      representations_.pop_back();
+  template<class T>
+  void Volume::removeRepresentationInternal()
+  {
+    if (!hasRepresentation<T>())
+      return;
+
+    for (std::vector<VolumeRepresentation*>::iterator it = representations_.begin(); 
+      it != representations_.end(); ++it) {
+      if (dynamic_cast<T*>(*it)) {
+        delete *it;
+        representations_.erase(it);
+        return;
+      }
     }
   }
+
+  void Volume::clearRepresentation()
+  {
+      while (!representations_.empty()) {
+        delete representations_.back();
+        representations_.pop_back();
+      }
+  }
+
+  /// derived data
 
   template <class T>
   T* Volume::getDerivedData() {
@@ -277,7 +323,7 @@ namespace tgt {
     result = dummy.createFrom(this);
 
     if (result)
-      addDerivedDataInternal<T>(static_cast<T*>(result));
+      addDerivedDataInternal<T>(dynamic_cast<T*>(result));
 
     return hasDerivedData<T>();
   }
@@ -286,7 +332,7 @@ namespace tgt {
   T* Volume::hasDerivedData() const {
     for (std::vector<VolumeDerivedData*>::const_iterator it = derivedData_.begin(); it != derivedData_.end(); ++it) {
       if (typeid(**it) == typeid(T)) {
-        T* tmp = static_cast<T*>(*it);
+        T* tmp = dynamic_cast<T*>(*it);
         return tmp;
       }
     }
@@ -303,7 +349,7 @@ namespace tgt {
     if (hasDerivedData<T>())
       removeDerivedDataInternal<T>();
 
-    derivedData_.push_back(static_cast<VolumeDerivedData*>(data));
+    derivedData_.push_back(dynamic_cast<VolumeDerivedData*>(data));
 
   }
 
@@ -322,9 +368,9 @@ namespace tgt {
   }
 
   void Volume::clearDerivedData() {
-    while (!representations_.empty()) {
-      delete representations_.back();
-      representations_.pop_back();
+    while (!derivedData_.empty()) {
+      delete derivedData_.back();
+      derivedData_.pop_back();
     }
   }
 

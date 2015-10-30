@@ -1,14 +1,16 @@
 #include "progressbar.h"
 #include "logmanager.h"
+#include "tgt_string.h"
 
 namespace tgt {
 
   std::string ProgressBar::loggerCat_ = "ProgressBar";
 
-  ProgressBar::ProgressBar()
+  ProgressBar::ProgressBar(ProgressCallback callback)
     : progress_(0)
     , progressRange_(0.f, 1.f)
     , printedErrorMessage_(false)
+    , callback_(callback)
   {}
 
   void ProgressBar::setProgress(float progress) {
@@ -73,5 +75,20 @@ namespace tgt {
     return progressRange_;
   }
 
+  void ProgressBar::show() {
+    forceUpdate();
+  }
 
+  void ProgressBar::hide() {
+    callback_("");
+  }
+
+  void ProgressBar::forceUpdate() {
+    std::string msg = title_ + ": " + message_ + "(" + tgt::itos((int)(progress_ * 100)) + "%)";
+    callback_(msg.c_str());
+  }
+
+  void ProgressBar::update() {
+    forceUpdate();
+  }
 } // end namespace tgt

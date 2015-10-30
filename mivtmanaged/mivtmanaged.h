@@ -40,7 +40,9 @@ namespace mivtmanaged {
       float windowWidth,
       float windowCenter);
 
-    void LoadVolume(String^ fileName);
+    delegate void NativeDelegate(String^);
+
+    void LoadVolume(String^ fileName, NativeDelegate^ callback);
 
     void SetTransfunc(String^ fileName);
     String^ GetTransfunc();

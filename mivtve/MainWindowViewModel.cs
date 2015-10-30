@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,6 +35,9 @@ namespace mivtve
     string                          _ambientColor;
     string                          _diffuseColor;
     string                          _specularColor;
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    delegate void ProgressCallback();
 
     #endregion
 
@@ -139,13 +144,21 @@ namespace mivtve
       LoadVolume = new RelayCommand((x) =>
       {
         string ext = Path.GetExtension(Properties.Settings.Default.VolumeFile);
-        if(ext == ".img" || ext == ".raw")
+        if(ext == ".img" || ext == ".raw") {
           LoadRawVolume(Properties.Settings.Default.VolumeFile);
-        else if(ext == ".dcm")
-          LoadDcmVolume(Properties.Settings.Default.VolumeFile);
+          UpdateImage();
+          LogInfo("Volume Loaded.", 5000);
+        }
 
-        UpdateImage();
-        LogInfo("Volume Loaded.", 5000);
+        else if (ext == ".dcm")
+        {
+          var task = Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+          {
+            LoadDcmVolume(Properties.Settings.Default.VolumeFile);
+          }));
+          UpdateImage();
+          LogInfo("Volume Loaded.", 5000);
+        }
       }, (x) =>
       {
         return File.Exists(Properties.Settings.Default.VolumeFile);
@@ -408,6 +421,12 @@ namespace mivtve
       }
     }
 
+    private void LogInfo(string msg)
+    {
+      _messageBackup = LogMessage;
+      LogMessage = msg;
+    }
+
 
     private void LoadRawVolume(string rawFileName)
     {
@@ -455,7 +474,12 @@ namespace mivtve
 
     private void LoadDcmVolume(string fileName)
     {
-      _engine.LoadVolume(fileName);
+      var thread = new Thread(() =>
+      {
+        _engine.LoadVolume(fileName, LogInfo);
+      });
+      thread.Start();
+      //thread.Join();
     }
 
     #endregion

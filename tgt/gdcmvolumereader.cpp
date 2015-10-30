@@ -869,8 +869,8 @@ namespace tgt {
     vh->setWindowCenter(0);
     vh->setWindowWidth(0);
 
-    VolumeGL* vgl = new VolumeGL(vh->getRepresentation<VolumeRAM>());
-    vh->addRepresentation(vgl);
+    //VolumeGL* vgl = new VolumeGL(vh->getRepresentation<VolumeRAM>());
+    //vh->addRepresentation(vgl);
 
     if (getProgressBar())
       getProgressBar()->hide();

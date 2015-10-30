@@ -6,32 +6,34 @@
 
 namespace tgt {
 
+  typedef void (__stdcall * ProgressCallback)(const char* msg);
+
   /**
   * Base class for GUI toolkit specific progress bars.
   */
   class ProgressBar {
   public:
-    TGT_API ProgressBar();
+    TGT_API ProgressBar(ProgressCallback callback);
     TGT_API virtual ~ProgressBar() {}
 
     /**
     * Makes the progress dialog visible.
     */
-    TGT_API virtual void show() {}
+    TGT_API virtual void show();
 
     /**
     * Makes the progress dialog invisible.
     */
-    TGT_API virtual void hide() {}
+    TGT_API virtual void hide();
 
     /**
     * Calling this function is assumed to force a repaint,
     * rather than just schedule an update.
     */
-    TGT_API virtual void forceUpdate() {}
+    TGT_API virtual void forceUpdate();
 
     /// Override this method to get notified on IO progress.
-    TGT_API virtual void update() {}
+    TGT_API virtual void update();
 
     /**
     * Assigns the current progress state.
@@ -92,6 +94,8 @@ namespace tgt {
     glm::vec2 progressRange_;
 
     bool printedErrorMessage_;
+
+    ProgressCallback callback_;
 
   private:
     static std::string loggerCat_;

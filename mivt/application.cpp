@@ -208,13 +208,14 @@ namespace mivt {
     }
   }
 
-  void Application::LoadVolume(const std::string &fileName)
+  void Application::LoadVolume(const std::string &fileName, tgt::ProgressCallback callback)
   {
     std::string dictFileName = getResourcePath("dicom") + "/dicts/StandardDictionary.xml";
 
     try {
       DELPTR(volume_);
-      volume_ = tgt::GdcmVolumeReader(dictFileName).read(fileName);
+      tgt::ProgressBar progressbar(callback);
+      volume_ = tgt::GdcmVolumeReader(dictFileName, &progressbar).read(fileName);
       if (volume_) {
         tgt::oldVolumePosition(volume_);
       }

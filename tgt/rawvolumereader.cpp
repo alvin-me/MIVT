@@ -158,8 +158,8 @@ namespace tgt {
     volumeHandle->setWindowCenter(h.windowCenter_);
     volumeHandle->setWindowWidth(h.windowWidth_);
 
-    VolumeGL* vgl = new VolumeGL(volumeRAM);
-    volumeHandle->addRepresentation(vgl);
+    //VolumeGL* vgl = new VolumeGL(volumeRAM);
+    //volumeHandle->addRepresentation(vgl);
 
     return volumeHandle;
   }

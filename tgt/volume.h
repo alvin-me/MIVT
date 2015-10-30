@@ -99,7 +99,15 @@ namespace tgt {
     template <class T>
     T* getRepresentation();
 
-    TGT_API void addRepresentation(VolumeRepresentation* representation);
+    template<class T>
+    T* hasRepresentation() const;
+
+    template<class T>
+    void addRepresentationInternal(T* data);
+
+    template<class T>
+    void removeRepresentationInternal();
+
     TGT_API void clearRepresentation();
 
   private:
@@ -127,6 +135,9 @@ namespace tgt {
 
   class VolumeGL;
   template TGT_API VolumeGL* Volume::getRepresentation<VolumeGL>();
+
+  class VolumeRAM;
+  template TGT_API VolumeRAM* Volume::getRepresentation<VolumeRAM>();
 
   //------------------------------------------------------------------------------
 
