@@ -156,8 +156,8 @@ namespace mivtve
           {
             LoadDcmVolume(Properties.Settings.Default.VolumeFile);
           }));
-          UpdateImage();
-          LogInfo("Volume Loaded.", 5000);
+          //UpdateImage();
+          //LogInfo("Volume Loaded.", 5000);
         }
       }, (x) =>
       {

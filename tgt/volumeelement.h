@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <string>
 
+#pragma warning(disable:4756)
+
 namespace tgt {
 
   /**
