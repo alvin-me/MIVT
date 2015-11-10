@@ -277,5 +277,52 @@ namespace mivt {
   {
     return output_;
   }
+
+  void RenderBackground::SetFirstColor(const glm::vec4 color)
+  {
+    if (firstcolor_ != color) {
+      firstcolor_ = color;
+
+      if (mode_ == "radial") {
+        DELPTR(tex_);
+        createRadialTexture();
+      }
+    }
+  }
+
+  glm::vec4 RenderBackground::GetFirstColor()
+  {
+    return firstcolor_;
+  }
+
+  void RenderBackground::SetSecondColor(const glm::vec4 color)
+  {
+    if (secondcolor_ != color) {
+      secondcolor_ = color;
+
+      if (mode_ == "radial") {
+        DELPTR(tex_);
+        createRadialTexture();
+      }
+    }
+  }
+
+  glm::vec4 RenderBackground::GetSecondColor()
+  {
+    return secondcolor_;
+  }
+
+  void RenderBackground::SetColorMode(const std::string& mode)
+  {
+    if (mode_ != mode) {
+      DELPTR(tex_);
+      mode_ = mode;
+    }
+  }
+
+  std::string RenderBackground::GetColorMode()
+  {
+    return mode_;
+  }
 }
 

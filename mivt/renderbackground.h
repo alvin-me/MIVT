@@ -21,6 +21,15 @@ namespace mivt {
     void Process(tgt::RenderTarget *input);
     tgt::RenderTarget* GetOutput();
 
+    void SetFirstColor(const glm::vec4 color);
+    glm::vec4 GetFirstColor();
+
+    void SetSecondColor(const glm::vec4 color);
+    glm::vec4 GetSecondColor();
+
+    void SetColorMode(const std::string& mode);
+    std::string GetColorMode();
+
   private:
 
     /**

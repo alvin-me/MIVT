@@ -314,4 +314,42 @@ namespace mivt {
   {
     return render_->GetMaterialShininess();
   }
+
+  void Application::SetFirstBgColor(const float v[4])
+  {
+    render_->SetFirstColor(glm::vec4(v[0], v[1], v[2], v[3]));
+  }
+
+  void Application::GetFirstBgColor(float v[4])
+  {
+    glm::vec4 ret = render_->GetFirstColor();
+    v[0] = ret.x;
+    v[1] = ret.y;
+    v[2] = ret.z;
+    v[3] = ret.w;
+  }
+
+  void Application::SetSecondBgColor(const float v[4])
+  {
+    render_->SetSecondColor(glm::vec4(v[0], v[1], v[2], v[3]));
+  }
+
+  void Application::GetSecondBgColor(float v[4])
+  {
+    glm::vec4 ret = render_->GetSecondColor();
+    v[0] = ret.x;
+    v[1] = ret.y;
+    v[2] = ret.z;
+    v[3] = ret.w;
+  }
+
+  void Application::SetBgColorMode(const std::string& mode)
+  {
+    render_->SetColorMode(mode);
+  }
+
+  std::string Application::GetBgColorMode()
+  {
+    return render_->GetColorMode();
+  }
 }

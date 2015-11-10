@@ -62,6 +62,15 @@ namespace mivtmanaged {
     void SetMaterialShininess(float v);
     float GetMaterialShininess();
 
+    void SetFirstBgColor(array<float>^ v);
+    void GetFirstBgColor(array<float>^ v);
+
+    void SetSecondBgColor(array<float>^ v);
+    void GetSecondBgColor(array<float>^ v);
+
+    void SetBgColorMode(String^ mode);
+    String^ GetBgColorMode();
+
   private:
     mivt::Application *local_;
 	};

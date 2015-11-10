@@ -260,5 +260,35 @@ namespace mivt {
       shader_->rebuild();
     }
   }
+
+  void RenderVolume::SetFirstColor(const glm::vec4 color)
+  {
+    renderBackground_->SetFirstColor(color);
+  }
+
+  glm::vec4 RenderVolume::GetFirstColor()
+  {
+    return renderBackground_->GetFirstColor();
+  }
+
+  void RenderVolume::SetSecondColor(const glm::vec4 color)
+  {
+    renderBackground_->SetSecondColor(color);
+  }
+
+  glm::vec4 RenderVolume::GetSecondColor()
+  {
+    return renderBackground_->GetSecondColor();
+  }
+
+  void RenderVolume::SetColorMode(const std::string& mode)
+  {
+    renderBackground_->SetColorMode(mode);
+  }
+
+  std::string RenderVolume::GetColorMode()
+  {
+    return renderBackground_->GetColorMode();
+  }
 }
 

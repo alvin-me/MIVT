@@ -29,12 +29,16 @@ namespace mivtve
     private int                     _protocalType;
     private List<ProtocalData>      _protocalList;
     private List<string>            _classificationModeList;
-    TransfuncWindow                 _transfuncWindow = null;
-    LightWindow                     _lightWindow = null;
-    float                           _shiness;
-    string                          _ambientColor;
-    string                          _diffuseColor;
-    string                          _specularColor;
+    private TransfuncWindow         _transfuncWindow = null;
+    private LightWindow             _lightWindow = null;
+    private float                   _shiness;
+    private string                  _ambientColor;
+    private string                  _diffuseColor;
+    private string                  _specularColor;
+    private List<string>            _bgColorModeList;
+    private string                  _bgColorMode;
+    private string                  _firstBgColor;
+    private string                  _secondBgColor;
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     delegate void ProgressCallback();
@@ -91,6 +95,20 @@ namespace mivtve
 
       _engine.GetLightSpecular(color);
       SpecularColor = MyColorConverter.ArrayToString(color);
+
+      _bgColorModeList = new List<string>();
+      _bgColorModeList.Add("none");
+      _bgColorModeList.Add("monochrome");
+      _bgColorModeList.Add("radial");
+      _bgColorModeList.Add("gradient");
+
+      BgColorMode = _engine.GetBgColorMode();
+
+      _engine.GetFirstBgColor(color);
+      FirstBgColor = MyColorConverter.ArrayToString(color);
+
+      _engine.GetSecondBgColor(color);
+      SecondBgColor = MyColorConverter.ArrayToString(color);
 
       // initialize commands
 
@@ -319,6 +337,61 @@ namespace mivtve
           UpdateImage();
 
           OnPropertyChanged("SpecularColor");
+        }
+      }
+    }
+
+    public List<string> BgColorModeList { get { return _bgColorModeList; } }
+
+    public string BgColorMode
+    {
+      get { return _bgColorMode; }
+      set
+      {
+        if (_bgColorMode != value)
+        {
+          _bgColorMode = value;
+
+          _engine.SetBgColorMode(_bgColorMode);
+          UpdateImage();
+
+          OnPropertyChanged("BgColorMode");
+        }
+      }
+    }
+
+    public string FirstBgColor
+    {
+      get { return _firstBgColor; }
+      set
+      {
+        if (_firstBgColor != value)
+        {
+          _firstBgColor = value;
+
+          float[] arr = MyColorConverter.StringToArray(value);
+          _engine.SetFirstBgColor(arr);
+          UpdateImage();
+
+          OnPropertyChanged("FirstBgColor");
+        }
+      }
+    }
+
+    public string SecondBgColor
+    {
+      get { return _secondBgColor; }
+      set
+      {
+        if (_secondBgColor != value)
+        {
+          _secondBgColor = value;
+
+          float[] arr = MyColorConverter.StringToArray(value);
+          _engine.SetSecondBgColor(arr);
+          UpdateImage();
+
+          OnPropertyChanged("SecondBgColor");
         }
       }
     }

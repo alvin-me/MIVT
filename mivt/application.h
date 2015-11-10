@@ -64,6 +64,15 @@ namespace mivt {
     MIVT_API void SetMaterialShininess(float v);
     MIVT_API float GetMaterialShininess();
 
+    MIVT_API void SetFirstBgColor(const float v[4]);
+    MIVT_API void GetFirstBgColor(float v[4]);
+
+    MIVT_API void SetSecondBgColor(const float v[4]);
+    MIVT_API void GetSecondBgColor(float v[4]);
+
+    MIVT_API void SetBgColorMode(const std::string& mode);
+    MIVT_API std::string GetBgColorMode();
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;

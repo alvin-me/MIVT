@@ -1,17 +1,19 @@
 ﻿<Window x:Class="mivtve.TransfuncWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Transfer Function" Height="117" Width="400"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Transfer Function" Height="201" Width="400"
         ResizeMode="NoResize" Icon="Resources/mapping-function.png" Topmost="True">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="140" />
             <ColumnDefinition Width="4" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="22" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
             <RowDefinition Height="25" />
@@ -36,5 +38,19 @@
                   ItemsSource="{Binding Path=ClassificationModeList, Mode=OneTime}"
                   SelectedValue="{Binding Path=ClassificationMode, Mode=TwoWay}">
         </ComboBox>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Backgroud Color Mode:"/>
+        <ComboBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" x:Name="cmbBgColorMode"
+                  ItemsSource="{Binding Path=BgColorModeList, Mode=OneTime}"
+                  SelectedValue="{Binding Path=BgColorMode, Mode=TwoWay}">
+        </ComboBox>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Frist Backgroud Color:"/>
+        <xctk:ColorPicker Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" DisplayColorAndName="True" Width="150"
+                          SelectedColor="{Binding Path=FirstBgColor, Mode=TwoWay}"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Second Backgroud Color:"/>
+        <xctk:ColorPicker Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" DisplayColorAndName="True" Width="150"
+                          SelectedColor="{Binding Path=SecondBgColor, Mode=TwoWay}"/>
     </Grid>
 </Window>

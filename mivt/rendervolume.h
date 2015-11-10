@@ -44,6 +44,15 @@ namespace mivt {
 
     void SetClassificationMode(const std::string& mode);
 
+    void SetFirstColor(const glm::vec4 color);
+    glm::vec4 GetFirstColor();
+
+    void SetSecondColor(const glm::vec4 color);
+    glm::vec4 GetSecondColor();
+
+    void SetColorMode(const std::string& mode);
+    std::string GetColorMode();
+
   private:
     void Process(bool downsampling);
 

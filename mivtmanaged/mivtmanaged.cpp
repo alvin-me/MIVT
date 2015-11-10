@@ -153,5 +153,39 @@ namespace mivtmanaged {
   {
     return local_->GetMaterialShininess();
   }
+
+  void Application::SetFirstBgColor(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->SetFirstBgColor(pinned_v);
+  }
+
+  void Application::GetFirstBgColor(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->GetFirstBgColor(pinned_v);
+  }
+
+  void Application::SetSecondBgColor(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->SetSecondBgColor(pinned_v);
+  }
+
+  void Application::GetSecondBgColor(array<float>^ v)
+  {
+    pin_ptr<float> pinned_v = &v[0];
+    local_->GetSecondBgColor(pinned_v);
+  }
+
+  void Application::SetBgColorMode(String^ mode)
+  {
+    local_->SetBgColorMode(FromManaged(mode));
+  }
+
+  String^ Application::GetBgColorMode()
+  {
+    return ToManaged(local_->GetBgColorMode());
+  }
 }
 
