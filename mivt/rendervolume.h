@@ -53,6 +53,8 @@ namespace mivt {
     void SetColorMode(const std::string& mode);
     std::string GetColorMode();
 
+    void SaveToImage(const std::string& filename);
+
   private:
     void Process(bool downsampling);
 

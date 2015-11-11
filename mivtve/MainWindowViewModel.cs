@@ -39,6 +39,10 @@ namespace mivtve
     private string                  _bgColorMode;
     private string                  _firstBgColor;
     private string                  _secondBgColor;
+    private int                     _exportImageWidth;
+    private int                     _exportImageHeight;
+    private int                     _renderImageWidth;
+    private int                     _renderImageHeight;
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     delegate void ProgressCallback();
@@ -128,11 +132,29 @@ namespace mivtve
         _engine.Resize(width, height);
 
         UpdateImage();
+
+        // save for initialize export image size.
+        _renderImageWidth = width;
+        _renderImageHeight = height;
       });
 
       OpenSettingWindow = new RelayCommand((x) =>
       {
         var window = new SettingWindow();
+        if (window.ShowDialog() == true)
+        {
+
+        }
+      });
+
+      OpenExportWindow = new RelayCommand((x) =>
+      {
+        var window = new ExportWindow();
+        window.DataContext = this;
+
+        ExportImageWidth = _renderImageWidth;
+        ExportImageHeight = _renderImageHeight;
+
         if (window.ShowDialog() == true)
         {
 
@@ -180,6 +202,11 @@ namespace mivtve
       }, (x) =>
       {
         return File.Exists(Properties.Settings.Default.VolumeFile);
+      });
+
+      ExportImage = new RelayCommand((x) =>
+      {
+        _engine.SaveToImage();
       });
     }
 
@@ -396,6 +423,34 @@ namespace mivtve
       }
     }
 
+    public int ExportImageWidth
+    {
+      get { return _exportImageWidth; }
+      set
+      {
+        if(_exportImageWidth != value)
+        {
+          _exportImageWidth = value;
+
+          OnPropertyChanged("ExportImageWidth");
+        }
+      }
+    }
+
+    public int ExportImageHeight
+    {
+      get { return _exportImageHeight; }
+      set
+      {
+        if (_exportImageHeight != value)
+        {
+          _exportImageHeight = value;
+
+          OnPropertyChanged("ExportImageHeight");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -409,6 +464,10 @@ namespace mivtve
     public ICommand OpenTransfuncWindow { get; private set; }
 
     public ICommand OpenLightWindow { get; private set; }
+
+    public ICommand OpenExportWindow { get; private set; }
+
+    public ICommand ExportImage { get; private set; }
 
     #endregion
 

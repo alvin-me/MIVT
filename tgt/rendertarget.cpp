@@ -4,6 +4,9 @@
 #include "texture.h"
 #include "shadermanager.h"
 
+#include <IL/il.h>
+#include <IL/ilu.h>
+
 namespace tgt {
 
   const std::string RenderTarget::loggerCat_ = "RenderTarget";
@@ -282,6 +285,36 @@ namespace tgt {
       throw Exception("RenderTarget::readColorBuffer() called on an empty render target");
     }
     getColorTexture()->downloadTextureToBuffer(buffer, numBytesAllocated);
+  }
+
+  void RenderTarget::saveToImage(const std::string& filename) throw (Exception) {
+
+    if (filename.empty())
+      throw Exception("filename is empty");
+    else if (FileSystem::fileExtension(filename).empty())
+      throw Exception("filename has no extension");
+
+    // get color buffer content
+    uint16_t* colorBuffer = readColorBuffer<uint16_t>();
+    glm::ivec2 size = getSize();
+
+    // create Devil image from image data and write it to file
+    ILuint img;
+    ilGenImages(1, &img);
+    ilBindImage(img);
+    // put pixels into IL-Image
+    ilTexImage(size.x, size.y, 1, 3, IL_RGB, IL_UNSIGNED_SHORT, colorBuffer);
+    ilEnable(IL_FILE_OVERWRITE);
+    ilResetWrite();
+    ILboolean success = ilSaveImage(const_cast<char*>(filename.c_str()));
+    ilDeleteImages(1, &img);
+
+    delete[] colorBuffer;
+
+    if (!success) {
+      ILenum error = ilGetError();
+      throw Exception(std::string(iluErrorString(error)));
+    }
   }
 
 } // end namespace tgt

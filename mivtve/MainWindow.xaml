@@ -30,6 +30,12 @@
                         <TextBlock Margin="3,0,0,0">Light</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button ToolTip="Export as Image" Command="{Binding OpenExportWindow}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/export.png" />
+                        <TextBlock Margin="3,0,0,0">Export</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Button ToolTip="Set Rendering Parameters" Command="{Binding OpenSettingWindow}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/setting.png" />

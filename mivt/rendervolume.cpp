@@ -290,5 +290,10 @@ namespace mivt {
   {
     return renderBackground_->GetColorMode();
   }
+
+  void RenderVolume::SaveToImage(const std::string& filename)
+  {
+    output_->saveToImage(filename);
+  }
 }
 

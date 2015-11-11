@@ -69,6 +69,9 @@
     </ApplicationDefinition>
     <Compile Include="Converter.cs" />
     <Compile Include="EventCommand.cs" />
+    <Compile Include="ExportWindow.xaml.cs">
+      <DependentUpon>ExportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LightWindow.xaml.cs">
       <DependentUpon>LightWindow.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,10 @@
       <DependentUpon>TransfuncWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
+    <Page Include="ExportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LightWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +152,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\online.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

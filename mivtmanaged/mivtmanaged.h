@@ -71,6 +71,9 @@ namespace mivtmanaged {
     void SetBgColorMode(String^ mode);
     String^ GetBgColorMode();
 
+    void SaveToImage(String^ filename);
+    void SaveToImage();
+
   private:
     mivt::Application *local_;
 	};

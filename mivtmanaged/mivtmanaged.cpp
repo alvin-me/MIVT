@@ -187,5 +187,15 @@ namespace mivtmanaged {
   {
     return ToManaged(local_->GetBgColorMode());
   }
+
+  void Application::SaveToImage(String^ filename)
+  {
+    local_->SaveToImage(FromManaged(filename));
+  }
+
+  void Application::SaveToImage()
+  {
+    local_->SaveToImage();
+  }
 }
 

@@ -73,6 +73,9 @@ namespace mivt {
     MIVT_API void SetBgColorMode(const std::string& mode);
     MIVT_API std::string GetBgColorMode();
 
+    MIVT_API void SaveToImage(const std::string& filename);
+    MIVT_API void SaveToImage();
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;

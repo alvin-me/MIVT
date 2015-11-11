@@ -352,4 +352,14 @@ namespace mivt {
   {
     return render_->GetColorMode();
   }
+
+  void Application::SaveToImage(const std::string& filename)
+  {
+    render_->SaveToImage(filename);
+  }
+
+  void Application::SaveToImage()
+  {
+    SaveToImage(getUserDataPath() + "\\screenshot.png");
+  }
 }

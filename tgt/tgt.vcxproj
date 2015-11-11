@@ -63,7 +63,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32d.lib;tinyxml.lib;gdcmMSFF.lib;gdcmDICT.lib;gdcmIOD.lib;gdcmDSED.lib;gdcmCommon.lib;gdcmzlib.lib;gdcmexpat.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmopenjpeg.lib;gdcmcharls.lib;rpcrt4.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32d.lib;tinyxml.lib;gdcmMSFF.lib;gdcmDICT.lib;gdcmIOD.lib;gdcmDSED.lib;gdcmCommon.lib;gdcmzlib.lib;gdcmexpat.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmopenjpeg.lib;gdcmcharls.lib;rpcrt4.lib;ws2_32.lib;DevIL.lib;ILU.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\lib\debug\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -84,7 +84,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;tinyxml.lib;gdcmMSFF.lib;gdcmDICT.lib;gdcmIOD.lib;gdcmDSED.lib;gdcmCommon.lib;gdcmzlib.lib;gdcmexpat.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmopenjpeg.lib;gdcmcharls.lib;rpcrt4.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;tinyxml.lib;gdcmMSFF.lib;gdcmDICT.lib;gdcmIOD.lib;gdcmDSED.lib;gdcmCommon.lib;gdcmzlib.lib;gdcmexpat.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmopenjpeg.lib;gdcmcharls.lib;rpcrt4.lib;ws2_32.lib;DevIL.lib;ILU.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\lib\release\$(TargetName).lib</ImportLibrary>
     </Link>

@@ -82,6 +82,19 @@ namespace tgt {
 
     TGT_API void readColorBuffer(uint8_t* buffer, size_t numBytesAllocated) throw (Exception);
 
+    /**
+    * Writes the currently stored rendering to an image file.
+    *
+    * @note This function requires Voreen to be built with DevIL support.
+    *
+    * @param filename the filename of the output file. Must have an
+    *      extension known by the DevIL library. *.jpg and *.png
+    *      should work fine.
+    *
+    * @throw VoreenException if the image saving failed
+    */
+    TGT_API void saveToImage(const std::string &filename) throw (Exception);
+
   protected:
     FramebufferObject* fbo_;
 
