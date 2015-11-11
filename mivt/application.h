@@ -75,6 +75,8 @@ namespace mivt {
 
     MIVT_API void SaveToImage(const std::string& filename);
     MIVT_API void SaveToImage();
+    MIVT_API void SaveToImage(const std::string& filename, int width, int height);
+    MIVT_API void SaveToImage(int width, int height);
 
   private:
     std::string getBasePath(const std::string& filename = "") const;

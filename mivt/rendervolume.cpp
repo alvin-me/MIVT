@@ -295,5 +295,19 @@ namespace mivt {
   {
     output_->saveToImage(filename);
   }
+
+  void RenderVolume::SaveToImage(const std::string& filename, const glm::ivec2& newSize)
+  {
+    if (output_->getSize() != newSize) {
+      glm::ivec2 oldSize = output_->getSize();
+      Resize(newSize);
+      Process(false);
+      output_->saveToImage(filename);
+      Resize(oldSize);
+    }
+    else {
+      output_->saveToImage(filename);
+    }
+  }
 }
 

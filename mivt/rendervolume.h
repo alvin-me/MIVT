@@ -55,6 +55,8 @@ namespace mivt {
 
     void SaveToImage(const std::string& filename);
 
+    void SaveToImage(const std::string& filename, const glm::ivec2& newSize);
+
   private:
     void Process(bool downsampling);
 

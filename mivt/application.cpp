@@ -362,4 +362,14 @@ namespace mivt {
   {
     SaveToImage(getUserDataPath() + "\\screenshot.png");
   }
+
+  void Application::SaveToImage(const std::string& filename, int width, int height)
+  {
+    render_->SaveToImage(filename, glm::ivec2(width, height));
+  }
+
+  void Application::SaveToImage(int width, int height)
+  {
+    SaveToImage(getUserDataPath() + "\\screenshot.png", width, height);
+  }
 }

@@ -197,5 +197,15 @@ namespace mivtmanaged {
   {
     local_->SaveToImage();
   }
+
+  void Application::SaveToImage(String^ filename, int width, int height)
+  {
+    local_->SaveToImage(FromManaged(filename), width, height);
+  }
+
+  void Application::SaveToImage(int width, int height)
+  {
+    local_->SaveToImage(width, height);
+  }
 }
 

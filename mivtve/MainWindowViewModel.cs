@@ -125,7 +125,7 @@ namespace mivtve
         _imageBuffer = new byte[width * height * 4];
 
         // create bitmap for control binding
-        PixelFormat pf = PixelFormats.Rgb24;
+        PixelFormat pf = PixelFormats.Bgra32;
         int stride = (width * pf.BitsPerPixel + 7) / 8;
         _imageBitmap = new WriteableBitmap(width, height, 96, 96, pf, null);
 
@@ -206,7 +206,7 @@ namespace mivtve
 
       ExportImage = new RelayCommand((x) =>
       {
-        _engine.SaveToImage();
+        _engine.SaveToImage(ExportImageWidth, ExportImageHeight);
       });
     }
 

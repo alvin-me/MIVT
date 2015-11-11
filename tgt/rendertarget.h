@@ -128,7 +128,7 @@ namespace tgt {
 
     GLubyte* pixels = 0;
     try {
-      pixels = getColorTexture()->downloadTextureToBuffer(GL_RGB, dataType);
+      pixels = getColorTexture()->downloadTextureToBuffer(GL_BGRA, dataType);
     }
     catch (std::bad_alloc&) {
       throw Exception("RenderTarget::readColorBuffer(): bad allocation");
@@ -160,7 +160,7 @@ namespace tgt {
       "Expected: uint8_t, uint16_t, float");
 
     try {
-      getColorTexture()->downloadTextureToBuffer(GL_RGB, dataType, pixels, numBytesAllocated);
+      getColorTexture()->downloadTextureToBuffer(GL_BGRA, dataType, pixels, numBytesAllocated);
     }
     catch (std::bad_alloc&) {
       throw Exception("RenderTarget::readColorBuffer(): bad allocation");

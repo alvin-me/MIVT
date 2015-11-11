@@ -303,7 +303,7 @@ namespace tgt {
     ilGenImages(1, &img);
     ilBindImage(img);
     // put pixels into IL-Image
-    ilTexImage(size.x, size.y, 1, 3, IL_RGB, IL_UNSIGNED_SHORT, colorBuffer);
+    ilTexImage(size.x, size.y, 1, 4, IL_BGRA, IL_UNSIGNED_SHORT, colorBuffer);
     ilEnable(IL_FILE_OVERWRITE);
     ilResetWrite();
     ILboolean success = ilSaveImage(const_cast<char*>(filename.c_str()));

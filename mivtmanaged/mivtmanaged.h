@@ -73,6 +73,8 @@ namespace mivtmanaged {
 
     void SaveToImage(String^ filename);
     void SaveToImage();
+    void SaveToImage(String^ filename, int width, int height);
+    void SaveToImage(int width, int height);
 
   private:
     mivt::Application *local_;
