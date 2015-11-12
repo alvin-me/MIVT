@@ -29,6 +29,7 @@ namespace tgt {
     , rescaleSlope_(rescaleSlope)
     , windowCenter_(windowCenter)
     , windowWidth_(windowWidth)
+    , ready_(false)
   {
     addRepresentationInternal(volume);
   }
@@ -372,6 +373,16 @@ namespace tgt {
       delete derivedData_.back();
       derivedData_.pop_back();
     }
+  }
+
+  void Volume::SetReady(bool flag)
+  {
+    ready_ = flag;
+  }
+
+  bool Volume::IsReady()
+  {
+    return ready_;
   }
 
   //------------------------------------------------------------------------------

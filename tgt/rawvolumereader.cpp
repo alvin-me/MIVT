@@ -157,6 +157,7 @@ namespace tgt {
     volumeHandle->setRescaleSlope(h.rescaleSlope_);
     volumeHandle->setWindowCenter(h.windowCenter_);
     volumeHandle->setWindowWidth(h.windowWidth_);
+    volumeHandle->SetReady();
 
     //VolumeGL* vgl = new VolumeGL(volumeRAM);
     //volumeHandle->addRepresentation(vgl);

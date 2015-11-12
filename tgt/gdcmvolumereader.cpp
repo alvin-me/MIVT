@@ -444,6 +444,7 @@ namespace tgt {
     Volume* vh = readDicomFiles(fileNames, origin);
     if (vh) {
       vh->setOrigin(origin);
+      vh->SetReady();
       vc->add(vh);
     }
 

@@ -133,14 +133,14 @@ namespace mivt {
 
     // bind transfer function before active shader and target, because it may re-compute 
     // transfer function table use gpu by another shader in PreIntegration.
-    if (transfunc_ && volume_) {
+    if (transfunc_ && volume_ && volume_->IsReady()) {
       bindTransfuncTexture(classificationMode_, transfunc_, CalculateSamplingStepSize(volume_));
     }
 
     renderDestination->activateTarget();
     renderDestination->clearTarget();
 
-    if (volume_) {
+    if (volume_ && volume_->IsReady()) {
       // activate shader and set common uniforms
       shader_->activate();
       setGlobalShaderParameters(shader_, camera_, renderSize);

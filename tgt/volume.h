@@ -110,6 +110,9 @@ namespace tgt {
 
     TGT_API void clearRepresentation();
 
+    TGT_API void SetReady(bool flag = true);
+    TGT_API bool IsReady();
+
   private:
     std::vector<VolumeRepresentation*> representations_;
     std::vector<VolumeDerivedData*> derivedData_;
@@ -122,6 +125,8 @@ namespace tgt {
     float rescaleSlope_;
     float windowCenter_;
     float windowWidth_;
+
+    bool ready_;
   };
 
   class VolumePreview;
