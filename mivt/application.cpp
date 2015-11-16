@@ -17,14 +17,14 @@ namespace mivt {
 
   const std::string Application::loggerCat_ = "Application";
 
-  Application::Application()
+  Application::Application(bool useOffScreenRender)
     : offscreen_(0)
     , logManager_(0)
     , volume_(0)
     , transfunc_(0)
     , render_(0)
   {
-    Initialize();
+    Initialize(useOffScreenRender);
   }
 
   Application::~Application()
@@ -32,7 +32,7 @@ namespace mivt {
     Deinitialize();
   }
 
-  void Application::Initialize()
+  void Application::Initialize(bool useOffScreenRender)
   {
     ///
     /// 1. initialize none opengl parameters
@@ -64,7 +64,8 @@ namespace mivt {
     /// 2. create render context.
     ///
 
-    offscreen_ = new tgt::OffScreenRender();
+    if (useOffScreenRender)
+      offscreen_ = new tgt::OffScreenRender();
 
     ///
     /// 3. initialize opengl parameters

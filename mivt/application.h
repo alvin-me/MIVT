@@ -17,11 +17,11 @@ namespace mivt {
   class Application
   {
   public:
-    MIVT_API Application();
+    MIVT_API Application(bool useOffScreenRender = false);
 
     MIVT_API ~Application();
 
-    MIVT_API void Initialize();
+    MIVT_API void Initialize(bool useOffScreenRender);
 
     MIVT_API void Deinitialize();
 

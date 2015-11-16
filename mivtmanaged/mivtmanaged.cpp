@@ -26,7 +26,7 @@ namespace mivtmanaged {
   }
 
   Application::Application() {
-    local_ = new mivt::Application();
+    local_ = new mivt::Application(true);
   }
 
   Application::~Application() {
