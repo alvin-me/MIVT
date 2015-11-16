@@ -150,12 +150,12 @@ namespace mivt {
       tgt::TextureUnit entryUnit, entryDepthUnit, exitUnit, exitDepthUnit;
       renderColorCube_->GetFrontFace()->bindTextures(entryUnit, entryDepthUnit, GL_NEAREST);
       shader_->setUniform("entryPoints_", entryUnit.getUnitNumber());
-      //shader_->setUniform("entryPointsDepth_", entryDepthUnit.getUnitNumber());
+      shader_->setUniform("entryPointsDepth_", entryDepthUnit.getUnitNumber());
       renderColorCube_->GetFrontFace()->setTextureParameters(shader_, "entryParameters_");
 
       renderColorCube_->GetBackFace()->bindTextures(exitUnit, exitDepthUnit, GL_NEAREST);
       shader_->setUniform("exitPoints_", exitUnit.getUnitNumber());
-      //shader_->setUniform("exitPointsDepth_", exitDepthUnit.getUnitNumber());
+      shader_->setUniform("exitPointsDepth_", exitDepthUnit.getUnitNumber());
       renderColorCube_->GetBackFace()->setTextureParameters(shader_, "exitParameters_");
       LGL_ERROR;
 

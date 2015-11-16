@@ -5,6 +5,7 @@
 #include "modules/mod_transfunc.frag"       // for transfer function mapping
 #include "modules/mod_gradient.frag"        // for gradient calculation
 #include "modules/mod_shading.frag"         // for shading
+#include "modules/mod_depth.frag"           // for depth
 
 out vec4 FragData0;
 
@@ -70,7 +71,7 @@ vec4 rayTraversal(in vec3 first, in vec3 last, float entryDepth, float exitDepth
   } END_WHILE
 
 
-    gl_FragDepth = 1;
+    gl_FragDepth = 0.5f; // getDepthValue(tDepth, tEnd, entryDepth, exitDepth);;
   return result;
 }
 

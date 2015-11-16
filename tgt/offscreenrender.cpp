@@ -43,11 +43,11 @@ namespace tgt {
     if (!InitializeContext())  return;
     GLenum err = glewInit();
     if (GLEW_OK != err) {
-      LERRORC("MyApplication", "glewInit failed, error: " << glewGetErrorString(err) << std::endl);
+      LERRORC("OffScreenRender", "glewInit failed, error: " << glewGetErrorString(err) << std::endl);
       assert(false);
       exit(EXIT_FAILURE);
     }
-    LINFOC("MyApplication", "GLEW version:       " << glewGetString(GLEW_VERSION));
+    LINFOC("OffScreenRender", "GLEW version:       " << glewGetString(GLEW_VERSION));
 
     glShadeModel(GL_SMOOTH);
 

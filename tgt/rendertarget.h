@@ -161,6 +161,19 @@ namespace tgt {
 
     try {
       getColorTexture()->downloadTextureToBuffer(GL_BGRA, dataType, pixels, numBytesAllocated);
+      
+//      this->activateTarget();
+//      float *depth = new float[getSize().x * getSize().y];
+//      glReadPixels(0, 0, getSize().x, getSize().y, GL_DEPTH_COMPONENT, GL_FLOAT, depth);
+//
+//#pragma warning(disable:4996)
+//
+//      FILE* fp = fopen("D:/test.dat", "wb");
+//      fwrite(depth, getSize().x * getSize().y * sizeof(float), 1, fp);
+//      fclose(fp);
+//
+//      delete[] depth;
+//      this->deactivateTarget();
     }
     catch (std::bad_alloc&) {
       throw Exception("RenderTarget::readColorBuffer(): bad allocation");
