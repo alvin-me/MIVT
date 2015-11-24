@@ -238,6 +238,7 @@ namespace mivt {
       volume->getURB(), glm::vec3(0.f), glm::vec3(1.f), 1.0f);
     boundingbox->transform(volume->getPhysicalToWorldMatrix());
     trackball_->adaptInteractionToScene(boundingbox->getBoundingBox(), glm::hmin(volume->getSpacing()));
+    DELPTR(boundingbox);
 
     // generate geometry
     const glm::vec3 texLlf(0, 0, 0);

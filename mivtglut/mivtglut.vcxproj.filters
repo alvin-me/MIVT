@@ -21,9 +21,18 @@
     <ClCompile Include="vrtest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="opengltransformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vrtest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opengltransformation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
