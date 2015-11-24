@@ -487,28 +487,31 @@ GLfloat cubeNormals[] = {
 ///////////////////////////////////////////////////////////////////////////////
 void drawCube()
 {
-  float shininess = 15.0f;
-  float diffuseColor[3] = { 0.929524f, 0.796542f, 0.178823f };
-  float specularColor[4] = { 1.00000f, 0.980392f, 0.549020f, 1.0f };
+  //float shininess = 15.0f;
+  //float diffuseColor[3] = { 0.929524f, 0.796542f, 0.178823f };
+  //float specularColor[4] = { 1.00000f, 0.980392f, 0.549020f, 1.0f };
 
-  // set specular and shiniess using glMaterial (gold-yellow)
-  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess); // range 0 ~ 128
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularColor);
+  //// set specular and shiniess using glMaterial (gold-yellow)
+  //glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess); // range 0 ~ 128
+  //glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularColor);
 
-  // set ambient and diffuse color using glColorMaterial (gold-yellow)
-  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-  glColor3fv(diffuseColor);
+  //// set ambient and diffuse color using glColorMaterial (gold-yellow)
+  //glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+  //glColor3fv(diffuseColor);
 
   // start to render polygons
   glEnableClientState(GL_NORMAL_ARRAY);
   glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_COLOR_ARRAY);
 
   glNormalPointer(GL_FLOAT, 0, cubeNormals);
   glVertexPointer(3, GL_FLOAT, 0, cubeVertices);
+  glColorPointer(3, GL_FLOAT, 0, cubeVertices);
 
   //glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, &cubeIndices[0]);
   glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 
+  glDisableClientState(GL_COLOR_ARRAY);	  // disable color arrays
   glDisableClientState(GL_VERTEX_ARRAY);	// disable vertex arrays
   glDisableClientState(GL_NORMAL_ARRAY);	// disable normal arrays
 

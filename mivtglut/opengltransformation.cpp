@@ -80,8 +80,17 @@ void OpenGLTransformation::init(int, char* argv[])
 
   // scene init
   {
-    camera = new tgt::Camera(glm::vec3(0, 0, 10), glm::vec3(0), glm::vec3(0, 1, 0), 60.f,
-      (float)windowWidth * 0.5f / windowHeight, 1, 10);
+    /*camera = new tgt::Camera(glm::vec3(0, 0, 10), glm::vec3(0), glm::vec3(0, 1, 0), 60.f,
+      (float)windowWidth * 0.5f / windowHeight, 1, 10);*/
+
+    const float focusToOrigin = 10; // length from eye focus to the original point.
+    glm::vec3 eye(0, 0, focusToOrigin);
+    float nearPlane = 1.f;// focusToOrigin - 2;
+    float farPlane = focusToOrigin + 2;
+    float ratio = (float)windowWidth * 0.5f / windowHeight;
+    float fovy = atan(1 / ratio / nearPlane) / DEG2RAD * 2;
+    camera = new tgt::Camera(eye, glm::vec3(0), glm::vec3(0, 1, 0), fovy, ratio, nearPlane, farPlane);
+
     trackball = new tgt::Trackball(camera);
     trackball->setSize(0.7f); // sets trackball sensitivity
 
@@ -128,7 +137,12 @@ void OpenGLTransformation::drawSub1()
   // always draw the grid at the origin (before any modeling transform)
   drawGrid(10, 1);
   drawAxis(4);
+
+  glm::mat4 cubeModel = glm::translate(glm::vec3(-0.5f));
+  MatStack.pushMatrix();
+  MatStack.loadMatrix(camera->getViewMatrix() * cubeModel);
   drawCube();
+  MatStack.popMatrix();
 
   MatStack.matrixMode(tgt::MatrixStack::PROJECTION);
   MatStack.popMatrix();
@@ -154,14 +168,19 @@ void OpenGLTransformation::drawSub2()
   // always draw the grid at the origin (before any modeling transform)
   drawGrid(10, 1);
   drawAxis(4);
+
+  glm::mat4 cubeModel = glm::translate(glm::vec3(-0.5f));
+  MatStack.pushMatrix();
+  MatStack.loadMatrix(cameraRight->getViewMatrix() * cubeModel);
   drawCube();
+  MatStack.popMatrix();
 
   // draw the camera
   glm::mat4 camModel = glm::translate(camera->getPosition()) * glm::inverse(camera->getRotateMatrix());
   MatStack.pushMatrix();
   MatStack.loadMatrix(cameraRight->getViewMatrix() * camModel);
   drawCamera();
-  drawFrustum(60.0f, (float)windowWidth / 2 / windowHeight, 1, 10);
+  drawFrustum(camera->getFovy(), camera->getRatio(), camera->getNearDist(), camera->getFarDist());
   MatStack.popMatrix();
 
   MatStack.matrixMode(tgt::MatrixStack::PROJECTION);
