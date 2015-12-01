@@ -61,6 +61,8 @@ namespace mivt {
     MatStack.pushMatrix();
     MatStack.loadMatrix(camera->getViewMatrix());
 
+    glEnable(GL_DEPTH_TEST);
+
     // render front texture
     if (frontTarget_) {
       // simple implement

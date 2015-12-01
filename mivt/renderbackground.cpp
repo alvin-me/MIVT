@@ -110,7 +110,6 @@ namespace mivt {
 
     output_->deactivateTarget();
     
-    glDisable(GL_DEPTH_TEST);
     tgt::TextureUnit::setZeroUnit();
   }
 

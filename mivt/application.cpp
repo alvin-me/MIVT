@@ -152,7 +152,7 @@ namespace mivt {
     log = new tgt::HtmlLog(htmlLogFile, false, true, true, true, false);
     assert(log);
 
-    log->addCat("", true, tgt::LogLevel::Info);
+    log->addCat("", true, tgt::LogLevel::Debug);
     LogMgr.addLog(log);
 
     htmlLogFile = absLogPath;

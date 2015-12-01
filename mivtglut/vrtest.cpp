@@ -50,7 +50,9 @@ void VRTest::display()
     memcpy(bufferRCP + (windowHeight - 1 - i) * lineBytes, buffer + i * lineBytes, lineBytes);
   }
 
+  glDisable(GL_DEPTH_TEST);
   glDrawPixels(windowWidth, windowHeight, GL_BGRA, GL_UNSIGNED_BYTE, bufferRCP);
+  glEnable(GL_DEPTH_TEST);
 
   glutSwapBuffers();
 }

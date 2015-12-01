@@ -71,7 +71,7 @@ vec4 rayTraversal(in vec3 first, in vec3 last, float entryDepth, float exitDepth
   } END_WHILE
 
 
-    gl_FragDepth = 0.5f; // getDepthValue(tDepth, tEnd, entryDepth, exitDepth);;
+    gl_FragDepth = getDepthValue(tDepth, tEnd, entryDepth, exitDepth);;
   return result;
 }
 
