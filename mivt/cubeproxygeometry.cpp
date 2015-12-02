@@ -47,7 +47,7 @@ namespace mivt {
     glm::ivec3 numSlices = volume_->getDimensions();
 
     clipRight_ = 0;
-    clipLeft_ = static_cast<float>(numSlices.x - 1) / 2.0f;
+    clipLeft_ = static_cast<float>(numSlices.x - 1);
     clipFront_ = 0;
     clipBack_ = static_cast<float>(numSlices.y - 1);
     clipBottom_ = 0;

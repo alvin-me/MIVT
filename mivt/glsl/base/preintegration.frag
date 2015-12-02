@@ -24,9 +24,8 @@ void main() {
         //else: perform compositing in transfer function space
         int sf = int(fragCoord.x);
         int sb = int(fragCoord.y);
-        float scale = 1 / abs(float(sb - sf));
-
-        int incr = (sb - sf) / abs(sb - sf);
+        int incr = sb > sf ? 1 : -1;
+        float scale = incr / float(sb - sf);
 
         //for (int s = sf; (incr == 1 ? s <= sb : s >= sb) && (fragColor.a < 0.95); s += incr) {
         for (int s = sf; ((incr * s) <= (incr * sb)) && (fragColor.a < 0.95); s += incr) {
