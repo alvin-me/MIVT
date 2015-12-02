@@ -16,6 +16,7 @@ namespace mivt {
   class RenderColorCube;
   class RenderBackground;
   class RenderToScreen;
+  class CubeProxyGeometry;
 
   class RenderVolume : public VolumeRaycaster
   {
@@ -57,6 +58,24 @@ namespace mivt {
 
     void SaveToImage(const std::string& filename, const glm::ivec2& newSize);
 
+    void ChangeClipRight(float val);
+    void ChangeClipLeft(float val);
+    void ChangeClipBack(float val);
+    void ChangeClipFront(float val);
+    void ChangeClipBottom(float val);
+    void ChangeClipTop(float val);
+    void resetClipPlanes();
+    void EnableClip(bool flag);
+    glm::ivec3 getClipMaximum();
+
+    float GetClipRight();
+    float GetClipLeft();
+    float GetClipBack();
+    float GetClipFront();
+    float GetClipBottom();
+    float GetClipTop();
+    bool IsClipEnabled();
+
   private:
     void Process(bool downsampling);
 
@@ -69,7 +88,7 @@ namespace mivt {
     tgt::RenderTarget     *output_;
     tgt::Shader           *shader_;
     tgt::Camera           *camera_;
-    tgt::Geometry         *proxyGeometry_;
+    //tgt::Geometry         *proxyGeometry_;
     tgt::Trackball        *trackball_;
     tgt::Volume           *volume_;
     tgt::TransFunc1D      *transfunc_;
@@ -77,6 +96,7 @@ namespace mivt {
     RenderColorCube       *renderColorCube_;    
     RenderBackground      *renderBackground_;
     RenderToScreen        *renderToScreen_;
+    CubeProxyGeometry     *cubeProxyGeometry_;
   };
 
 }

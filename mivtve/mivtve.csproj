@@ -67,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClippingWindow.xaml.cs">
+      <DependentUpon>ClippingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter.cs" />
     <Compile Include="EventCommand.cs" />
     <Compile Include="ExportWindow.xaml.cs">
@@ -83,6 +86,10 @@
       <DependentUpon>TransfuncWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
+    <Page Include="ClippingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\star-half.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

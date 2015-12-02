@@ -10,6 +10,7 @@
 #include "transfunc1d.h"
 #include "renderbackground.h"
 #include "rendertoscreen.h"
+#include "cubeproxygeometry.h"
 
 namespace mivt {
 
@@ -20,13 +21,14 @@ namespace mivt {
     , output_(0)
     , shader_(0)
     , camera_(0)
-    , proxyGeometry_(0)
+    //, proxyGeometry_(0)
     , renderColorCube_(0)
     , trackball_(0)
     , volume_(0)
     , transfunc_(0)
     , renderBackground_(0)
     , renderToScreen_(0)
+    , cubeProxyGeometry_(0)
   {
   }
 
@@ -61,6 +63,8 @@ namespace mivt {
 
     renderToScreen_ = new RenderToScreen();
     renderToScreen_->Initialize();
+
+    cubeProxyGeometry_ = new CubeProxyGeometry();
   }
 
   void RenderVolume::Deinitialize()
@@ -91,6 +95,8 @@ namespace mivt {
     renderToScreen_->Deinitialize();
     DELPTR(renderToScreen_);
 
+    DELPTR(cubeProxyGeometry_);
+
   }
 
   void RenderVolume::GetPixels(unsigned char* buffer, int length, bool downsampling)
@@ -115,8 +121,8 @@ namespace mivt {
   void RenderVolume::Process(bool downsampling)
   {
     // create front & back color cube texture.
-    if (proxyGeometry_)
-      renderColorCube_->Process(proxyGeometry_, camera_);
+    if (cubeProxyGeometry_->GetGeometry())
+      renderColorCube_->Process(cubeProxyGeometry_->GetGeometry(), camera_);
 
 
     const bool renderCoarse = downsampling && interactionCoarseness_ > 1;
@@ -240,12 +246,15 @@ namespace mivt {
     trackball_->adaptInteractionToScene(boundingbox->getBoundingBox(), glm::hmin(volume->getSpacing()));
     DELPTR(boundingbox);
 
-    // generate geometry
-    const glm::vec3 texLlf(0, 0, 0);
-    const glm::vec3 texUrb(1, 1, 1);
-    DELPTR(proxyGeometry_);
-    proxyGeometry_ = tgt::TriangleMeshGeometryVec4Vec3::createCube(texLlf, texUrb, texLlf, texUrb, 1.0f);
-    proxyGeometry_->transform(volume->getTextureToWorldMatrix());
+    //// generate geometry
+    //const glm::vec3 texLlf(0, 0, 0);
+    //const glm::vec3 texUrb(1, 1, 1);
+    //DELPTR(proxyGeometry_);
+    //proxyGeometry_ = tgt::TriangleMeshGeometryVec4Vec3::createCube(texLlf, texUrb, texLlf, texUrb, 1.0f);
+    //proxyGeometry_->transform(volume->getTextureToWorldMatrix());
+
+    cubeProxyGeometry_->SetVolume(volume);
+    cubeProxyGeometry_->Process();
   }
 
   void RenderVolume::SetTransfunc(tgt::TransFunc1D *transfunc)
@@ -309,6 +318,90 @@ namespace mivt {
     else {
       output_->saveToImage(filename);
     }
+  }
+
+  void RenderVolume::ChangeClipRight(float val)
+  {
+    cubeProxyGeometry_->ChangeClipRight(val);
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::ChangeClipLeft(float val)
+  {
+    cubeProxyGeometry_->ChangeClipLeft(val);
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::ChangeClipBack(float val)
+  {
+    cubeProxyGeometry_->ChangeClipBack(val);
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::ChangeClipFront(float val)
+  {
+    cubeProxyGeometry_->ChangeClipFront(val);
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::ChangeClipBottom(float val)
+  {
+    cubeProxyGeometry_->ChangeClipBottom(val);
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::ChangeClipTop(float val)
+  {
+    cubeProxyGeometry_->ChangeClipTop(val);
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::resetClipPlanes()
+  {
+    cubeProxyGeometry_->resetClipPlanes();
+    cubeProxyGeometry_->Process();
+  }
+
+  void RenderVolume::EnableClip(bool flag)
+  {
+    cubeProxyGeometry_->EnableClip(flag);
+  }
+
+  glm::ivec3 RenderVolume::getClipMaximum()
+  {
+    if (volume_)
+      return volume_->getDimensions();
+    else
+      return glm::ivec3(1);
+  }
+
+  float RenderVolume::GetClipRight()
+  {
+    return cubeProxyGeometry_->GetClipRight();
+  }
+  float RenderVolume::GetClipLeft()
+  {
+    return cubeProxyGeometry_->GetClipLeft();
+  }
+  float RenderVolume::GetClipBack()
+  {
+    return cubeProxyGeometry_->GetClipBack();
+  }
+  float RenderVolume::GetClipFront()
+  {
+    return cubeProxyGeometry_->GetClipFront();
+  }
+  float RenderVolume::GetClipBottom()
+  {
+    return cubeProxyGeometry_->GetClipBottom();
+  }
+  float RenderVolume::GetClipTop()
+  {
+    return cubeProxyGeometry_->GetClipTop();
+  }
+  bool RenderVolume::IsClipEnabled()
+  {
+    return cubeProxyGeometry_->IsClipEnabled();
   }
 }
 

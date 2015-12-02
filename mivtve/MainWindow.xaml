@@ -30,6 +30,12 @@
                         <TextBlock Margin="3,0,0,0">Light</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button ToolTip="Volume clipping and sculpt" Command="{Binding OpenClippingWindow}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/star-half.png" />
+                        <TextBlock Margin="3,0,0,0">Clipping</TextBlock>
+                    </StackPanel>
+                </Button>
                 <Button ToolTip="Export as Image" Command="{Binding OpenExportWindow}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Resources/export.png" />

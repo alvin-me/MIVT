@@ -85,7 +85,7 @@ void OpenGLTransformation::init(int, char* argv[])
 
     const float focusToOrigin = 10; // length from eye focus to the original point.
     glm::vec3 eye(0, 0, focusToOrigin);
-    float nearPlane = 1.f;// focusToOrigin - 2;
+    float nearPlane = focusToOrigin - 2;
     float farPlane = focusToOrigin + 2;
     float ratio = (float)windowWidth * 0.5f / windowHeight;
     float fovy = atan(1 / ratio / nearPlane) / DEG2RAD * 2;
@@ -115,6 +115,8 @@ void OpenGLTransformation::display()
 {
   drawSub1();
   drawSub2();
+
+  glFinish();
 
   glutSwapBuffers();
 }

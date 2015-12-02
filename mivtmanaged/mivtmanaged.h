@@ -76,6 +76,23 @@ namespace mivtmanaged {
     void SaveToImage(String^ filename, int width, int height);
     void SaveToImage(int width, int height);
 
+    void ChangeClipRight(float val);
+    void ChangeClipLeft(float val);
+    void ChangeClipBack(float val);
+    void ChangeClipFront(float val);
+    void ChangeClipBottom(float val);
+    void ChangeClipTop(float val);
+    void resetClipPlanes();
+    void EnableClip(bool flag);
+    void getClipMaximum(array<int>^ v);
+    float GetClipRight();
+    float GetClipLeft();
+    float GetClipBack();
+    float GetClipFront();
+    float GetClipBottom();
+    float GetClipTop();
+    bool IsClipEnabled();
+
   private:
     mivt::Application *local_;
 	};

@@ -235,6 +235,27 @@ namespace tgt {
     camera_->setFocus(newFocus);
     camera_->setPosition(newPos);
     camera_->setFarDist(newMaxDist + maxSideLength);
+
+    //const float maxSideLength = glm::hmax(bound.diagonal());
+    //const float focusToOrigin = 10 * maxSideLength;
+
+    //glm::vec3 lookat = bound.center();
+    //glm::vec3 eye = bound.center() - focusToOrigin * camera_->getLook();
+    //float nearPlane = focusToOrigin - 2 * maxSideLength;
+    //float farPlane = focusToOrigin + 2 * maxSideLength;
+    //float ratio = camera_->getRatio();
+    //float fovy = glm::rad2deg(atan(1 / ratio / nearPlane)) * 2;
+    //camera_->setPosition(eye);
+    //camera_->setFocus(lookat);
+    //camera_->setNearDist(nearPlane);
+    //camera_->setFarDist(farPlane);
+    //camera_->setFovy(fovy);
+
+    //setMaxValue(farPlane);
+    //setMinValue(nearPlane);
+    //setCenter(lookat);
+
+    //nearDist;
   }
 
 } // end namespace tgt

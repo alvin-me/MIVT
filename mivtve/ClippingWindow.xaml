@@ -1,0 +1,57 @@
+﻿<Window x:Class="mivtve.ClippingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clipping" Height="219.8" Width="332.8"
+        ResizeMode="NoResize" Icon="Resources/star-half.png">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Right Clip Plane(x):"/>
+        <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Slider x:Name="sliderRightClip" Minimum="0" Maximum="{Binding Path=ClipRangeX, Mode=OneWay}" Value="{Binding Path=ClipRight, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Path=ClipRight, Mode=TwoWay}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Left Clip Plane(x):"/>
+        <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Slider x:Name="sliderLeftClip" Minimum="0" Maximum="{Binding Path=ClipRangeX, Mode=OneWay}" Value="{Binding Path=ClipLeft, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Path=ClipLeft, Mode=TwoWay}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Front Clip Plane(y):"/>
+        <StackPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Slider x:Name="sliderFrontClip" Minimum="0" Maximum="{Binding Path=ClipRangeY, Mode=OneWay}" Value="{Binding Path=ClipFront, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Path=ClipFront, Mode=TwoWay}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Back Clip Plane(y):"/>
+        <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Slider x:Name="sliderBackClip" Minimum="0" Maximum="{Binding Path=ClipRangeY, Mode=OneWay}" Value="{Binding Path=ClipBack, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Path=ClipBack, Mode=TwoWay}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Bottom Clip Plane(z):"/>
+        <StackPanel Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Slider x:Name="sliderBottomClip" Minimum="0" Maximum="{Binding Path=ClipRangeZ, Mode=OneWay}" Value="{Binding Path=ClipBottom, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Path=ClipBottom, Mode=TwoWay}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Top Clip Plane(z):"/>
+        <StackPanel Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Slider x:Name="sliderTopClip" Minimum="0" Maximum="{Binding Path=ClipRangeZ, Mode=OneWay}" Value="{Binding Path=ClipTop, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Path=ClipTop, Mode=TwoWay}" />
+        </StackPanel>
+    </Grid>
+</Window>

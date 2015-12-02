@@ -207,5 +207,80 @@ namespace mivtmanaged {
   {
     local_->SaveToImage(width, height);
   }
+
+  void Application::ChangeClipRight(float val)
+  {
+    local_->ChangeClipRight(val);
+  }
+
+  void Application::ChangeClipLeft(float val)
+  {
+    local_->ChangeClipLeft(val);
+  }
+
+  void Application::ChangeClipBack(float val)
+  {
+    local_->ChangeClipBack(val);
+  }
+
+  void Application::ChangeClipFront(float val)
+  {
+    local_->ChangeClipFront(val);
+  }
+
+  void Application::ChangeClipBottom(float val)
+  {
+    local_->ChangeClipBottom(val);
+  }
+
+  void Application::ChangeClipTop(float val)
+  {
+    local_->ChangeClipTop(val);
+  }
+
+  void Application::resetClipPlanes()
+  {
+    local_->resetClipPlanes();
+  }
+
+  void Application::EnableClip(bool flag)
+  {
+    local_->EnableClip(flag);
+  }
+
+  void Application::getClipMaximum(array<int>^ v)
+  {
+    pin_ptr<int> pinned_v = &v[0];
+    local_->getClipMaximum(pinned_v);
+  }
+
+  float Application::GetClipRight()
+  {
+    return local_->GetClipRight();
+  }
+  float Application::GetClipLeft()
+  {
+    return local_->GetClipLeft();
+  }
+  float Application::GetClipBack()
+  {
+    return local_->GetClipBack();
+  }
+  float Application::GetClipFront()
+  {
+    return local_->GetClipFront();
+  }
+  float Application::GetClipBottom()
+  {
+    return local_->GetClipBottom();
+  }
+  float Application::GetClipTop()
+  {
+    return local_->GetClipTop();
+  }
+  bool Application::IsClipEnabled()
+  {
+    return local_->IsClipEnabled();
+  }
 }
 

@@ -70,6 +70,7 @@
     <ClCompile Include="volumeraycaster.cpp" />
     <ClCompile Include="preintegration.cpp" />
     <ClCompile Include="renderbackground.cpp" />
+    <ClCompile Include="cubeproxygeometry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -81,5 +82,6 @@
     <ClInclude Include="volumeraycaster.h" />
     <ClInclude Include="preintegration.h" />
     <ClInclude Include="renderbackground.h" />
+    <ClInclude Include="cubeproxygeometry.h" />
   </ItemGroup>
 </Project>

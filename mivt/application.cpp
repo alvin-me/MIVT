@@ -373,4 +373,81 @@ namespace mivt {
   {
     SaveToImage(getUserDataPath() + "\\screenshot.png", width, height);
   }
+
+  void Application::ChangeClipRight(float val)
+  {
+    render_->ChangeClipRight(val);
+  }
+
+  void Application::ChangeClipLeft(float val)
+  {
+    render_->ChangeClipLeft(val);
+  }
+
+  void Application::ChangeClipBack(float val)
+  {
+    render_->ChangeClipBack(val);
+  }
+
+  void Application::ChangeClipFront(float val)
+  {
+    render_->ChangeClipFront(val);
+  }
+
+  void Application::ChangeClipBottom(float val)
+  {
+    render_->ChangeClipBottom(val);
+  }
+
+  void Application::ChangeClipTop(float val)
+  {
+    render_->ChangeClipTop(val);
+  }
+
+  void Application::resetClipPlanes()
+  {
+    render_->resetClipPlanes();
+  }
+
+  void Application::EnableClip(bool flag)
+  {
+    render_->EnableClip(flag);
+  }
+
+  void Application::getClipMaximum(int v[3])
+  {
+    glm::ivec3 ret = render_->getClipMaximum();
+    v[0] = ret.x;
+    v[1] = ret.y;
+    v[2] = ret.z;
+  }
+
+  float Application::GetClipRight()
+  {
+    return render_->GetClipRight();
+  }
+  float Application::GetClipLeft()
+  {
+    return render_->GetClipLeft();
+  }
+  float Application::GetClipBack()
+  {
+    return render_->GetClipBack();
+  }
+  float Application::GetClipFront()
+  {
+    return render_->GetClipFront();
+  }
+  float Application::GetClipBottom()
+  {
+    return render_->GetClipBottom();
+  }
+  float Application::GetClipTop()
+  {
+    return render_->GetClipTop();
+  }
+  bool Application::IsClipEnabled()
+  {
+    return render_->IsClipEnabled();
+  }
 }

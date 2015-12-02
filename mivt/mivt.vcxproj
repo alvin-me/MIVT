@@ -30,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="cubeproxygeometry.cpp" />
     <ClCompile Include="preintegration.cpp" />
     <ClCompile Include="renderbackground.cpp" />
     <ClCompile Include="renderbase.cpp" />
@@ -40,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="cubeproxygeometry.h" />
     <ClInclude Include="preintegration.h" />
     <ClInclude Include="renderbackground.h" />
     <ClInclude Include="renderbase.h" />

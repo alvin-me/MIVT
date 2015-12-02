@@ -78,6 +78,23 @@ namespace mivt {
     MIVT_API void SaveToImage(const std::string& filename, int width, int height);
     MIVT_API void SaveToImage(int width, int height);
 
+    MIVT_API void ChangeClipRight(float val);
+    MIVT_API void ChangeClipLeft(float val);
+    MIVT_API void ChangeClipBack(float val);
+    MIVT_API void ChangeClipFront(float val);
+    MIVT_API void ChangeClipBottom(float val);
+    MIVT_API void ChangeClipTop(float val);
+    MIVT_API void resetClipPlanes();
+    MIVT_API void EnableClip(bool flag);
+    MIVT_API void getClipMaximum(int val[3]);
+    MIVT_API float GetClipRight();
+    MIVT_API float GetClipLeft();
+    MIVT_API float GetClipBack();
+    MIVT_API float GetClipFront();
+    MIVT_API float GetClipBottom();
+    MIVT_API float GetClipTop();
+    MIVT_API bool IsClipEnabled();
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;

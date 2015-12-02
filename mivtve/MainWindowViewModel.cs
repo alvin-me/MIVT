@@ -31,6 +31,7 @@ namespace mivtve
     private List<string>            _classificationModeList;
     private TransfuncWindow         _transfuncWindow = null;
     private LightWindow             _lightWindow = null;
+    private ClippingWindow          _clippingWindow = null;
     private float                   _shiness;
     private string                  _ambientColor;
     private string                  _diffuseColor;
@@ -43,6 +44,16 @@ namespace mivtve
     private int                     _exportImageHeight;
     private int                     _renderImageWidth;
     private int                     _renderImageHeight;
+    private float                   _clipLeft;
+    private float                   _clipRight;
+    private float                   _clipFront;
+    private float                   _clipBack;
+    private float                   _clipTop;
+    private float                   _clipBottom;
+    private int                     _clipRangeX;
+    private int                     _clipRangeY;
+    private int                     _clipRangeZ;
+    private bool                    _volumeLoaded;
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     delegate void ProgressCallback();
@@ -114,6 +125,12 @@ namespace mivtve
       _engine.GetSecondBgColor(color);
       SecondBgColor = MyColorConverter.ArrayToString(color);
 
+      ClipRangeX = 1;
+      ClipRangeY = 1;
+      ClipRangeZ = 1;
+
+      _volumeLoaded = false;
+
       // initialize commands
 
       ImageSizeChanged = new RelayCommand((x) =>
@@ -181,6 +198,34 @@ namespace mivtve
         _lightWindow.Show();
       });
 
+      OpenClippingWindow = new RelayCommand((x) =>
+      {
+        if(_clippingWindow == null)
+        {
+          _clippingWindow = new ClippingWindow();
+
+          int[] range = new int[3];
+          _engine.getClipMaximum(range);
+          ClipRangeX = range[0];
+          ClipRangeY = range[1];
+          ClipRangeZ = range[2];
+
+          ClipRight = _engine.GetClipRight();
+          ClipLeft = _engine.GetClipLeft();
+          ClipBottom = _engine.GetClipBottom();
+          ClipTop = _engine.GetClipTop();
+          ClipFront = _engine.GetClipFront();
+          ClipBack = _engine.GetClipBack();
+
+          _clippingWindow.DataContext = this;
+        }
+        _clippingWindow.Show();
+      }, 
+      (x) =>
+      {
+        return _volumeLoaded;
+      });
+
       LoadVolume = new RelayCommand((x) =>
       {
         string ext = Path.GetExtension(Properties.Settings.Default.VolumeFile);
@@ -188,8 +233,8 @@ namespace mivtve
           LoadRawVolume(Properties.Settings.Default.VolumeFile);
           UpdateImage();
           LogInfo("Volume Loaded.", 5000);
+          _volumeLoaded = true;
         }
-
         else if (ext == ".dcm")
         {
           var task = Application.Current.Dispatcher.BeginInvoke(new Action(() =>
@@ -198,6 +243,7 @@ namespace mivtve
           }));
           //UpdateImage();
           //LogInfo("Volume Loaded.", 5000);
+          _volumeLoaded = true;
         }
       }, (x) =>
       {
@@ -451,6 +497,150 @@ namespace mivtve
       }
     }
 
+    public float ClipLeft
+    {
+      get { return _clipLeft; }
+      set
+      {
+        if (_clipLeft != value)
+        {
+          _clipLeft = value;
+
+          _engine.ChangeClipLeft(value);
+          UpdateImage();
+
+          OnPropertyChanged("ClipLeft");
+        }
+      }
+    }
+
+    public float ClipRight
+    {
+      get { return _clipRight; }
+      set
+      {
+        if (_clipRight != value)
+        {
+          _clipRight = value;
+
+          _engine.ChangeClipRight(value);
+          UpdateImage();
+
+          OnPropertyChanged("ClipRight");
+        }
+      }
+    }
+
+    public float ClipFront
+    {
+      get { return _clipFront; }
+      set
+      {
+        if (_clipFront != value)
+        {
+          _clipFront = value;
+
+          _engine.ChangeClipFront(value);
+          UpdateImage();
+
+          OnPropertyChanged("ClipFront");
+        }
+      }
+    }
+
+    public float ClipBack
+    {
+      get { return _clipBack; }
+      set
+      {
+        if (_clipBack != value)
+        {
+          _clipBack = value;
+
+          _engine.ChangeClipBack(value);
+          UpdateImage();
+
+          OnPropertyChanged("ClipBack");
+        }
+      }
+    }
+
+    public float ClipTop
+    {
+      get { return _clipTop; }
+      set
+      {
+        if (_clipTop != value)
+        {
+          _clipTop = value;
+
+          _engine.ChangeClipTop(value);
+          UpdateImage();
+
+          OnPropertyChanged("ClipTop");
+        }
+      }
+    }
+
+    public float ClipBottom
+    {
+      get { return _clipBottom; }
+      set
+      {
+        if (_clipBottom != value)
+        {
+          _clipBottom = value;
+
+          _engine.ChangeClipBottom(value);
+          UpdateImage();
+
+          OnPropertyChanged("ClipBottom");
+        }
+      }
+    }
+
+    public int ClipRangeX
+    {
+      get { return _clipRangeX; }
+      set
+      {
+        if (_clipRangeX != value)
+        {
+          _clipRangeX = value;
+
+          OnPropertyChanged("ClipRangeX");
+        }
+      }
+    }
+
+    public int ClipRangeY
+    {
+      get { return _clipRangeY; }
+      set
+      {
+        if (_clipRangeY != value)
+        {
+          _clipRangeY = value;
+
+          OnPropertyChanged("ClipRangeY");
+        }
+      }
+    }
+
+    public int ClipRangeZ
+    {
+      get { return _clipRangeZ; }
+      set
+      {
+        if (_clipRangeZ != value)
+        {
+          _clipRangeZ = value;
+
+          OnPropertyChanged("ClipRangeZ");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -468,6 +658,8 @@ namespace mivtve
     public ICommand OpenExportWindow { get; private set; }
 
     public ICommand ExportImage { get; private set; }
+
+    public ICommand OpenClippingWindow { get; private set; }
 
     #endregion
 
