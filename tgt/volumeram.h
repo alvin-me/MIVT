@@ -63,8 +63,6 @@ namespace tgt {
   protected:
     // protected default constructor
     VolumeRAM() {}
-
-    static const std::string loggerCat_;
   };
 
 } // end namespace tgt

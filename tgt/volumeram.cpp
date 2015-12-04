@@ -2,8 +2,6 @@
 
 namespace tgt {
 
-  const std::string VolumeRAM::loggerCat_("VolumeRAM");
-
   VolumeRAM::VolumeRAM(const glm::ivec3& dimensions)
     : VolumeRepresentation(dimensions)
   {}

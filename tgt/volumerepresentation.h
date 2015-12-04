@@ -28,8 +28,6 @@ namespace tgt {
 
     glm::ivec3  dimensions_;
     size_t      numVoxels_;
-
-    static const std::string loggerCat_;
   };
 
 } // end namespace tgt

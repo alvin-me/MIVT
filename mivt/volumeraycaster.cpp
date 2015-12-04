@@ -25,6 +25,7 @@ namespace mivt {
     , classificationMode_("pre-integrated-gpu") // transfer-function, pre-integrated
     , shadeMode_("phong")
     , compositingMode_("dvr")
+    , maskingMode_("")
     , preintegration_(0)
     , interactionCoarseness_(3) // 1~8
     //, interactionQuality_(1.f)

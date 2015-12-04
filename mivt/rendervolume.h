@@ -92,6 +92,7 @@ namespace mivt {
     tgt::Trackball        *trackball_;
     tgt::Volume           *volume_;
     tgt::TransFunc1D      *transfunc_;
+    tgt::Volume           *mask_;
 
     RenderColorCube       *renderColorCube_;    
     RenderBackground      *renderBackground_;

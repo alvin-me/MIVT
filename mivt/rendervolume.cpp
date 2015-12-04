@@ -11,6 +11,7 @@
 #include "renderbackground.h"
 #include "rendertoscreen.h"
 #include "cubeproxygeometry.h"
+#include "volumeatomic.h"
 
 namespace mivt {
 
@@ -25,6 +26,7 @@ namespace mivt {
     , renderColorCube_(0)
     , trackball_(0)
     , volume_(0)
+    , mask_(0)
     , transfunc_(0)
     , renderBackground_(0)
     , renderToScreen_(0)
@@ -96,6 +98,8 @@ namespace mivt {
     DELPTR(renderToScreen_);
 
     DELPTR(cubeProxyGeometry_);
+
+    DELPTR(mask_);
 
   }
 
@@ -171,6 +175,12 @@ namespace mivt {
         GL_CLAMP_TO_EDGE, glm::vec4(0.f), GL_LINEAR);
       bindVolume(shader_, volumeTexture, camera_, lightPosition_);
       LGL_ERROR;
+
+      // bind mask texture and pass it to the shader
+      tgt::TextureUnit maskUnit;
+      VolumeStruct maskTexutre(mask_, &maskUnit, "mask_", "maskStruct_",
+        GL_CLAMP_TO_EDGE, glm::vec4(0.f), GL_NEAREST);
+      bindVolume(shader_, maskTexutre);
 
       // pass transfer function to the shader
       tgt::TextureUnit transferUnit;
@@ -255,6 +265,19 @@ namespace mivt {
 
     cubeProxyGeometry_->SetVolume(volume);
     cubeProxyGeometry_->Process();
+
+    // create a mask with the same dimension as volume
+    tgt::VolumeRAM* volumeRAM = new tgt::VolumeRAM_UInt8(volume->getDimensions());
+    volumeRAM->clear();
+    DELPTR(mask_);
+    mask_ = new tgt::Volume(volumeRAM, glm::vec3(1), glm::vec3(0));
+
+    unsigned char* data = reinterpret_cast<uint8_t*>(mask_->getRepresentation<tgt::VolumeRAM>()->getData());
+    glm::ivec3 dim = volume->getDimensions();
+    for (int idz = 0; idz < dim.z/2; ++idz)
+    for (int idy = 0; idy < dim.y; ++idy)
+    for (int idx = 0; idx < dim.x; ++idx)
+      data[idz * dim.y * dim.x + idy * dim.x + idx] = 1;
   }
 
   void RenderVolume::SetTransfunc(tgt::TransFunc1D *transfunc)

@@ -2,8 +2,6 @@
 
 namespace tgt {
 
-  const std::string VolumeRepresentation::loggerCat_("VolumeRepresentation");
-
   VolumeRepresentation::VolumeRepresentation(const glm::ivec3& dimensions)
     : dimensions_(dimensions)
   {

@@ -19,6 +19,9 @@ uniform TextureParameters exitParameters_;  // ray exit texture parameters
 uniform sampler3D volume_;                  // volume texture
 uniform VolumeParameters volumeStruct_;     // volume texture parameters
 
+uniform sampler3D mask_;                    // mask texture
+uniform VolumeParameters maskStruct_;       // mask texture parameters
+
 uniform TF_SAMPLER_TYPE transFuncTex_;        // transfunc texture
 uniform TransFuncParameters transFuncStruct_; // transfunc texture parameters
 
@@ -41,30 +44,33 @@ vec4 rayTraversal(in vec3 first, in vec3 last, float entryDepth, float exitDepth
 
   WHILE(!finished) {
     vec3 samplePos = first + t * rayDirection;
-    float intensity = textureLookup3DMapped(volume_, volumeStruct_, samplePos);
+    float mask = textureLookup3DMapped(mask_, maskStruct_, samplePos);
+    if (mask > 0) {
+      float intensity = textureLookup3DMapped(volume_, volumeStruct_, samplePos);
 
-    // apply classification
-    vec4 color = RC_APPLY_CLASSIFICATION(transFuncStruct_, transFuncTex_, intensity, lastIntensity);
+      // apply classification
+      vec4 color = RC_APPLY_CLASSIFICATION(transFuncStruct_, transFuncTex_, intensity, lastIntensity);
 
-    // if opacity greater zero, apply compositing
-    if (color.a > 0.0) {
-      // calculate gradient
-      vec3 n = CALC_GRADIENT(volume_, volumeStruct_, samplePos);
+      // if opacity greater zero, apply compositing
+      if (color.a > 0.0) {
+        // calculate gradient
+        vec3 n = CALC_GRADIENT(volume_, volumeStruct_, samplePos);
 
-      // apply shading
-      color.rgb = APPLY_SHADING(n,
-        texToPhysical(samplePos, volumeStruct_),
-        volumeStruct_.cameraPositionPhysical_,  // lightPositionPhysical_
-        volumeStruct_.cameraPositionPhysical_,
-        color.rgb,
-        color.rgb,
-        vec3(1.0f));
+        // apply shading
+        color.rgb = APPLY_SHADING(n,
+          texToPhysical(samplePos, volumeStruct_),
+          volumeStruct_.cameraPositionPhysical_,  // lightPositionPhysical_
+          volumeStruct_.cameraPositionPhysical_,
+          color.rgb,
+          color.rgb,
+          vec3(1.0f));
 
-      compositeDVR(result, color, t, samplingStepSize_, tDepth);
+        compositeDVR(result, color, t, samplingStepSize_, tDepth);
+      }
+
+      finished = earlyRayTermination(result.a, EARLY_RAY_TERMINATION_OPACITY);
+      lastIntensity = intensity;
     }
-
-    finished = earlyRayTermination(result.a, EARLY_RAY_TERMINATION_OPACITY);
-    lastIntensity = intensity;
 
     t += tIncr;
     finished = finished || (t > tEnd);

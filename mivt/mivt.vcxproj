@@ -38,6 +38,7 @@
     <ClCompile Include="rendervolume.cpp" />
     <ClCompile Include="rendertoscreen.cpp" />
     <ClCompile Include="volumeraycaster.cpp" />
+    <ClCompile Include="volumesculpt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="rendervolume.h" />
     <ClInclude Include="rendertoscreen.h" />
     <ClInclude Include="volumeraycaster.h" />
+    <ClInclude Include="volumesculpt.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1E463676-3EF8-4898-9524-480EC01B508D}</ProjectGuid>

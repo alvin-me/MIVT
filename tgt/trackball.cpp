@@ -213,49 +213,49 @@ namespace tgt {
       return;
     }
 
-    float oldRelCamDist = (camera_->getFocalLength() - getMinValue()) / (getMaxValue() - getMinValue());
-    float maxSideLength = glm::hmax(bound.diagonal());
+    //float oldRelCamDist = (camera_->getFocalLength() - getMinValue()) / (getMaxValue() - getMinValue());
+    //float maxSideLength = glm::hmax(bound.diagonal());
 
-    // The factor 250 is derived from an earlier constant maxDist of 500 and a constant maximum cubeSize element of 2
-    float newMaxDist = 250.f * maxSideLength;
-    setMaxValue(newMaxDist);
+    //// The factor 250 is derived from an earlier constant maxDist of 500 and a constant maximum cubeSize element of 2
+    //float newMaxDist = 250.f * maxSideLength;
+    //setMaxValue(newMaxDist);
 
-    if (nearDist > 0.f) {
-      camera_->setNearDist(nearDist);
-      setMinValue(nearDist);
-    }
-    else
-      setMinValue(newMaxDist / 50000.f);
+    //if (nearDist > 0.f) {
+    //  camera_->setNearDist(nearDist);
+    //  setMinValue(nearDist);
+    //}
+    //else
+    //  setMinValue(newMaxDist / 50000.f);
 
-    float newAbsCamDist = getMinValue() + oldRelCamDist * (getMaxValue() - getMinValue());
+    //float newAbsCamDist = getMinValue() + oldRelCamDist * (getMaxValue() - getMinValue());
 
-    setCenter(bound.center());
-    glm::vec3 newFocus = bound.center();
-    glm::vec3 newPos = bound.center() - camera_->getLook() * newAbsCamDist;
-    camera_->setFocus(newFocus);
-    camera_->setPosition(newPos);
-    camera_->setFarDist(newMaxDist + maxSideLength);
+    //setCenter(bound.center());
+    //glm::vec3 newFocus = bound.center();
+    //glm::vec3 newPos = bound.center() - camera_->getLook() * newAbsCamDist;
+    //camera_->setFocus(newFocus);
+    //camera_->setPosition(newPos);
+    //camera_->setFarDist(newMaxDist + maxSideLength);
 
-    //const float maxSideLength = glm::hmax(bound.diagonal());
-    //const float focusToOrigin = 10 * maxSideLength;
+    const float maxSideLength = glm::hmax(bound.diagonal());
+    const float focusToOrigin = 10 * maxSideLength;
 
-    //glm::vec3 lookat = bound.center();
-    //glm::vec3 eye = bound.center() - focusToOrigin * camera_->getLook();
-    //float nearPlane = focusToOrigin - 2 * maxSideLength;
-    //float farPlane = focusToOrigin + 2 * maxSideLength;
-    //float ratio = camera_->getRatio();
-    //float fovy = glm::rad2deg(atan(1 / ratio / nearPlane)) * 2;
-    //camera_->setPosition(eye);
-    //camera_->setFocus(lookat);
-    //camera_->setNearDist(nearPlane);
-    //camera_->setFarDist(farPlane);
-    //camera_->setFovy(fovy);
+    glm::vec3 lookat = bound.center();
+    glm::vec3 eye = bound.center() - focusToOrigin * camera_->getLook();
+    float nearPlane = focusToOrigin - 2 * maxSideLength;
+    float farPlane = focusToOrigin + 2 * maxSideLength;
+    float ratio = camera_->getRatio();
+    float fovy = glm::rad2deg(atan(1 / ratio / nearPlane)) * 2;
+    camera_->setPosition(eye);
+    camera_->setFocus(lookat);
+    camera_->setNearDist(nearPlane);
+    camera_->setFarDist(farPlane);
+    camera_->setFovy(fovy);
 
-    //setMaxValue(farPlane);
-    //setMinValue(nearPlane);
-    //setCenter(lookat);
+    setMaxValue(farPlane);
+    setMinValue(nearPlane);
+    setCenter(lookat);
 
-    //nearDist;
+    nearDist;
   }
 
 } // end namespace tgt

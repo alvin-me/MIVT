@@ -29,7 +29,7 @@ void VRTest::init()
   float windowCenter = 30;
   app->LoadVolume(fileName, format, dimension, spacing, intercept, slope, windowWidth, windowCenter);
 
-  app->SetTransfunc("Transparent_Bone");
+  app->SetTransfunc("Vascular_Leg_Runoff");
 }
 
 void VRTest::deinit()

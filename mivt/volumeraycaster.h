@@ -168,6 +168,7 @@ namespace mivt {
     std::string classificationMode_;          ///< What type of transfer function should be used for classification
     std::string shadeMode_;                   ///< What shading method should be applied
     std::string compositingMode_;             ///< What compositing mode should be applied
+    std::string maskingMode_;                 ///< What masking should be applied
 
     int interactionCoarseness_;               ///< RenderPorts are resized to size_/interactionCoarseness_ in interactionmode
     //float interactionQuality_;
