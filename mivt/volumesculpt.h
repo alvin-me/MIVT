@@ -4,6 +4,7 @@
 
 namespace tgt {
   class Volume;
+  class Camera;
 }
 
 namespace mivt {
@@ -13,15 +14,17 @@ namespace mivt {
     VolumeSculpt();
     ~VolumeSculpt();
 
-    void SetVolume(tgt::Volume *volume);
+    void SetMaskVolume(tgt::Volume *maskVolume);
 
-    void Process();
+    //void Process();
+
+    bool SculptCPU(const std::vector<glm::vec2> &polygon,
+      tgt::Camera *cam, const glm::ivec2 viewSize, const glm::mat4& voxelToWorld);
 
   private:
-    bool SculptCPU(const std::vector<glm::vec2> &polygon);
+    tgt::Volume *maskVolume_;
 
-  private:
-    tgt::Volume *volume_;
+    static const std::string loggerCat_;
   };
 }
 

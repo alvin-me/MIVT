@@ -1,6 +1,7 @@
 #pragma once
 
 #include "volumeraycaster.h"
+#include <vector>
 
 namespace tgt {
   class RenderTarget;
@@ -17,6 +18,7 @@ namespace mivt {
   class RenderBackground;
   class RenderToScreen;
   class CubeProxyGeometry;
+  class VolumeSculpt;
 
   class RenderVolume : public VolumeRaycaster
   {
@@ -76,6 +78,8 @@ namespace mivt {
     float GetClipTop();
     bool IsClipEnabled();
 
+    void DoSculpt(const std::vector<glm::vec2> & polygon);
+
   private:
     void Process(bool downsampling);
 
@@ -98,6 +102,7 @@ namespace mivt {
     RenderBackground      *renderBackground_;
     RenderToScreen        *renderToScreen_;
     CubeProxyGeometry     *cubeProxyGeometry_;
+    VolumeSculpt          *volumeSculpt_;
   };
 
 }

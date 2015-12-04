@@ -10,6 +10,8 @@ int                 VRTest::bufferSize = 0;
 VRTest::MouseMode   VRTest::mouseMode;
 int                 VRTest::lastMouse[2];
 bool                VRTest::interactionMode = false;
+bool                VRTest::sculptMode = false;
+std::vector<glm::vec2> VRTest::polygon;
 
 void VRTest::init()
 {
@@ -21,7 +23,7 @@ void VRTest::init()
 
   const std::string fileName = "E:/raw/CT-Head/CT-Head.img";
   const std::string format = "SHORT";
-  const int dimension[3] = { 512, 512, 393 };
+  const int dimension[3] = { 512, 512, 50 };
   const float spacing[3] = { 0.47f, 0.47f, 0.63f };
   float intercept = -1024;
   float slope = 1;
@@ -52,7 +54,23 @@ void VRTest::display()
 
   glDisable(GL_DEPTH_TEST);
   glDrawPixels(windowWidth, windowHeight, GL_BGRA, GL_UNSIGNED_BYTE, bufferRCP);
+
+
+  // draw polygon
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+  gluOrtho2D(0, windowWidth, windowHeight, 0);
+  glColor3f(1, 1, 0);
+  glBegin(GL_LINE_LOOP);
+  for (size_t i = 0; i < polygon.size(); ++i)
+    glVertex2f(polygon[i].x, polygon[i].y);
+  glEnd();
+  glPopMatrix();
+
   glEnable(GL_DEPTH_TEST);
+  
+
 
   glutSwapBuffers();
 }
@@ -97,6 +115,10 @@ void VRTest::key(unsigned char k, int, int)
   case 'q':
     exit(0);
     break;
+  case 's':
+    sculptMode = !sculptMode;
+    printf("Scult is " + sculptMode ? "On\n" : "Off\n");
+    break;
   default:
     break;
   }
@@ -110,6 +132,20 @@ void VRTest::mouse(int button, int state, int x, int y)
 
   lastMouse[0] = x;
   lastMouse[1] = y;
+
+  if (sculptMode && (state == GLUT_DOWN)) {
+    mouseMode = MOUSE_SCULPT;
+    polygon.clear();
+    //printf("add points (%i, %i)\n", x, y);
+    polygon.push_back(glm::vec2(x, y));
+    return;
+  }
+  else if (sculptMode && (state == GLUT_UP) && polygon.size() >= 3) {
+    app->DoSculpt(polygon);
+    polygon.clear();
+    sculptMode = false;
+    return;
+  }
 
   interactionMode = (state == GLUT_DOWN);
 
@@ -149,6 +185,10 @@ void VRTest::motion(int x, int y)
     app->Pan(x, y, lastMouse[0], lastMouse[1]);
     break;
   case MOUSE_WINDOWING:
+    break;
+  case MOUSE_SCULPT:
+    //printf("add points (%i, %i)", x, y);
+    polygon.push_back(glm::vec2(x, y));
     break;
   default:
     break;

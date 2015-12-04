@@ -37,6 +37,7 @@
     <ClCompile Include="rendercolorcube.cpp" />
     <ClCompile Include="rendervolume.cpp" />
     <ClCompile Include="rendertoscreen.cpp" />
+    <ClCompile Include="scanline.cpp" />
     <ClCompile Include="volumeraycaster.cpp" />
     <ClCompile Include="volumesculpt.cpp" />
   </ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="rendervolume.h" />
     <ClInclude Include="rendertoscreen.h" />
+    <ClInclude Include="scanline.h" />
     <ClInclude Include="volumeraycaster.h" />
     <ClInclude Include="volumesculpt.h" />
   </ItemGroup>

@@ -45,7 +45,7 @@ vec4 rayTraversal(in vec3 first, in vec3 last, float entryDepth, float exitDepth
   WHILE(!finished) {
     vec3 samplePos = first + t * rayDirection;
     float mask = textureLookup3DMapped(mask_, maskStruct_, samplePos);
-    if (mask > 0) {
+    if (mask == 0) {
       float intensity = textureLookup3DMapped(volume_, volumeStruct_, samplePos);
 
       // apply classification

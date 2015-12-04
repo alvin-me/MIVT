@@ -113,6 +113,9 @@ namespace tgt {
     TGT_API void SetReady(bool flag = true);
     TGT_API bool IsReady();
 
+    /// sync cpu data to gpu
+    TGT_API void SyncData();
+
   private:
     std::vector<VolumeRepresentation*> representations_;
     std::vector<VolumeDerivedData*> derivedData_;

@@ -12,6 +12,7 @@
 #include "rendertoscreen.h"
 #include "cubeproxygeometry.h"
 #include "volumeatomic.h"
+#include "volumesculpt.h"
 
 namespace mivt {
 
@@ -67,6 +68,8 @@ namespace mivt {
     renderToScreen_->Initialize();
 
     cubeProxyGeometry_ = new CubeProxyGeometry();
+
+    volumeSculpt_ = new VolumeSculpt();
   }
 
   void RenderVolume::Deinitialize()
@@ -100,6 +103,8 @@ namespace mivt {
     DELPTR(cubeProxyGeometry_);
 
     DELPTR(mask_);
+
+    DELPTR(volumeSculpt_);
 
   }
 
@@ -271,13 +276,9 @@ namespace mivt {
     volumeRAM->clear();
     DELPTR(mask_);
     mask_ = new tgt::Volume(volumeRAM, glm::vec3(1), glm::vec3(0));
+    mask_->setPhysicalToWorldMatrix(volume->getPhysicalToWorldMatrix());
 
-    unsigned char* data = reinterpret_cast<uint8_t*>(mask_->getRepresentation<tgt::VolumeRAM>()->getData());
-    glm::ivec3 dim = volume->getDimensions();
-    for (int idz = 0; idz < dim.z/2; ++idz)
-    for (int idy = 0; idy < dim.y; ++idy)
-    for (int idx = 0; idx < dim.x; ++idx)
-      data[idz * dim.y * dim.x + idy * dim.x + idx] = 1;
+    volumeSculpt_->SetMaskVolume(mask_);
   }
 
   void RenderVolume::SetTransfunc(tgt::TransFunc1D *transfunc)
@@ -425,6 +426,12 @@ namespace mivt {
   bool RenderVolume::IsClipEnabled()
   {
     return cubeProxyGeometry_->IsClipEnabled();
+  }
+
+  void RenderVolume::DoSculpt(const std::vector<glm::vec2> & polygon)
+  {
+    volumeSculpt_->SculptCPU(polygon, camera_, output_->getSize(), volume_->getVoxelToWorldMatrix());
+    mask_->SyncData();
   }
 }
 

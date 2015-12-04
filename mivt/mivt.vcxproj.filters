@@ -72,6 +72,7 @@
     <ClCompile Include="renderbackground.cpp" />
     <ClCompile Include="cubeproxygeometry.cpp" />
     <ClCompile Include="volumesculpt.cpp" />
+    <ClCompile Include="scanline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -85,5 +86,6 @@
     <ClInclude Include="renderbackground.h" />
     <ClInclude Include="cubeproxygeometry.h" />
     <ClInclude Include="volumesculpt.h" />
+    <ClInclude Include="scanline.h" />
   </ItemGroup>
 </Project>

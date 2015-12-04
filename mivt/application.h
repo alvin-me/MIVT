@@ -3,6 +3,7 @@
 #include "config.h"
 #include "progressbar.h"
 #include <string>
+#include <vector>
 
 namespace tgt {
   class OffScreenRender;
@@ -94,6 +95,8 @@ namespace mivt {
     MIVT_API float GetClipBottom();
     MIVT_API float GetClipTop();
     MIVT_API bool IsClipEnabled();
+
+    MIVT_API void DoSculpt(const std::vector<glm::vec2> & polygon);
 
   private:
     std::string getBasePath(const std::string& filename = "") const;

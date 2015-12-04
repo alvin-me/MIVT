@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 
+#include <vector>
+
 #include "application.h"
 
 #pragma warning(disable:4505)
@@ -36,9 +38,12 @@ private:
     MOUSE_ZOOM,
     MOUSE_MOVE,
     MOUSE_WINDOWING,
+    MOUSE_SCULPT,
   } MouseMode;
   static MouseMode mouseMode;
   static int lastMouse[2];
   static bool interactionMode;
+  static bool sculptMode;
+  static std::vector<glm::vec2> polygon;
 };
 

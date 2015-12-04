@@ -385,6 +385,17 @@ namespace tgt {
     return ready_;
   }
 
+  void Volume::SyncData()
+  {
+    VolumeRAM* volumeRam = getRepresentation<VolumeRAM>();
+    assert(volumeRam);
+    VolumeGL* volumeGl = getRepresentation<VolumeGL>();
+    assert(volumeGl);
+    volumeGl->getTexture()->setPixelData(reinterpret_cast<GLubyte*>(volumeRam->getData()));
+    volumeGl->getTexture()->uploadTexture();
+    volumeGl->getTexture()->setPixelData(0);
+  }
+
   //------------------------------------------------------------------------------
 
   void oldVolumePosition(Volume* vh) {

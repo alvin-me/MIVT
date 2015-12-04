@@ -450,4 +450,9 @@ namespace mivt {
   {
     return render_->IsClipEnabled();
   }
+
+  void Application::DoSculpt(const std::vector<glm::vec2> & polygon)
+  {
+    return render_->DoSculpt(polygon);
+  }
 }
