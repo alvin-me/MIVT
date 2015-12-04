@@ -80,6 +80,7 @@ namespace tgt {
       static const GlVersion TGT_GL_VERSION_4_0;
       static const GlVersion TGT_GL_VERSION_4_1;
       static const GlVersion TGT_GL_VERSION_4_2;
+      static const GlVersion TGT_GL_VERSION_4_3;
 
       static const GlVersion SHADER_VERSION_110; ///< GLSL version 1.10
       static const GlVersion SHADER_VERSION_120; ///< GLSL version 1.20
@@ -90,6 +91,7 @@ namespace tgt {
       static const GlVersion SHADER_VERSION_400; ///< GLSL version 4.00
       static const GlVersion SHADER_VERSION_410; ///< GLSL version 4.10
       static const GlVersion SHADER_VERSION_420; ///< GLSL version 4.20
+      static const GlVersion SHADER_VERSION_430; ///< GLSL version 4.30
     };
 
 
@@ -230,6 +232,12 @@ namespace tgt {
     * is true for OpenGL version 2.0 or later.
     */
     TGT_API bool areShadersSupported();
+
+    /**
+    * Returns wether compute shaders are supported, which
+    * is true for OpenGL version 4.3 or later.
+    */
+    TGT_API bool areComputeShadersSupported();
 
     /**
     * Returns wether the ARB shader extensions
@@ -397,6 +405,7 @@ namespace tgt {
 
     bool shaderSupport_;
     bool shaderSupportARB_;
+    bool shaderSupportCompute_;
     GlVersion shaderVersion_;
     ShaderModel shaderModel_;
 

@@ -42,7 +42,8 @@ namespace tgt {
     enum ShaderType {
       VERTEX_SHADER = GL_VERTEX_SHADER,
       FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
-      GEOMETRY_SHADER = GL_GEOMETRY_SHADER_EXT
+      GEOMETRY_SHADER = GL_GEOMETRY_SHADER_EXT,
+      COMPUTE_SHADER = GL_COMPUTE_SHADER
     };
 
     // Helper for resolving line number when includes are used in shader files
@@ -347,6 +348,14 @@ namespace tgt {
       const std::string& fragFilename, const std::string& customHeader = "")
       throw (Exception);
 
+    /**
+    * Load filename.comp (compute shader) and link shader.
+    *
+    * @throw Exception if loading failed
+    */
+    void loadCompute(const std::string& filename)
+      throw (Exception);
+
     typedef std::list<ShaderObject*> ShaderObjects;
     ShaderObjects objects_;
 
@@ -483,6 +492,17 @@ namespace tgt {
       throw(Exception);
 
     TGT_API bool rebuildAllShadersFromFile();
+
+    /**
+    * Load filename.comp(compute shader), link shader and
+    * activate it by default.
+    *
+    * @return The loaded shader
+    *
+    * @throw Exception if loading failed
+    */
+    TGT_API Shader* loadCompute(const std::string& filename, bool activate = true)
+      throw (Exception);
 
   protected:
     static const std::string loggerCat_;

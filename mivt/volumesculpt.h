@@ -5,6 +5,7 @@
 namespace tgt {
   class Volume;
   class Camera;
+  class Shader;
 }
 
 namespace mivt {
@@ -23,6 +24,7 @@ namespace mivt {
 
   private:
     tgt::Volume *maskVolume_;
+    tgt::Shader *shaderProgram_;
 
     static const std::string loggerCat_;
   };

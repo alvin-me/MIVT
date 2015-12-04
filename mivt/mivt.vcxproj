@@ -27,6 +27,7 @@
     <None Include="glsl\modules\mod_shading.frag" />
     <None Include="glsl\modules\mod_transfunc.frag" />
     <None Include="glsl\rc_basic.frag" />
+    <None Include="glsl\sculpt.comp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />

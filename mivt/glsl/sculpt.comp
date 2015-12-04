@@ -1,0 +1,65 @@
+#version 430 core
+layout (local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
+layout (r8, binding = 0) uniform image3D mask;
+layout (binding = 1) buffer BufferObject {
+  vec2 polygon[];
+};
+
+uniform int  polyNumb;
+uniform vec3 vol_dim;
+uniform mat4 mvp;
+uniform vec2 view_size;
+
+
+//  Globals which should be set before calling this function:
+//
+//  int    polySides  =  how many corners the polygon has
+//  float  polyX[]    =  horizontal coordinates of corners
+//  float  polyY[]    =  vertical coordinates of corners
+//  float  x, y       =  point to be tested
+//
+//  (Globals are used in this example for purposes of speed.  Change as
+//  desired.)
+//
+//  The function will return YES if the point x,y is inside the polygon, or
+//  NO if it is not.  If the point is exactly on the edge of the polygon,
+//  then the function may return YES or NO.
+//
+//  Note that division by zero is avoided because the division is protected
+//  by the "if" clause which surrounds it.
+
+bool pointInPolygon(vec2 point) 
+{
+  int  i, j = polyNumb - 1 ;
+  bool oddNodes = false;
+
+  for (i=0; i<polyNumb; i++) {
+    if ((polygon[i].y < point.y && polygon[j].y >= point.y
+    ||   polygon[j].y < point.y && polygon[i].y >= point.y)
+    &&  (polygon[i].x <=point.x || polygon[j].x <= point.x)) {
+      oddNodes = oddNodes ^^ (polygon[i].x + (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) 
+        * (polygon[j].x - polygon[i].x) < point.x);
+    }
+    j=i;
+  }
+  return oddNodes; 
+}
+
+void main()
+{
+  if (any(greaterThanEqual(gl_GlobalInvocationID, vol_dim))) return;
+    
+  vec4 point = vec4(gl_GlobalInvocationID.xyz, 1);
+  point = mvp * point;
+
+  // NDC
+  point /= point.w;
+
+  // Window Coordinate
+  point.x = point.x * view_size.x * 0.5 + view_size.x * 0.5;
+  point.y = point.y * view_size.y * 0.5 + view_size.y * 0.5;
+  
+  if(pointInPolygon(vec2(point))) {
+    imageStore(mask, ivec3(gl_GlobalInvocationID), vec4(1.0/256.0, 0,0,0));
+  }
+}

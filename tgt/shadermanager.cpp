@@ -724,6 +724,59 @@ namespace tgt {
     }
   }
 
+  void Shader::loadCompute(const std::string& filename)
+    throw (Exception) {
+    ShaderObject* comp = 0;
+
+    if (!filename.empty()) {
+      comp = new ShaderObject(filename, ShaderObject::COMPUTE_SHADER);
+
+      try {
+        comp->loadSourceFromFile(filename);
+      }
+      catch (const Exception& e) {
+        LDEBUG("Failed to load compute shader " << filename << ": " << e.what());
+        delete comp;
+        throw Exception("Failed to load compute shader " + filename + ": " + e.what());
+      }
+
+      comp->uploadSource();
+
+      if (!comp->compileShader()) {
+        LERROR("Failed to compile compute shader " << filename);
+        LERROR("Compiler Log: \n" << comp->getCompilerLog());
+        delete comp;
+        throw Exception("Failed to compile compute shader: " + filename);
+      }
+    }
+
+    // Attach ShaderObjects, dtor will take care of freeing them
+    if (comp)
+      attachObject(comp);
+
+    if (!linkProgram()) {
+      LERROR("Failed to link shader (" << filename << ")");
+      if (comp) {
+        LERROR(comp->filename_ << " Vertex shader compiler log: \n" << comp->getCompilerLog());
+        detachObject(comp);
+        delete comp;
+      }
+     
+      LERROR("Linker Log: \n" << getLinkerLog());
+      throw Exception("Failed to link shader (" + filename + ")");
+    }
+
+
+    if (comp && comp->getCompilerLog().size() > 1) {
+      LDEBUG("Compute shader compiler log for file '" << filename
+        << "': \n" << comp->getCompilerLog());
+    }
+  
+    if (getLinkerLog().size() > 1) {
+      LDEBUG("Linker log for '" << filename << "': \n" << getLinkerLog());
+    }
+  }
+
   GLint Shader::getUniformLocation(const string& name) {
     GLint l;
     l = glGetUniformLocation(id_, name.c_str());
@@ -1268,6 +1321,49 @@ namespace tgt {
       throw;
     }
   }
+
+  Shader* ShaderManager::loadCompute(const std::string& filename, bool activate)
+    throw (Exception)
+  {
+    LDEBUG("Loading files " << filename);
+    if (!GpuCaps.areComputeShadersSupported()) {
+      LERROR("Shaders are not supported.");
+      throw Exception("Shaders are not supported.");
+    }
+
+    // create a somewhat unique identifier for this shader triple
+    string identifier = filename;
+
+    if (isLoaded(identifier)) {
+      LDEBUG("Shader already loaded. Increase usage count.");
+      increaseUsage(identifier);
+      return get(identifier);
+    }
+
+    Shader* shdr = new Shader();
+
+    // searching in all paths for every shader
+    string comp_completeFilename;
+    if (!filename.empty())
+      comp_completeFilename = completePath(filename);
+
+    // loading and linking found shaders
+    try {
+      shdr->loadCompute(comp_completeFilename);
+      // register even when caching is disabled, needed for rebuildFromFile()
+      reg(shdr, identifier);
+
+      if (activate)
+        shdr->activate();
+
+      return shdr;
+    }
+    catch (const Exception& /*e*/) {
+      delete shdr;
+      throw;
+    }
+  }
+
 
   bool ShaderManager::rebuildAllShadersFromFile() {
     bool result = true;

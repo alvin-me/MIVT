@@ -60,6 +60,9 @@
     <None Include="glsl\base\preintegration.frag">
       <Filter>glsl\base</Filter>
     </None>
+    <None Include="glsl\sculpt.comp">
+      <Filter>glsl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />

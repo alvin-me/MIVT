@@ -4,6 +4,7 @@
 #include "volume.h"
 #include "camera.h"
 #include "scanline.h"
+#include "shadermanager.h"
 
 namespace mivt {
 
@@ -12,11 +13,14 @@ namespace mivt {
   VolumeSculpt::VolumeSculpt()
     : maskVolume_(0)
   {
+    shaderProgram_ = ShdrMgr.loadCompute("sculpt.comp", false);
   }
 
 
   VolumeSculpt::~VolumeSculpt()
   {
+    ShdrMgr.dispose(shaderProgram_);
+    shaderProgram_ = 0;
   }
 
   void VolumeSculpt::SetMaskVolume(tgt::Volume *volume)

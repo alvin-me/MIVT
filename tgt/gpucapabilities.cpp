@@ -70,6 +70,10 @@ namespace tgt {
     return shaderSupport_;
   }
 
+  bool GpuCapabilities::areComputeShadersSupported() {
+    return shaderSupportCompute_;
+  }
+
   bool GpuCapabilities::areShadersSupportedARB() {
     return shaderSupportARB_;
   }
@@ -326,6 +330,7 @@ namespace tgt {
     shaderSupport_ = (glVersion_ >= GlVersion::TGT_GL_VERSION_2_0);
     shaderSupportARB_ = (isExtensionSupported("GL_ARB_vertex_program") &&
       isExtensionSupported("GL_ARB_fragment_program"));
+    shaderSupportCompute_ = (glVersion_ >= GlVersion::TGT_GL_VERSION_4_3);
 
     if (!shaderVersion_.parseVersionString(glslVersionString_)) {
       LERROR("Malformed GLSL version string: " << glslVersionString_);
@@ -427,6 +432,7 @@ namespace tgt {
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::TGT_GL_VERSION_4_0(4, 0, 0);
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::TGT_GL_VERSION_4_1(4, 1, 0);
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::TGT_GL_VERSION_4_2(4, 2, 0);
+  const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::TGT_GL_VERSION_4_3(4, 3, 0);
 
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::SHADER_VERSION_110(1, 10); ///< GLSL version 1.10
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::SHADER_VERSION_120(1, 20); ///< GLSL version 1.20
@@ -437,6 +443,7 @@ namespace tgt {
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::SHADER_VERSION_400(4, 0); ///< GLSL version 4.00
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::SHADER_VERSION_410(4, 10); ///< GLSL version 4.10
   const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::SHADER_VERSION_420(4, 20); ///< GLSL version 4.20
+  const GpuCapabilities::GlVersion GpuCapabilities::GlVersion::SHADER_VERSION_430(4, 30); ///< GLSL version 4.30
 
   GpuCapabilities::GlVersion::GlVersion(int major, int minor, int release)
     : major_(major), minor_(minor), release_(release)
