@@ -69,7 +69,7 @@ namespace mivt {
 
     cubeProxyGeometry_ = new CubeProxyGeometry();
 
-    volumeSculpt_ = new VolumeSculpt();
+    volumeSculpt_ = new VolumeSculpt(true);
   }
 
   void RenderVolume::Deinitialize()
@@ -430,8 +430,7 @@ namespace mivt {
 
   void RenderVolume::DoSculpt(const std::vector<glm::vec2> & polygon)
   {
-    volumeSculpt_->SculptCPU(polygon, camera_, output_->getSize(), volume_->getVoxelToWorldMatrix());
-    mask_->SyncData();
+    volumeSculpt_->Process(polygon, camera_, output_->getSize(), volume_->getVoxelToWorldMatrix());
   }
 }
 

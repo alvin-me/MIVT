@@ -90,11 +90,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="computeshadertest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="opengltransformation.cpp" />
     <ClCompile Include="vrtest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="computeshadertest.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="opengltransformation.h" />
     <ClInclude Include="vrtest.h" />

@@ -23,7 +23,7 @@ void VRTest::init()
 
   const std::string fileName = "E:/raw/CT-Head/CT-Head.img";
   const std::string format = "SHORT";
-  const int dimension[3] = { 512, 512, 50 };
+  const int dimension[3] = { 512, 512, 393 };
   const float spacing[3] = { 0.47f, 0.47f, 0.63f };
   float intercept = -1024;
   float slope = 1;

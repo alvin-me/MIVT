@@ -55,38 +55,36 @@ namespace tgt {
     float scale = 1.f;        ///< rescale data from normalized interger to interger. 
     // scalar
     if (dynamic_cast<const VolumeAtomic<uint8_t>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA8;
+      format = GL_RED;
+      internalFormat = GL_R8;
       dataType = GL_UNSIGNED_BYTE;
       scale = (float)std::numeric_limits<uint8_t>::max();
     }
     else if (dynamic_cast<const VolumeAtomic<int8_t>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA8;
+      format = GL_RED;
+      internalFormat = GL_R8;
       dataType = GL_BYTE;
       scale = (float)std::numeric_limits<int8_t>::max();
     }
     else if (dynamic_cast<const VolumeAtomic<uint16_t>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA16;
       dataType = GL_UNSIGNED_SHORT;
       scale = (float)std::numeric_limits<uint16_t>::max();
     }
     else if (dynamic_cast<const VolumeAtomic<int16_t>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA16;
+      format = GL_RED;
+      internalFormat = GL_R16;
       dataType = GL_SHORT;
       scale = (float)std::numeric_limits<int16_t>::max();
     }
     else if (dynamic_cast<const VolumeAtomic<uint32_t>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA;
+      format = GL_RED;
+      internalFormat = GL_R;
       dataType = GL_UNSIGNED_INT;
       scale = (float)std::numeric_limits<uint32_t>::max();
     }
     else if (dynamic_cast<const VolumeAtomic<int32_t>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA;
+      format = GL_RED;
+      internalFormat = GL_R;
       dataType = GL_INT;
       scale = (float)std::numeric_limits<int32_t>::max();
     }
@@ -101,8 +99,8 @@ namespace tgt {
       throw tgt::Exception(message);
     }
     else if (dynamic_cast<const VolumeAtomic<float>*>(volume)) {
-      format = GL_ALPHA;
-      internalFormat = GL_ALPHA32F_ARB;
+      format = GL_RED;
+      internalFormat = GL_R32F;
       dataType = GL_FLOAT;
       scale = (float)std::numeric_limits<float>::max();
     }

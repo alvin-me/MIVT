@@ -41,9 +41,9 @@ vec4 textureLookup3D(sampler3D volume, VolumeParameters volumeStruct, vec3 texCo
 float textureLookup3DMapped(sampler3D volume, VolumeParameters volumeStruct, vec3 texCoords) {
   vec4 result;
   result = texture(volume, texCoords);
-  result.a *= volumeStruct.vmScale_;
-  result.a += volumeStruct.vmOffset_;
-  return result.a;
+  result.r *= volumeStruct.vmScale_;
+  result.r += volumeStruct.vmOffset_;
+  return result.r;
 }
 
 vec3 texToPhysical(vec3 samplePos, VolumeParameters volumeParams) {
