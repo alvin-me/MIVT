@@ -67,6 +67,8 @@ namespace tgt {
       scale = (float)std::numeric_limits<int8_t>::max();
     }
     else if (dynamic_cast<const VolumeAtomic<uint16_t>*>(volume)) {
+      format = GL_RED;
+      internalFormat = GL_R16;
       dataType = GL_UNSIGNED_SHORT;
       scale = (float)std::numeric_limits<uint16_t>::max();
     }
