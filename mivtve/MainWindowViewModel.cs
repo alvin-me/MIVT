@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -54,6 +55,8 @@ namespace mivtve
     private int                     _clipRangeY;
     private int                     _clipRangeZ;
     private bool                    _volumeLoaded;
+    private ObservableCollection<Point> _polygonPoints;
+    private bool                    _onSculpt;
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     delegate void ProgressCallback();
@@ -130,6 +133,10 @@ namespace mivtve
       ClipRangeZ = 1;
 
       _volumeLoaded = false;
+
+      _polygonPoints = new ObservableCollection<Point>();
+
+      _onSculpt = false;
 
       // initialize commands
 
@@ -641,6 +648,34 @@ namespace mivtve
       }
     }
 
+    public ObservableCollection<Point> PolygonPoints
+    {
+      get { return _polygonPoints; }
+      set
+      {
+        if (_polygonPoints != value)
+        {
+          _polygonPoints = value;
+
+          OnPropertyChanged("PolygonPoints");
+        }
+      }
+    }
+
+    public bool OnSculpt
+    {
+      get { return _onSculpt; }
+      set
+      {
+        if (_onSculpt != value)
+        {
+          _onSculpt = value;
+
+          OnPropertyChanged("OnSculpt");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -685,12 +720,35 @@ namespace mivtve
 
     public void ImageMouseDown(object sender, MouseButtonEventArgs e)
     {
-      _lastMousePosition = e.GetPosition(sender as Image);
+      _lastMousePosition = e.GetPosition(sender as Grid);
       _mouseTracking = true;
+
+      if (OnSculpt)
+      {
+        PolygonPoints.Clear();
+        PolygonPoints.Add(new Point(Math.Round(_lastMousePosition.X), Math.Round(_lastMousePosition.Y)));
+        OnPropertyChanged("PolygonPoints");
+      }
     }
 
     public void ImageMouseUp(object sender, MouseButtonEventArgs e)
     {
+      if (OnSculpt)
+      {
+        OnSculpt = false;
+
+        float []arr = new float[PolygonPoints.Count * 2];
+        for(int i = 0; i < PolygonPoints.Count; ++i) 
+        {
+          arr[i*2] = (float)PolygonPoints[i].X;
+          arr[i * 2 + 1] = (float)PolygonPoints[i].Y;
+        }
+        _engine.DoSculpt(arr);
+
+        PolygonPoints.Clear();
+        OnPropertyChanged("PolygonPoints");
+      }
+
       _mouseTracking = false;
       UpdateImage();
     }
@@ -699,10 +757,23 @@ namespace mivtve
     {
       if(_mouseTracking)
       {
-        Point mousePos = e.GetPosition(sender as Image);
+        Point mousePos = e.GetPosition(sender as Grid);
 
         if(e.LeftButton == MouseButtonState.Pressed)
         {
+          if (OnSculpt)
+          {
+            Point p = new Point(Math.Round(mousePos.X), Math.Round(mousePos.Y));
+            if(p.X != PolygonPoints[PolygonPoints.Count-1].X ||
+              p.Y != PolygonPoints[PolygonPoints.Count - 1].Y)
+            {
+              PolygonPoints.Add(p);
+              OnPropertyChanged("PolygonPoints");
+            }
+
+            return;
+          }
+
           _engine.Rotate((int)mousePos.X, (int)mousePos.Y, 
             (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
           UpdateImage(true);

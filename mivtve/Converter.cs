@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace mivtve
@@ -21,5 +24,29 @@ namespace mivtve
       return Color.FromArgb(Convert.ToByte(arr[3] * 255), Convert.ToByte(arr[0] * 255),
         Convert.ToByte(arr[1] * 255), Convert.ToByte(arr[2] * 255)).ToString();
     }
+  }
+
+  public class PointCollectionConverter : IValueConverter
+  {
+    #region IValueConverter Members
+
+    public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+      if (value.GetType() == typeof(ObservableCollection<Point>) && targetType == typeof(PointCollection))
+      {
+        var pointCollection = new PointCollection();
+        foreach (var point in value as ObservableCollection<Point>)
+          pointCollection.Add(point);
+        return pointCollection;
+      }
+      return null;
+    }
+
+    public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+      return null; //not needed
+    }
+
+    #endregion
   }
 }

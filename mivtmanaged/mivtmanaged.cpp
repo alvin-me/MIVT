@@ -282,5 +282,16 @@ namespace mivtmanaged {
   {
     return local_->IsClipEnabled();
   }
+
+  void Application::DoSculpt(array<float>^ polygon)
+  {
+    pin_ptr<float> pinned_polygon = &polygon[0];
+    int count = polygon->Length;
+    std::vector<glm::vec2> vec;
+    for (int i = 0; i < count / 2; ++i) {
+      vec.push_back(glm::round(glm::vec2(pinned_polygon[i * 2], pinned_polygon[i * 2 + 1])));
+    }
+    local_->DoSculpt(vec);
+  }
 }
 

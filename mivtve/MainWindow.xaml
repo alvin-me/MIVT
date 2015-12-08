@@ -8,6 +8,9 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <local:PointCollectionConverter x:Key="ConvPointCollection" />
+    </Window.Resources>
     
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
@@ -81,7 +84,7 @@
         </StatusBar>
 
         <!--use customer EventCommand for SizeChanged for startup trigger-->
-        <Grid Margin="4" Background="Black" 
+        <Grid Background="Black" 
               local:EventCommand.Name="SizeChanged" 
               local:EventCommand.Command="{Binding ImageSizeChanged}">  
             <i:Interaction.Triggers>
@@ -96,6 +99,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <Image Source="{Binding Path=ImageSrc, Mode=OneWay}" />
+            <Polygon x:Name="polygon" Stroke="Yellow" StrokeThickness="1" Points="{Binding PolygonPoints, Converter={StaticResource ConvPointCollection}}"/>
         </Grid>
     </DockPanel>
 </Window>

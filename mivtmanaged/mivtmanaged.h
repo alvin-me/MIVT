@@ -93,6 +93,8 @@ namespace mivtmanaged {
     float GetClipTop();
     bool IsClipEnabled();
 
+    void DoSculpt(array<float>^ polygon);
+
   private:
     mivt::Application *local_;
 	};

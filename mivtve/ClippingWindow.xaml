@@ -54,7 +54,7 @@
             <Slider x:Name="sliderTopClip" Minimum="0" Maximum="{Binding Path=ClipRangeZ, Mode=OneWay}" Value="{Binding Path=ClipTop, Mode=TwoWay}" Margin="0,0,4,0" Width="150" HorizontalAlignment="Left"/>
             <TextBlock Text="{Binding Path=ClipTop, Mode=TwoWay}" />
         </StackPanel>
-        
-        <CheckBox Grid.Row="6" Grid.Column="2" Content="do Sculpt" VerticalAlignment="Center"/>
+
+        <CheckBox Grid.Row="6" Grid.Column="2" Content="do Sculpt" VerticalAlignment="Center" IsChecked="{Binding Path=OnSculpt, Mode=TwoWay}"/>
     </Grid>
 </Window>
