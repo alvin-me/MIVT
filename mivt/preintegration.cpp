@@ -36,7 +36,7 @@ namespace mivt {
     }
     else {
       table_ = new vec4[resolution_ * resolution_];
-      tex_ = new tgt::Texture(reinterpret_cast<GLubyte*>(table_), glm::ivec3(static_cast<int>(resolution_),
+      tex_ = new tgt::Texture(glm::ivec3(static_cast<int>(resolution_),
         static_cast<int>(resolution_), 1), GL_RGBA, GL_RGBA32F, GL_FLOAT, tgt::Texture::LINEAR);
     }
   }

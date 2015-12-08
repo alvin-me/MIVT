@@ -39,7 +39,7 @@ namespace mivt {
   }
 
   void VolumeRaycaster::Initialize() {
-    preintegration_ = new PreIntegration(256, true);
+    preintegration_ = new PreIntegration(256, false);
   }
 
   void VolumeRaycaster::Deinitialize() {
@@ -270,7 +270,7 @@ namespace mivt {
       if (tgt::startsWith(mode, "pre-integrated")) {
         if (preintegration_->computeOnGPU() != tgt::contains(mode, "gpu")) {
           DELPTR(preintegration_);
-          preintegration_ = new PreIntegration(256, tgt::contains(mode, "gpu"), true);
+          preintegration_ = new PreIntegration(256, tgt::contains(mode, "gpu"), false);
         }
         preintegration_->getTexture(tf, samplingStepSize)->bind();
       }
