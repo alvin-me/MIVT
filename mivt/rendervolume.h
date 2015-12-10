@@ -80,6 +80,9 @@ namespace mivt {
 
     void DoSculpt(const std::vector<glm::vec2> & polygon);
 
+    glm::vec2 getWindowingDomain() const;
+    void setWindowingDomain(glm::vec2 domain);
+
   private:
     void Process(bool downsampling);
 

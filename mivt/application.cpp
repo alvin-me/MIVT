@@ -455,4 +455,16 @@ namespace mivt {
   {
     return render_->DoSculpt(polygon);
   }
+
+  void Application::getWindowingDomain(float val[2])
+  {
+    glm::vec2 domain = render_->getWindowingDomain();
+    val[0] = domain.x;
+    val[1] = domain.y;
+  }
+
+  void Application::setWindowingDomain(float val[2])
+  {
+    render_->setWindowingDomain(glm::vec2(val[0], val[1]));
+  }
 }

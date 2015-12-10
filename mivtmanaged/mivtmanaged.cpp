@@ -293,5 +293,17 @@ namespace mivtmanaged {
     }
     local_->DoSculpt(vec);
   }
+
+  void Application::getWindowingDomain(array<float>^ val)
+  {
+    pin_ptr<float> pinned_v = &val[0];
+    local_->getWindowingDomain(pinned_v);
+  }
+
+  void Application::setWindowingDomain(array<float>^ val)
+  {
+    pin_ptr<float> pinned_v = &val[0];
+    local_->setWindowingDomain(pinned_v);
+  }
 }
 

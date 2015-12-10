@@ -95,6 +95,9 @@ namespace mivtmanaged {
 
     void DoSculpt(array<float>^ polygon);
 
+    void getWindowingDomain(array<float>^ val);
+    void setWindowingDomain(array<float>^ val);
+
   private:
     mivt::Application *local_;
 	};

@@ -98,6 +98,9 @@ namespace mivt {
 
     MIVT_API void DoSculpt(const std::vector<glm::vec2> & polygon);
 
+    MIVT_API void getWindowingDomain(float val[2]);
+    MIVT_API void setWindowingDomain(float val[2]);
+
   private:
     std::string getBasePath(const std::string& filename = "") const;
     std::string getProgramPath() const;

@@ -77,6 +77,10 @@
             </StatusBarItem>
             <StatusBarItem Grid.Column="1">
                 <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ww: "/>
+                    <TextBlock Text="{Binding Path=WindowWidth}" Margin="0,0,4,0" />
+                    <TextBlock Text="wc: "/>
+                    <TextBlock Text="{Binding Path=WindowCenter}" Margin="0,0,20,0"/>
                     <TextBlock Text="{Binding Path=FrameRate}"/>
                     <TextBlock Text="FPS"/>
                 </StackPanel>

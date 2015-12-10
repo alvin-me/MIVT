@@ -57,6 +57,8 @@ namespace mivtve
     private bool                    _volumeLoaded;
     private ObservableCollection<Point> _polygonPoints;
     private bool                    _onSculpt;
+    private float                   _windowWidth;
+    private float                   _windowCenter;
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     delegate void ProgressCallback();
@@ -252,6 +254,18 @@ namespace mivtve
           //LogInfo("Volume Loaded.", 5000);
           _volumeLoaded = true;
         }
+
+        int[] range = new int[3];
+        _engine.getClipMaximum(range);
+        ClipRangeX = range[0];
+        ClipRangeY = range[1];
+        ClipRangeZ = range[2];
+
+        float[] domain = new float[2];
+        _engine.getWindowingDomain(domain);
+        WindowWidth = domain[1] - domain[0];
+        WindowCenter = domain[0] + (domain[1] - domain[0]) * 0.5f;
+
       }, (x) =>
       {
         return File.Exists(Properties.Settings.Default.VolumeFile);
@@ -676,6 +690,34 @@ namespace mivtve
       }
     }
 
+    public float WindowWidth
+    {
+      get { return _windowWidth; }
+      set
+      {
+        if (_windowWidth != value)
+        {
+          _windowWidth = value;
+
+          OnPropertyChanged("WindowWidth");
+        }
+      }
+    }
+
+    public float WindowCenter
+    {
+      get { return _windowCenter; }
+      set
+      {
+        if (_windowCenter != value)
+        {
+          _windowCenter = value;
+
+          OnPropertyChanged("WindowCenter");
+        }
+      }
+    }
+
     #endregion
 
     #region Commands
@@ -780,14 +822,29 @@ namespace mivtve
         }
         else if(e.RightButton == MouseButtonState.Pressed)
         {
-          _engine.Zoom((int)mousePos.X, (int)mousePos.Y, 
+          _engine.Zoom((int)mousePos.X, (int)mousePos.Y,
             (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
           UpdateImage(true);
         }
         else if(e.MiddleButton == MouseButtonState.Pressed)
         {
-          _engine.Pan((int)mousePos.X, (int)mousePos.Y, 
-            (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
+          if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+          {
+            float dx = (float)(mousePos.X - _lastMousePosition.X);
+            float dy = (float)(mousePos.Y - _lastMousePosition.Y);
+            WindowWidth += dx;
+            WindowCenter += dy;
+            float[] domain = new float[2];
+            domain[0] = WindowCenter - WindowWidth * 0.5f;
+            domain[1] = WindowCenter + WindowWidth * 0.5f;
+            _engine.setWindowingDomain(domain);
+          }
+          else
+          {
+            _engine.Pan((int)mousePos.X, (int)mousePos.Y,
+              (int)_lastMousePosition.X, (int)_lastMousePosition.Y);
+          }
+
           UpdateImage(true);
         }
 

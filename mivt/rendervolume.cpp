@@ -432,5 +432,15 @@ namespace mivt {
   {
     volumeSculpt_->Process(polygon, camera_, output_->getSize(), volume_->getVoxelToWorldMatrix());
   }
+
+  glm::vec2 RenderVolume::getWindowingDomain() const
+  {
+    return transfunc_->getWindowingDomain();
+  }
+
+  void RenderVolume::setWindowingDomain(glm::vec2 domain)
+  {
+    transfunc_->setWindowingDomain(domain);
+  }
 }
 
